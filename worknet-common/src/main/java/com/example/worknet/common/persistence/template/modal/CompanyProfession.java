@@ -36,6 +36,10 @@ public class CompanyProfession implements Serializable {
     @TableField("profession_id")
     private Long professionId;
     /**
+     * 标题
+     */
+    private String title;
+    /**
      * 职位描述
      */
     private String introduction;
@@ -89,6 +93,14 @@ public class CompanyProfession implements Serializable {
 
     public void setProfessionId(Long professionId) {
         this.professionId = professionId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getIntroduction() {
@@ -153,6 +165,7 @@ public class CompanyProfession implements Serializable {
         ", id=" + id +
         ", companyId=" + companyId +
         ", professionId=" + professionId +
+        ", title=" + title +
         ", introduction=" + introduction +
         ", requirement=" + requirement +
         ", salary=" + salary +

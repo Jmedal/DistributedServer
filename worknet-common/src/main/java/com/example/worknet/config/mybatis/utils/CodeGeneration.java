@@ -53,8 +53,7 @@ public class CodeGeneration {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] {"sys_company_profession",
-                "sys_company_cv","sys_learner_cv"}); // 需要生成的表
+        strategy.setInclude(new String[] {"sys_company_profession"}); // 需要生成的表
 //                 "sys_user",
 //                "sys_curriculum",
 //                "sys_course_video",
