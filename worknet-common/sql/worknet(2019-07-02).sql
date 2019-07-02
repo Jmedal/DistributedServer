@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-12 17:24:51
+Date: 2019-07-02 10:27:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,13 +24,37 @@ CREATE TABLE `sys_administrator` (
   `account` varchar(255) NOT NULL DEFAULT '' COMMENT '用户账号',
   `password` varchar(255) NOT NULL DEFAULT '' COMMENT '用户密码',
   `power` int(20) NOT NULL DEFAULT '0' COMMENT '权限',
-  PRIMARY KEY (`id`,`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+  PRIMARY KEY (`id`,`account`) USING BTREE,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of sys_administrator
 -- ----------------------------
 INSERT INTO `sys_administrator` VALUES ('1', 'admin', 'admin', '3');
+
+-- ----------------------------
+-- Table structure for sys_admin_check_company
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_admin_check_company`;
+CREATE TABLE `sys_admin_check_company` (
+  `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '特殊账号注册审核记录id',
+  `user_id` bigint(255) unsigned NOT NULL COMMENT '申请帐号id',
+  `administrator_id` bigint(255) unsigned NOT NULL COMMENT '审核管理员id',
+  `apply_time` datetime(6) NOT NULL COMMENT '申请时间',
+  `check_time` datetime(6) DEFAULT NULL COMMENT '审核时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '当前审核状态',
+  `result` tinyint(1) unsigned DEFAULT '0' COMMENT '审核结果',
+  PRIMARY KEY (`id`,`user_id`,`administrator_id`) USING BTREE,
+  KEY `fk_user_id` (`user_id`),
+  KEY `fk_administrator_id` (`administrator_id`),
+  CONSTRAINT `fk_administrator_id` FOREIGN KEY (`administrator_id`) REFERENCES `sys_administrator` (`id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='特殊账号注册审核记录表';
+
+-- ----------------------------
+-- Records of sys_admin_check_company
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_company
@@ -43,10 +67,11 @@ CREATE TABLE `sys_company` (
   `introduction` varchar(255) DEFAULT '' COMMENT '公司简介',
   `address` varchar(255) DEFAULT '' COMMENT '公司地址',
   `register_time` datetime(6) DEFAULT NULL COMMENT '注册时间',
-  PRIMARY KEY (`id`,`user_id`),
-  KEY `fk_sys_company_sys_user_1` (`user_id`),
+  PRIMARY KEY (`id`,`user_id`) USING BTREE,
+  KEY `fk_sys_company_sys_user_1` (`user_id`) USING BTREE,
+  KEY `id` (`id`) USING BTREE,
   CONSTRAINT `fk_sys_company_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司信息表';
 
 -- ----------------------------
 -- Records of sys_company
@@ -65,11 +90,11 @@ CREATE TABLE `sys_company_contest` (
   `start_time` datetime(6) NOT NULL COMMENT '笔试开始时间',
   `end_time` datetime(6) NOT NULL COMMENT '笔试结束时间',
   `activity` tinyint(10) NOT NULL COMMENT '是否激活',
-  PRIMARY KEY (`id`,`company_id`),
-  KEY `fk_sys_company_contest_sys_company_1` (`company_id`),
-  KEY `id` (`id`),
+  PRIMARY KEY (`id`,`company_id`) USING BTREE,
+  KEY `fk_sys_company_contest_sys_company_1` (`company_id`) USING BTREE,
+  KEY `id` (`id`) USING BTREE,
   CONSTRAINT `fk_sys_company_contest_sys_company_1` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='公司笔试表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司笔试表';
 
 -- ----------------------------
 -- Records of sys_company_contest
@@ -86,12 +111,12 @@ CREATE TABLE `sys_company_contest_apply` (
   `user_id` bigint(255) unsigned NOT NULL COMMENT '用户id',
   `permission` tinyint(10) NOT NULL DEFAULT '1' COMMENT '是否有效（考试时间、作弊等）',
   `sign_up_time` datetime(6) NOT NULL COMMENT '报名时间',
-  PRIMARY KEY (`id`,`contest_id`,`user_id`),
+  PRIMARY KEY (`id`,`contest_id`,`user_id`) USING BTREE,
   KEY `fk_sys_comany_contest_apply_sys_company_contest_1` (`contest_id`) USING BTREE,
   KEY `fk_sys_comany_contest_apply_sys_user_1` (`user_id`) USING BTREE,
   CONSTRAINT `fk_sys_comany_contest_apply_sys_company_contest_1` FOREIGN KEY (`contest_id`) REFERENCES `sys_company_contest` (`id`),
   CONSTRAINT `fk_sys_comany_contest_apply_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='公司笔试报名表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司笔试报名表';
 
 -- ----------------------------
 -- Records of sys_company_contest_apply
@@ -107,14 +132,18 @@ CREATE TABLE `sys_company_contest_choice_option` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '笔试选项id',
   `question_id` bigint(255) unsigned NOT NULL COMMENT '问题id',
   `option` varchar(255) NOT NULL COMMENT '选项内容',
-  PRIMARY KEY (`id`,`question_id`),
-  KEY `fk_sys_company_contest_choice_option_company_contest_question_1` (`question_id`),
+  PRIMARY KEY (`id`,`question_id`) USING BTREE,
+  KEY `fk_sys_company_contest_choice_option_company_contest_question_1` (`question_id`) USING BTREE,
   CONSTRAINT `fk_sys_company_contest_choice_option_company_contest_question_1` FOREIGN KEY (`question_id`) REFERENCES `sys_company_contest_question` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司笔试选项表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司笔试选项表';
 
 -- ----------------------------
 -- Records of sys_company_contest_choice_option
 -- ----------------------------
+INSERT INTO `sys_company_contest_choice_option` VALUES ('1', '1', '111');
+INSERT INTO `sys_company_contest_choice_option` VALUES ('2', '1', '1111');
+INSERT INTO `sys_company_contest_choice_option` VALUES ('3', '1', '11111');
+INSERT INTO `sys_company_contest_choice_option` VALUES ('4', '1', '111111');
 
 -- ----------------------------
 -- Table structure for sys_company_contest_question
@@ -127,16 +156,16 @@ CREATE TABLE `sys_company_contest_question` (
   `correct_option_id` bigint(255) unsigned NOT NULL COMMENT '正确选项id',
   `order_no` int(255) NOT NULL COMMENT '问题序号',
   `question_type` tinyint(10) NOT NULL DEFAULT '0' COMMENT '问题类型',
-  PRIMARY KEY (`id`,`contest_id`,`correct_option_id`),
-  KEY `fk_company_contest_question_sys_company_contest_1` (`contest_id`),
-  KEY `fk_sys_company_contest_question_company_contest_choice_option_1` (`correct_option_id`),
-  CONSTRAINT `fk_company_contest_question_sys_company_contest_1` FOREIGN KEY (`contest_id`) REFERENCES `sys_company_contest` (`id`),
-  CONSTRAINT `fk_sys_company_contest_question_company_contest_choice_option_1` FOREIGN KEY (`correct_option_id`) REFERENCES `sys_company_contest_choice_option` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司笔试问题表';
+  PRIMARY KEY (`id`,`contest_id`,`correct_option_id`) USING BTREE,
+  KEY `fk_company_contest_question_sys_company_contest_1` (`contest_id`) USING BTREE,
+  KEY `fk_sys_company_contest_question_company_contest_choice_option_1` (`correct_option_id`) USING BTREE,
+  CONSTRAINT `fk_company_contest_question_sys_company_contest_1` FOREIGN KEY (`contest_id`) REFERENCES `sys_company_contest` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司笔试问题表';
 
 -- ----------------------------
 -- Records of sys_company_contest_question
 -- ----------------------------
+INSERT INTO `sys_company_contest_question` VALUES ('1', '1', '123', '1', '1', '5');
 
 -- ----------------------------
 -- Table structure for sys_company_contest_result
@@ -150,17 +179,111 @@ CREATE TABLE `sys_company_contest_result` (
   `start_time` datetime(6) NOT NULL COMMENT '开始回答时间',
   `end_time` datetime(6) NOT NULL COMMENT '结束回答时间',
   `answer_id` bigint(255) unsigned NOT NULL COMMENT '回答选项id',
-  PRIMARY KEY (`id`,`user_id`,`contest_id`,`question_id`),
-  KEY `fk_company_contest_result_sys_company_contest_1` (`contest_id`),
-  KEY `fk_company_contest_result_sys_user_1` (`user_id`),
-  KEY `fk_company_contest_result_company_contest_question_1` (`question_id`),
+  PRIMARY KEY (`id`,`user_id`,`contest_id`,`question_id`) USING BTREE,
+  KEY `fk_company_contest_result_sys_company_contest_1` (`contest_id`) USING BTREE,
+  KEY `fk_company_contest_result_sys_user_1` (`user_id`) USING BTREE,
+  KEY `fk_company_contest_result_company_contest_question_1` (`question_id`) USING BTREE,
   CONSTRAINT `fk_company_contest_result_company_contest_question_1` FOREIGN KEY (`question_id`) REFERENCES `sys_company_contest_question` (`id`),
   CONSTRAINT `fk_company_contest_result_sys_company_contest_1` FOREIGN KEY (`contest_id`) REFERENCES `sys_company_contest` (`id`),
   CONSTRAINT `fk_company_contest_result_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公司笔试回答表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公司笔试回答表';
 
 -- ----------------------------
 -- Records of sys_company_contest_result
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_company_cv
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_company_cv`;
+CREATE TABLE `sys_company_cv` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '简历id',
+  `name` varchar(20) NOT NULL COMMENT '姓名',
+  `sex` int(1) NOT NULL COMMENT '性别',
+  `birth` datetime(6) NOT NULL COMMENT '出生年月',
+  `nativePlace` varchar(10) NOT NULL COMMENT '籍贯',
+  `qualification` varchar(10) NOT NULL COMMENT '学历',
+  `specialty` varchar(20) NOT NULL COMMENT '专业',
+  `tel` char(11) NOT NULL COMMENT '电话',
+  `experience` varchar(255) NOT NULL COMMENT '实习经历',
+  `mailbox` varchar(50) NOT NULL COMMENT '邮箱',
+  `introduction` varchar(255) NOT NULL COMMENT '自我介绍',
+  `diploma` varchar(255) NOT NULL COMMENT '获奖情况',
+  `head_path` varchar(255) NOT NULL COMMENT '证件照',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='简历表';
+
+-- ----------------------------
+-- Records of sys_company_cv
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_company_invitation
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_company_invitation`;
+CREATE TABLE `sys_company_invitation` (
+  `id` bigint(255) NOT NULL COMMENT '邀约id',
+  `company_id` bigint(255) unsigned DEFAULT NULL COMMENT '公司id',
+  `user_id` bigint(255) unsigned DEFAULT NULL COMMENT '用户Id',
+  `profession_id` bigint(255) unsigned DEFAULT NULL COMMENT '职业id',
+  `status` int(1) DEFAULT NULL COMMENT '邀约状态',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `invitation_company_id` (`company_id`) USING BTREE,
+  KEY `invitation_user_id` (`user_id`) USING BTREE,
+  KEY `invitation_profession_id` (`profession_id`) USING BTREE,
+  CONSTRAINT `invitation_company_id` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`),
+  CONSTRAINT `invitation_profession_id` FOREIGN KEY (`profession_id`) REFERENCES `sys_company_profession` (`id`),
+  CONSTRAINT `invitation_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='面试邀约表';
+
+-- ----------------------------
+-- Records of sys_company_invitation
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_company_profession
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_company_profession`;
+CREATE TABLE `sys_company_profession` (
+  `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '招聘id',
+  `company_id` bigint(255) unsigned NOT NULL COMMENT '公司id',
+  `profession_id` bigint(255) unsigned NOT NULL COMMENT '职业id',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
+  `introduction` varchar(255) DEFAULT NULL COMMENT '职位描述',
+  `requirement` varchar(255) DEFAULT NULL COMMENT '职位要求',
+  `salary` varchar(20) DEFAULT NULL COMMENT '薪水',
+  `start_time` datetime(6) DEFAULT NULL COMMENT '招聘开始时间',
+  `end_time` datetime(6) DEFAULT NULL COMMENT '招聘结束时间',
+  `state` int(1) DEFAULT NULL COMMENT '招聘状态',
+  `location` varchar(30) DEFAULT NULL COMMENT '工作地',
+  PRIMARY KEY (`id`,`company_id`,`profession_id`),
+  KEY `company` (`company_id`) USING BTREE,
+  KEY `profession` (`profession_id`) USING BTREE,
+  CONSTRAINT `company` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`),
+  CONSTRAINT `profession` FOREIGN KEY (`profession_id`) REFERENCES `sys_profession` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='企业发布岗位表';
+
+-- ----------------------------
+-- Records of sys_company_profession
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_company_reception
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_company_reception`;
+CREATE TABLE `sys_company_reception` (
+  `id` bigint(255) unsigned NOT NULL COMMENT '投递id',
+  `profession_id` bigint(255) unsigned DEFAULT NULL COMMENT '岗位id',
+  `cv_id` bigint(255) unsigned DEFAULT NULL COMMENT '简历id',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `profession_id1` (`profession_id`) USING BTREE,
+  KEY `cv_id` (`cv_id`) USING BTREE,
+  CONSTRAINT `cv_id` FOREIGN KEY (`cv_id`) REFERENCES `sys_company_cv` (`id`),
+  CONSTRAINT `profession_id1` FOREIGN KEY (`profession_id`) REFERENCES `sys_company_profession` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='岗位简历记录表';
+
+-- ----------------------------
+-- Records of sys_company_reception
 -- ----------------------------
 
 -- ----------------------------
@@ -176,10 +299,10 @@ CREATE TABLE `sys_course` (
   `upload_time` datetime(6) NOT NULL COMMENT '课程开设时间',
   `picture_path` varchar(255) NOT NULL DEFAULT '\\course_picture\\default\\default.jpg' COMMENT '封面图片路径',
   `activity` tinyint(10) unsigned NOT NULL DEFAULT '1' COMMENT '是否激活',
-  PRIMARY KEY (`id`,`teacher_id`),
-  KEY `fk_sys_course_sys_teacher_info_1` (`teacher_id`),
+  PRIMARY KEY (`id`,`teacher_id`) USING BTREE,
+  KEY `fk_sys_course_sys_teacher_info_1` (`teacher_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_sys_teacher_info_1` FOREIGN KEY (`teacher_id`) REFERENCES `sys_teacher_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='课程表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程表';
 
 -- ----------------------------
 -- Records of sys_course
@@ -196,12 +319,12 @@ CREATE TABLE `sys_course_click` (
   `user_id` bigint(255) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `course_id` bigint(255) unsigned NOT NULL DEFAULT '0' COMMENT '课程id',
   `click_time` datetime(6) NOT NULL COMMENT '点击时间',
-  PRIMARY KEY (`id`,`user_id`,`course_id`),
-  KEY `fk_sys_course_click_sys_user_1` (`user_id`),
-  KEY `fk_sys_course_click_sys_course_1` (`course_id`),
+  PRIMARY KEY (`id`,`user_id`,`course_id`) USING BTREE,
+  KEY `fk_sys_course_click_sys_user_1` (`user_id`) USING BTREE,
+  KEY `fk_sys_course_click_sys_course_1` (`course_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_click_sys_course_1` FOREIGN KEY (`course_id`) REFERENCES `sys_course` (`id`),
   CONSTRAINT `fk_sys_course_click_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='课程点击记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程点击记录表';
 
 -- ----------------------------
 -- Records of sys_course_click
@@ -221,12 +344,12 @@ CREATE TABLE `sys_course_comment` (
   `time` datetime(6) NOT NULL COMMENT '评论时间',
   `stars` float(50,0) NOT NULL DEFAULT '5' COMMENT '课程打分',
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '评价内容',
-  PRIMARY KEY (`id`,`course_id`,`user_id`),
-  KEY `fk_course_comment_user_1` (`user_id`),
-  KEY `fk_sys_course_comment_sys_course_1` (`course_id`),
+  PRIMARY KEY (`id`,`course_id`,`user_id`) USING BTREE,
+  KEY `fk_course_comment_user_1` (`user_id`) USING BTREE,
+  KEY `fk_sys_course_comment_sys_course_1` (`course_id`) USING BTREE,
   CONSTRAINT `fk_course_comment_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`),
   CONSTRAINT `fk_sys_course_comment_sys_course_1` FOREIGN KEY (`course_id`) REFERENCES `sys_course` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='课程评价表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程评价表';
 
 -- ----------------------------
 -- Records of sys_course_comment
@@ -250,10 +373,10 @@ CREATE TABLE `sys_course_contest` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '课程单元测试id',
   `course_index_id` bigint(255) unsigned NOT NULL COMMENT '所属课程单元id',
   `contest_name` varchar(255) DEFAULT NULL COMMENT '测试标题',
-  PRIMARY KEY (`id`,`course_index_id`),
-  KEY `fk_sys_course_contest_sys_course_index_1` (`course_index_id`),
+  PRIMARY KEY (`id`,`course_index_id`) USING BTREE,
+  KEY `fk_sys_course_contest_sys_course_index_1` (`course_index_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_sys_course_index_1` FOREIGN KEY (`course_index_id`) REFERENCES `sys_course_index` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程单元测试表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程单元测试表';
 
 -- ----------------------------
 -- Records of sys_course_contest
@@ -267,10 +390,10 @@ CREATE TABLE `sys_course_contest_option` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '选项id',
   `question_id` bigint(255) unsigned NOT NULL COMMENT '问题id',
   `option_content` varchar(255) NOT NULL COMMENT '选项内容',
-  PRIMARY KEY (`id`,`question_id`),
-  KEY `fk_sys_course_contest_option_sys_course_contest_question_1` (`question_id`),
+  PRIMARY KEY (`id`,`question_id`) USING BTREE,
+  KEY `fk_sys_course_contest_option_sys_course_contest_question_1` (`question_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_option_sys_course_contest_question_1` FOREIGN KEY (`question_id`) REFERENCES `sys_course_contest_question` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='选项表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='选项表';
 
 -- ----------------------------
 -- Records of sys_course_contest_option
@@ -285,12 +408,12 @@ CREATE TABLE `sys_course_contest_question` (
   `contest_question_id` bigint(255) unsigned NOT NULL COMMENT '所属课程单元测试id',
   `correct_option_id` bigint(255) unsigned NOT NULL COMMENT '正确答案id',
   `question_content` varchar(255) NOT NULL COMMENT '问题内容',
-  PRIMARY KEY (`id`,`contest_question_id`,`correct_option_id`),
-  KEY `fk_sys_course_contest_question_sys_course_contest_1` (`contest_question_id`),
-  KEY `fk_sys_course_contest_question_sys_course_contest_option_1` (`correct_option_id`),
+  PRIMARY KEY (`id`,`contest_question_id`,`correct_option_id`) USING BTREE,
+  KEY `fk_sys_course_contest_question_sys_course_contest_1` (`contest_question_id`) USING BTREE,
+  KEY `fk_sys_course_contest_question_sys_course_contest_option_1` (`correct_option_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_question_sys_course_contest_1` FOREIGN KEY (`contest_question_id`) REFERENCES `sys_course_contest` (`id`),
   CONSTRAINT `fk_sys_course_contest_question_sys_course_contest_option_1` FOREIGN KEY (`correct_option_id`) REFERENCES `sys_course_contest_option` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='问题表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='问题表';
 
 -- ----------------------------
 -- Records of sys_course_contest_question
@@ -307,12 +430,12 @@ CREATE TABLE `sys_course_contest_result` (
   `start_time` datetime(6) DEFAULT NULL COMMENT '开始测试时间',
   `end_time` datetime(6) DEFAULT NULL COMMENT '结束测试时间',
   `score` int(255) unsigned DEFAULT NULL COMMENT '测试得分',
-  PRIMARY KEY (`id`,`user_id`,`course_contest_id`),
-  KEY `fk_sys_course_contest_result_sys_course_contest_1` (`course_contest_id`),
-  KEY `fk_sys_course_contest_result_sys_user_1` (`user_id`),
+  PRIMARY KEY (`id`,`user_id`,`course_contest_id`) USING BTREE,
+  KEY `fk_sys_course_contest_result_sys_course_contest_1` (`course_contest_id`) USING BTREE,
+  KEY `fk_sys_course_contest_result_sys_user_1` (`user_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_result_sys_course_contest_1` FOREIGN KEY (`course_contest_id`) REFERENCES `sys_course_contest` (`id`),
   CONSTRAINT `fk_sys_course_contest_result_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单元测试结果表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='单元测试结果表';
 
 -- ----------------------------
 -- Records of sys_course_contest_result
@@ -328,12 +451,12 @@ CREATE TABLE `sys_course_contest_score` (
   `course_index_id` bigint(255) unsigned NOT NULL COMMENT '所属课程单元id',
   `score` float(255,0) NOT NULL DEFAULT '0' COMMENT '测试成绩',
   `take_time` datetime(6) NOT NULL COMMENT '参考时间',
-  PRIMARY KEY (`id`,`user_id`,`course_index_id`),
-  KEY `fk_sys_course_contest_score_sys_course_index_1` (`course_index_id`),
-  KEY `fk_sys_course_contest_score_sys_user_1` (`user_id`),
+  PRIMARY KEY (`id`,`user_id`,`course_index_id`) USING BTREE,
+  KEY `fk_sys_course_contest_score_sys_course_index_1` (`course_index_id`) USING BTREE,
+  KEY `fk_sys_course_contest_score_sys_user_1` (`user_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_score_sys_course_index_1` FOREIGN KEY (`course_index_id`) REFERENCES `sys_course_index` (`id`),
   CONSTRAINT `fk_sys_course_contest_score_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单元测试成绩表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='单元测试成绩表';
 
 -- ----------------------------
 -- Records of sys_course_contest_score
@@ -348,14 +471,14 @@ CREATE TABLE `sys_course_contest_user_answer` (
   `contest_result_id` bigint(255) unsigned NOT NULL COMMENT '单元测试结果id',
   `question_id` bigint(255) unsigned NOT NULL COMMENT '问题id',
   `answer_id` bigint(255) unsigned NOT NULL COMMENT '回答选项id',
-  PRIMARY KEY (`id`,`contest_result_id`),
-  KEY `fk_sys_course_contest_user_answer_sys_course_contest_question_1` (`question_id`),
-  KEY `fk_sys_course_contest_user_answer_sys_course_contest_option_1` (`answer_id`),
-  KEY `fk_sys_course_contest_user_answer_sys_course_contest_result_1` (`contest_result_id`),
+  PRIMARY KEY (`id`,`contest_result_id`) USING BTREE,
+  KEY `fk_sys_course_contest_user_answer_sys_course_contest_question_1` (`question_id`) USING BTREE,
+  KEY `fk_sys_course_contest_user_answer_sys_course_contest_option_1` (`answer_id`) USING BTREE,
+  KEY `fk_sys_course_contest_user_answer_sys_course_contest_result_1` (`contest_result_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_contest_user_answer_sys_course_contest_option_1` FOREIGN KEY (`answer_id`) REFERENCES `sys_course_contest_option` (`id`),
   CONSTRAINT `fk_sys_course_contest_user_answer_sys_course_contest_question_1` FOREIGN KEY (`question_id`) REFERENCES `sys_course_contest_question` (`id`),
   CONSTRAINT `fk_sys_course_contest_user_answer_sys_course_contest_result_1` FOREIGN KEY (`contest_result_id`) REFERENCES `sys_course_contest_result` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户单元测试答题表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户单元测试答题表';
 
 -- ----------------------------
 -- Records of sys_course_contest_user_answer
@@ -371,10 +494,10 @@ CREATE TABLE `sys_course_index` (
   `scale` int(255) NOT NULL COMMENT '目录等级',
   `index_order` int(255) NOT NULL COMMENT '目录位置',
   `index_title` varchar(255) NOT NULL DEFAULT '' COMMENT '目录标题',
-  PRIMARY KEY (`id`,`course_id`),
-  KEY `fk_sys_course_index_sys_course_1` (`course_id`),
+  PRIMARY KEY (`id`,`course_id`) USING BTREE,
+  KEY `fk_sys_course_index_sys_course_1` (`course_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_index_sys_course_1` FOREIGN KEY (`course_id`) REFERENCES `sys_course` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='课程目录表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程目录表';
 
 -- ----------------------------
 -- Records of sys_course_index
@@ -397,12 +520,12 @@ CREATE TABLE `sys_course_recommend` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '推荐id',
   `profession_id` bigint(255) unsigned NOT NULL COMMENT '职业id',
   `curriculum_id` bigint(255) unsigned NOT NULL COMMENT '科目分类id',
-  PRIMARY KEY (`id`,`profession_id`,`curriculum_id`),
-  KEY `fk_sys_course_recommend_sys_profession_type_1` (`profession_id`),
-  KEY `fk_sys_course_recommend_sys_curriculum_1` (`curriculum_id`),
+  PRIMARY KEY (`id`,`profession_id`,`curriculum_id`) USING BTREE,
+  KEY `fk_sys_course_recommend_sys_profession_type_1` (`profession_id`) USING BTREE,
+  KEY `fk_sys_course_recommend_sys_curriculum_1` (`curriculum_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_recommend_sys_curriculum_1` FOREIGN KEY (`curriculum_id`) REFERENCES `sys_curriculum` (`id`),
   CONSTRAINT `fk_sys_course_recommend_sys_profession_type_1` FOREIGN KEY (`profession_id`) REFERENCES `sys_profession` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='职业推荐课程表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='职业推荐课程表';
 
 -- ----------------------------
 -- Records of sys_course_recommend
@@ -424,12 +547,12 @@ CREATE TABLE `sys_course_studied` (
   `score` float(100,0) DEFAULT '0' COMMENT '课程综合成绩',
   `is_finished` tinyint(10) NOT NULL DEFAULT '0' COMMENT '是否完成学习',
   `start_time` datetime(6) NOT NULL COMMENT '开始学习时间',
-  PRIMARY KEY (`id`,`user_id`,`course_id`),
-  KEY `fk_sys_course_studied_sys_user_1` (`user_id`),
-  KEY `fk_sys_course_studied_sys_course_1` (`course_id`),
+  PRIMARY KEY (`id`,`user_id`,`course_id`) USING BTREE,
+  KEY `fk_sys_course_studied_sys_user_1` (`user_id`) USING BTREE,
+  KEY `fk_sys_course_studied_sys_course_1` (`course_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_studied_sys_course_1` FOREIGN KEY (`course_id`) REFERENCES `sys_course` (`id`),
   CONSTRAINT `fk_sys_course_studied_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户学习课程记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户学习课程记录表';
 
 -- ----------------------------
 -- Records of sys_course_studied
@@ -454,10 +577,10 @@ CREATE TABLE `sys_course_video` (
   `update_time` datetime(6) NOT NULL DEFAULT '2018-12-05 00:00:00.000000' COMMENT '发布时间',
   `video_len` bigint(255) unsigned NOT NULL DEFAULT '30' COMMENT '视频时长',
   `video_path` varchar(255) NOT NULL DEFAULT '\\course_view\\default\\001.mkv' COMMENT '视频文件路径',
-  PRIMARY KEY (`id`,`course_Index_id`),
-  KEY `fk_sys_course_video_sys_course_index_1` (`course_Index_id`),
+  PRIMARY KEY (`id`,`course_Index_id`) USING BTREE,
+  KEY `fk_sys_course_video_sys_course_index_1` (`course_Index_id`) USING BTREE,
   CONSTRAINT `fk_sys_course_video_sys_course_index_1` FOREIGN KEY (`course_Index_id`) REFERENCES `sys_course_index` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='课程视频表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程视频表';
 
 -- ----------------------------
 -- Records of sys_course_video
@@ -476,8 +599,8 @@ CREATE TABLE `sys_curriculum` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '科目id',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '科目名称',
   `introduction` varchar(255) NOT NULL DEFAULT '' COMMENT '科目介绍',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='科目表';
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='科目表';
 
 -- ----------------------------
 -- Records of sys_curriculum
@@ -497,12 +620,12 @@ CREATE TABLE `sys_curriculum_course` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '关系id',
   `course_id` bigint(255) unsigned NOT NULL COMMENT '课程id',
   `curriculum_id` bigint(255) unsigned NOT NULL COMMENT '科目id',
-  PRIMARY KEY (`id`,`curriculum_id`,`course_id`),
-  KEY `fk_curriculum_course_curriculum_1` (`curriculum_id`),
-  KEY `fk_curriculum_course_course_1` (`course_id`),
+  PRIMARY KEY (`id`,`curriculum_id`,`course_id`) USING BTREE,
+  KEY `fk_curriculum_course_curriculum_1` (`curriculum_id`) USING BTREE,
+  KEY `fk_curriculum_course_course_1` (`course_id`) USING BTREE,
   CONSTRAINT `fk_curriculum_course_course_1` FOREIGN KEY (`course_id`) REFERENCES `sys_course` (`id`),
   CONSTRAINT `fk_curriculum_course_curriculum_1` FOREIGN KEY (`curriculum_id`) REFERENCES `sys_curriculum` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='科目_课程关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='科目_课程关系表';
 
 -- ----------------------------
 -- Records of sys_curriculum_course
@@ -518,12 +641,12 @@ CREATE TABLE `sys_curriculum_tree` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '结点id',
   `curriculum_id` bigint(255) unsigned NOT NULL COMMENT '科目id',
   `pre_curriculum_id` bigint(255) unsigned NOT NULL COMMENT '前置科目id',
-  PRIMARY KEY (`id`,`curriculum_id`,`pre_curriculum_id`),
-  KEY `fk_curriculum_tree_curriculum_1` (`curriculum_id`),
-  KEY `fk_curriculum_tree_curriculum_2` (`pre_curriculum_id`),
+  PRIMARY KEY (`id`,`curriculum_id`,`pre_curriculum_id`) USING BTREE,
+  KEY `fk_curriculum_tree_curriculum_1` (`curriculum_id`) USING BTREE,
+  KEY `fk_curriculum_tree_curriculum_2` (`pre_curriculum_id`) USING BTREE,
   CONSTRAINT `fk_curriculum_tree_curriculum_1` FOREIGN KEY (`curriculum_id`) REFERENCES `sys_curriculum` (`id`),
   CONSTRAINT `fk_curriculum_tree_curriculum_2` FOREIGN KEY (`pre_curriculum_id`) REFERENCES `sys_curriculum` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='课程树表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='课程树表';
 
 -- ----------------------------
 -- Records of sys_curriculum_tree
@@ -533,6 +656,35 @@ INSERT INTO `sys_curriculum_tree` VALUES ('1', '2', '1');
 INSERT INTO `sys_curriculum_tree` VALUES ('2', '2', '4');
 INSERT INTO `sys_curriculum_tree` VALUES ('4', '3', '6');
 INSERT INTO `sys_curriculum_tree` VALUES ('5', '5', '3');
+
+-- ----------------------------
+-- Table structure for sys_learner_cv
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_learner_cv`;
+CREATE TABLE `sys_learner_cv` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '简历id',
+  `user_id` bigint(255) unsigned NOT NULL COMMENT '用户id',
+  `name` varchar(20) NOT NULL COMMENT '姓名',
+  `sex` int(1) NOT NULL COMMENT '性别',
+  `birth` datetime(6) NOT NULL COMMENT '出生年月',
+  `nativePlace` varchar(10) NOT NULL COMMENT '籍贯',
+  `qualification` varchar(10) NOT NULL COMMENT '学历',
+  `specialty` varchar(20) NOT NULL COMMENT '专业',
+  `tel` char(11) NOT NULL COMMENT '电话',
+  `experience` varchar(255) NOT NULL COMMENT '实习经历',
+  `mailbox` varchar(50) NOT NULL COMMENT '邮箱',
+  `introduction` varchar(255) NOT NULL COMMENT '自我介绍',
+  `diploma` varchar(255) NOT NULL COMMENT '获奖情况',
+  `head_path` varchar(255) NOT NULL COMMENT '证件照',
+  PRIMARY KEY (`id`,`user_id`) USING BTREE,
+  UNIQUE KEY `fk_sys_learner_cv_id` (`id`) USING BTREE,
+  KEY `fk_sys_learner_cv_user_id` (`user_id`),
+  CONSTRAINT `fk_sys_learner_cv_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='简历表';
+
+-- ----------------------------
+-- Records of sys_learner_cv
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_learner_info
@@ -552,10 +704,10 @@ CREATE TABLE `sys_learner_info` (
   `phone` varchar(255) DEFAULT NULL COMMENT '电话号码',
   `hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `professional` varchar(255) DEFAULT NULL COMMENT '目标职业',
-  PRIMARY KEY (`id`,`user_id`),
-  KEY `fk_sys_learner_info_sys_user_1` (`user_id`),
+  PRIMARY KEY (`id`,`user_id`) USING BTREE,
+  KEY `fk_sys_learner_info_sys_user_1` (`user_id`) USING BTREE,
   CONSTRAINT `fk_sys_learner_info_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='学习者信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='学习者信息表';
 
 -- ----------------------------
 -- Records of sys_learner_info
@@ -583,12 +735,12 @@ CREATE TABLE `sys_message` (
   `message_content` varchar(255) NOT NULL COMMENT '消息内容',
   `readed` tinyint(10) NOT NULL DEFAULT '0',
   `type` tinyint(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`,`sender_id`,`receiver_id`),
-  KEY `fk_sys_message_sys_user_1` (`sender_id`),
-  KEY `fk_sys_message_sys_user_2` (`receiver_id`),
+  PRIMARY KEY (`id`,`sender_id`,`receiver_id`) USING BTREE,
+  KEY `fk_sys_message_sys_user_1` (`sender_id`) USING BTREE,
+  KEY `fk_sys_message_sys_user_2` (`receiver_id`) USING BTREE,
   CONSTRAINT `fk_sys_message_sys_user_1` FOREIGN KEY (`sender_id`) REFERENCES `sys_user` (`id`),
   CONSTRAINT `fk_sys_message_sys_user_2` FOREIGN KEY (`receiver_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='消息记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='消息记录表';
 
 -- ----------------------------
 -- Records of sys_message
@@ -603,10 +755,10 @@ CREATE TABLE `sys_profession` (
   `name` varchar(255) NOT NULL COMMENT '职业名称',
   `salary` float(255,0) NOT NULL COMMENT '职业薪资',
   `type_id` bigint(255) unsigned NOT NULL COMMENT '职业分类id',
-  PRIMARY KEY (`id`),
-  KEY `fk_sys_professtion_sys_profession_type_1` (`type_id`),
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `fk_sys_professtion_sys_profession_type_1` (`type_id`) USING BTREE,
   CONSTRAINT `fk_sys_professtion_sys_profession_type_1` FOREIGN KEY (`type_id`) REFERENCES `sys_profession_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='职业表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='职业表';
 
 -- ----------------------------
 -- Records of sys_profession
@@ -624,8 +776,8 @@ DROP TABLE IF EXISTS `sys_profession_type`;
 CREATE TABLE `sys_profession_type` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '职业id',
   `type_name` varchar(255) NOT NULL COMMENT '职业分类名称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='职业分类';
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='职业分类';
 
 -- ----------------------------
 -- Records of sys_profession_type
@@ -650,10 +802,10 @@ CREATE TABLE `sys_teacher_info` (
   `tag` varchar(255) DEFAULT '' COMMENT '讲师头衔',
   `introduction` varchar(255) DEFAULT '' COMMENT '经历简介',
   `github` varchar(255) DEFAULT NULL COMMENT 'github帐号',
-  PRIMARY KEY (`id`,`user_id`),
-  KEY `fk_teacher_info_user_1` (`user_id`),
+  PRIMARY KEY (`id`,`user_id`) USING BTREE,
+  KEY `fk_teacher_info_user_1` (`user_id`) USING BTREE,
   CONSTRAINT `fk_teacher_info_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='讲师信息登记表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='讲师信息登记表';
 
 -- ----------------------------
 -- Records of sys_teacher_info
@@ -670,10 +822,10 @@ CREATE TABLE `sys_user` (
   `password` varchar(255) NOT NULL DEFAULT '' COMMENT '用户密码',
   `head_path` varchar(255) NOT NULL DEFAULT '\\avatar\\default\\avatar.jpg' COMMENT '头像路径',
   `role` tinyint(10) NOT NULL DEFAULT '3' COMMENT '身份标记（讲师/学生/公司）',
-  `activity` tinyint(10) NOT NULL DEFAULT '1' COMMENT '帐号是否激活',
-  PRIMARY KEY (`id`,`account`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='用户表';
+  `activity` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '帐号是否激活',
+  PRIMARY KEY (`id`,`account`) USING BTREE,
+  KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 -- Records of sys_user
@@ -698,12 +850,12 @@ CREATE TABLE `sys_user_profession` (
   `id` bigint(255) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户选择id',
   `user_id` bigint(255) unsigned NOT NULL COMMENT '用户id',
   `profession_id` bigint(255) unsigned NOT NULL COMMENT '职业id',
-  PRIMARY KEY (`id`,`user_id`,`profession_id`),
-  KEY `user_id` (`user_id`),
-  KEY `profession_id` (`profession_id`),
+  PRIMARY KEY (`id`,`user_id`,`profession_id`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `profession_id` (`profession_id`) USING BTREE,
   CONSTRAINT `profession_id` FOREIGN KEY (`profession_id`) REFERENCES `sys_profession` (`id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户选择职业表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户选择职业表';
 
 -- ----------------------------
 -- Records of sys_user_profession
@@ -724,14 +876,14 @@ CREATE TABLE `sys_video_discussion` (
   `reply_user_id` bigint(255) unsigned NOT NULL COMMENT '回复用户id（0：回复视频或者回复最上级评论；非0：回复评论（值为被回复的用户id））',
   `reply_time` datetime(6) NOT NULL COMMENT '回答时间',
   `content` varchar(255) NOT NULL DEFAULT '' COMMENT '讨论内容',
-  PRIMARY KEY (`id`,`user_id`,`video_id`,`reply_to_id`,`reply_user_id`),
-  KEY `fk_video_discussion_user_1` (`user_id`),
-  KEY `fk_sys_video_discussion_sys_course_video_1` (`video_id`),
-  KEY `fk_sys_video_discussion_sys_user_1` (`reply_user_id`),
-  KEY `id` (`id`),
-  KEY `fk_video_discussion_user_2` (`reply_to_id`),
+  PRIMARY KEY (`id`,`user_id`,`video_id`,`reply_to_id`,`reply_user_id`) USING BTREE,
+  KEY `fk_video_discussion_user_1` (`user_id`) USING BTREE,
+  KEY `fk_sys_video_discussion_sys_course_video_1` (`video_id`) USING BTREE,
+  KEY `fk_sys_video_discussion_sys_user_1` (`reply_user_id`) USING BTREE,
+  KEY `id` (`id`) USING BTREE,
+  KEY `fk_video_discussion_user_2` (`reply_to_id`) USING BTREE,
   CONSTRAINT `fk_video_discussion_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='讨论表';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='讨论表';
 
 -- ----------------------------
 -- Records of sys_video_discussion
@@ -751,12 +903,12 @@ CREATE TABLE `sys_video_watched` (
   `user_id` bigint(255) unsigned NOT NULL COMMENT '用户id',
   `video_id` bigint(255) unsigned NOT NULL COMMENT '视频id',
   `videl_watched_length` bigint(255) unsigned NOT NULL COMMENT '观看时长',
-  PRIMARY KEY (`id`,`user_id`,`video_id`),
-  KEY `fk_sys_video_watched_sys_user_1` (`user_id`),
-  KEY `fk_sys_video_watched_sys_course_video_1` (`video_id`),
+  PRIMARY KEY (`id`,`user_id`,`video_id`) USING BTREE,
+  KEY `fk_sys_video_watched_sys_user_1` (`user_id`) USING BTREE,
+  KEY `fk_sys_video_watched_sys_course_video_1` (`video_id`) USING BTREE,
   CONSTRAINT `fk_sys_video_watched_sys_course_video_1` FOREIGN KEY (`video_id`) REFERENCES `sys_course_video` (`id`),
   CONSTRAINT `fk_sys_video_watched_sys_user_1` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='播放记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='播放记录表';
 
 -- ----------------------------
 -- Records of sys_video_watched
