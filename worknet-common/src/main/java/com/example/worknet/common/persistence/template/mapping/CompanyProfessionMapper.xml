@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.worknet.common.persistence.affair.companyRecruit.dao.CompanyProfessionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.CompanyProfession">
+        <id column="id" property="id" />
+        <result column="company_id" property="companyId" />
+        <result column="profession_id" property="professionId" />
+        <result column="introduction" property="introduction" />
+        <result column="requirement" property="requirement" />
+        <result column="salary" property="salary" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="state" property="state" />
+        <result column="location" property="location" />
+    </resultMap>
+
+</mapper>

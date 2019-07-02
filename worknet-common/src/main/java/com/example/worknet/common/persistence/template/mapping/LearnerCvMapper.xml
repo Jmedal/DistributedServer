@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.worknet.common.persistence.affair.user.dao.LearnerCvMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.LearnerCv">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="birth" property="birth" />
+        <result column="nativePlace" property="nativePlace" />
+        <result column="qualification" property="qualification" />
+        <result column="specialty" property="specialty" />
+        <result column="tel" property="tel" />
+        <result column="experience" property="experience" />
+        <result column="mailbox" property="mailbox" />
+        <result column="introduction" property="introduction" />
+        <result column="diploma" property="diploma" />
+        <result column="head_path" property="headPath" />
+    </resultMap>
+
+</mapper>
