@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="company_id" property="companyId" />
         <result column="user_id" property="userId" />
-        <result column="profession_id" property="professionId" />
+        <result column="company_profession_id" property="companyProfessionId" />
         <result column="status" property="status" />
     </resultMap>
 

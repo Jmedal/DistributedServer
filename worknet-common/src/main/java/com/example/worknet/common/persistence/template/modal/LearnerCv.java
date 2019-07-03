@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-02
+ * @since 2019-07-03
  */
 @TableName("sys_learner_cv")
 public class LearnerCv implements Serializable {
@@ -31,6 +31,11 @@ public class LearnerCv implements Serializable {
     @TableField("user_id")
     private Long userId;
     /**
+     * 简历名称
+     */
+    @TableField("resume_name")
+    private String resumeName;
+    /**
      * 姓名
      */
     private String name;
@@ -45,7 +50,12 @@ public class LearnerCv implements Serializable {
     /**
      * 籍贯
      */
+    @TableField("native_place")
     private String nativePlace;
+    /**
+     * 身份证号
+     */
+    private String identity;
     /**
      * 学历
      */
@@ -54,6 +64,10 @@ public class LearnerCv implements Serializable {
      * 专业
      */
     private String specialty;
+    /**
+     * 毕业院校
+     */
+    private String university;
     /**
      * 电话
      */
@@ -75,6 +89,16 @@ public class LearnerCv implements Serializable {
      */
     private String diploma;
     /**
+     * 当前所在地
+     */
+    @TableField("current_location")
+    private String currentLocation;
+    /**
+     * 最快入职时间
+     */
+    @TableField("in_job_time")
+    private String inJobTime;
+    /**
      * 证件照
      */
     @TableField("head_path")
@@ -95,6 +119,14 @@ public class LearnerCv implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getResumeName() {
+        return resumeName;
+    }
+
+    public void setResumeName(String resumeName) {
+        this.resumeName = resumeName;
     }
 
     public String getName() {
@@ -129,6 +161,14 @@ public class LearnerCv implements Serializable {
         this.nativePlace = nativePlace;
     }
 
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
     public String getQualification() {
         return qualification;
     }
@@ -143,6 +183,14 @@ public class LearnerCv implements Serializable {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public String getTel() {
@@ -185,6 +233,22 @@ public class LearnerCv implements Serializable {
         this.diploma = diploma;
     }
 
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public String getInJobTime() {
+        return inJobTime;
+    }
+
+    public void setInJobTime(String inJobTime) {
+        this.inJobTime = inJobTime;
+    }
+
     public String getHeadPath() {
         return headPath;
     }
@@ -198,17 +262,22 @@ public class LearnerCv implements Serializable {
         return "LearnerCv{" +
         ", id=" + id +
         ", userId=" + userId +
+        ", resumeName=" + resumeName +
         ", name=" + name +
         ", sex=" + sex +
         ", birth=" + birth +
         ", nativePlace=" + nativePlace +
+        ", identity=" + identity +
         ", qualification=" + qualification +
         ", specialty=" + specialty +
+        ", university=" + university +
         ", tel=" + tel +
         ", experience=" + experience +
         ", mailbox=" + mailbox +
         ", introduction=" + introduction +
         ", diploma=" + diploma +
+        ", currentLocation=" + currentLocation +
+        ", inJobTime=" + inJobTime +
         ", headPath=" + headPath +
         "}";
     }

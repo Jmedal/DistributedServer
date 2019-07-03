@@ -2,6 +2,7 @@ package com.example.worknet.common.persistence.template.modal;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+
 import java.io.Serializable;
 
 /**
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-02
+ * @since 2019-07-03
  */
 @TableName("sys_company_invitation")
 public class CompanyInvitation implements Serializable {
@@ -27,15 +28,15 @@ public class CompanyInvitation implements Serializable {
     @TableField("company_id")
     private Long companyId;
     /**
-     * 用户Id
+     * 用户id
      */
     @TableField("user_id")
     private Long userId;
     /**
-     * 职业id
+     * 招聘id
      */
-    @TableField("profession_id")
-    private Long professionId;
+    @TableField("company_profession_id")
+    private Long companyProfessionId;
     /**
      * 邀约状态
      */
@@ -66,12 +67,12 @@ public class CompanyInvitation implements Serializable {
         this.userId = userId;
     }
 
-    public Long getProfessionId() {
-        return professionId;
+    public Long getCompanyProfessionId() {
+        return companyProfessionId;
     }
 
-    public void setProfessionId(Long professionId) {
-        this.professionId = professionId;
+    public void setCompanyProfessionId(Long companyProfessionId) {
+        this.companyProfessionId = companyProfessionId;
     }
 
     public Integer getStatus() {
@@ -88,7 +89,7 @@ public class CompanyInvitation implements Serializable {
         ", id=" + id +
         ", companyId=" + companyId +
         ", userId=" + userId +
-        ", professionId=" + professionId +
+        ", companyProfessionId=" + companyProfessionId +
         ", status=" + status +
         "}";
     }

@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.CompanyProfession">
         <id column="id" property="id" />
         <result column="company_id" property="companyId" />
-        <result column="profession_id" property="professionId" />
+        <result column="profession_type_id" property="professionTypeId" />
         <result column="title" property="title" />
         <result column="introduction" property="introduction" />
         <result column="requirement" property="requirement" />
@@ -15,6 +15,9 @@
         <result column="end_time" property="endTime" />
         <result column="state" property="state" />
         <result column="location" property="location" />
+        <result column="is_practice" property="isPractice" />
+        <result column="duration" property="duration" />
+        <result column="chance_to_formal" property="chanceToFormal" />
     </resultMap>
 
 </mapper>

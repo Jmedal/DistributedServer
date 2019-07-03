@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>招聘信息</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="/css/cubeportfolio.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootsnav.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/loader.css">
+    <link rel="stylesheet" type="text/css" href="/css/button.css">
+    <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.css" rel="stylesheet">
+
+    <style>
+        body{
+            background: rgba(227, 229, 228, 0.26);
+        }
+        #com-avatar{
+            text-align:center;
+            margin-top:30px;
+        }
+        #com-avatar img{
+            height:150px;
+            width:150px;
+            border-radius:50%;
+            margin-bottom:20px;
+            transition:all 0.5s ease-in-out;
+        }
+        #com-avatar img:hover{
+            transform:scale(1.1);
+        }
+        #container{
+            width:60%;
+            margin-top:50px;
+            margin-left:5%;
+            float:left;
+            margin-bottom:100px;
+            padding:20px 50px;
+            border:aliceblue 2px solid;
+            background:white;
+            display: inline-block;
+            box-shadow:0px 0px 3px #00000047;
+        }
+        #com-info{
+            padding-left:20px;
+            font-size:0.9em;
+        }
+        #com-info li{
+            margin-top:10px;
+        }
+
+        #com-intro{
+            font-size:0.9em;
+            padding:10px;
+        }
+        #com-href{
+            font-size:0.9em;
+            padding:10px;
+        }
+        #nav-bar{
+            box-shadow:0px 0px 3px #00000047;
+            display: inline-block;
+            width:27%;
+            background:white;
+            padding:20px 30px;
+            margin: 50px 5% 100px 2%;
+        }
+        #emp-title{
+            font-weight:bold;
+            margin-top:20px;
+            font-size:.9em;
+            margin-bottom:20px;
+        }
+        #title{
+            font-size:1.1em;
+            margin-bottom:10px;
+        }
+        #other{
+            font-weight:lighter;
+            font-size:0.8em;
+        }
+        #other i{
+            margin-left:20px;
+        }
+        #req{
+            list-style:none;
+        }
+        #req li{
+            display: inline-block;
+            font-size:0.8em;
+            padding-right:20px;
+            padding-left:20px;
+        }
+        #req li:not(:nth-child(1)){
+            border:1px solid #d6d6d6d9;
+            border-style:none none none solid;
+        }
+        .info-title{
+            font-size:1.1em;
+            font-weight:bold;
+            margin-bottom:20px;
+            margin-top:20px;
+        }
+        .info-cont{
+            font-size:0.9em;
+            padding:0 20px;
+            min-height:200px;
+        }
+        #emp-title:before{
+            content:"○ "
+        }
+        .hr-dotted{
+            height:2px;
+            border:none;
+            border-top:2px dotted #bbbbbb;
+        }
+        #resume-select td:not(:nth-child(1)){
+            text-align:center;
+            font-size:0.75em;
+            padding: 10px 10px;
+        }
+        #resume-select td:nth-child(1){
+            padding-left:15px;
+        }
+        #resume-select td:nth-last-child(1){
+            padding-right:15px;
+        }
+        #resume-select tr:hover{
+            background:#edfdeddb;
+        }
+        #resume-select{
+            margin-top:20px;
+            margin-left:10px;
+        }
+        #resume-select-title{
+            margin-left:20px;
+        }
+        #resume-select td:nth-last-child(1) a, i{
+            margin-right:5px;
+        }
+        td{
+            display:inline-block;
+        }
+        .resume-title{
+            display:inline-block;
+            width:270px;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            word-break:keep-all;
+        }
+        td a:hover{
+            cursor: pointer;
+            color:#48d26b;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+<a href="#" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
+<!--Loader-->
+<div class="loader">
+    <div class="bouncybox">
+        <div class="bouncy"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/js/header.js"></script>
+
+<!--Search-->
+<div id="search">
+    <button type="button" class="close">×</button>
+    <form>
+        <input type="search" value="" placeholder="Search here...." required/>
+        <button type="submit" class="btn btn_common blue">Search</button>
+    </form>
+</div>
+
+<!--Page Header-->
+<div class="clearfix">
+<section class="page_header padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 page-content">
+                <div class="page_nav">
+                    <span>你的位置:</span> <a href="/index">首页</a> <span><i
+                        class="fa fa-angle-double-right"></i>招聘信息</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Page Header-->
+
+<section id="container">
+    <div id="employ">
+        <div id="emp-title">
+            职位详情
+        </div>
+        <div id="info">
+            <div id="title"></div>
+            <div id="other">
+                <i class="icon icon-user"></i><span id="profession"></span>
+                <i class="icon icon-location"></i><span id="location"></span>
+            </div>
+            <ul id="req">
+                <li>薪酬：<span id="salary"></span></li>
+                <li>实习要求：<span id="duration"></span></li>
+                <li>转正机会：<span id="chance"></span></li>
+            </ul>
+        </div>
+        <hr>
+        <div id="intro">
+            <div class="info-title">
+                <i class="glyphicon glyphicon-bookmark"></i>职业概况
+            </div>
+            <div class="info-cont">
+
+            </div>
+        </div>
+        <div id="require">
+            <div class="info-title">
+                <i class="glyphicon glyphicon-briefcase"></i>职业需求
+            </div>
+            <div class="info-cont">
+
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <span class="btn btn-success btn-lg" id="apply"
+              data-toggle="modal" data-target="#resume">申请</span>
+    </div>
+    <div class="modal fade" id="resume" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">投递简历</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div id="resume-select-title">选择投递简历</div>
+                        <table id="resume-select">
+                            <tr>
+                                <td><input type="radio" name="check" id="check-online"></td>
+                                <td><span><i class="icon icon-screen"></i>
+                                在线简历</span></td>
+                                <td><span class="resume-title" id="online-resume-title">
+                                    aaaaaaaaaaaxx职位申请_张三阿斯达所大所大所多</span></td>
+                                <td>
+                                    <a><i class="icon icon-eye"></i>预览</a>
+                                    <a><i class="icon icon-pencil"></i>修改</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="radio" name="check" id="check-file"></td>
+                                <td><span><i class="icon icon-clip"></i>
+                                附件简历</span></td>
+                                <td><span class="resume-title" id="file-resume-title">
+                                    xx职位申请_张三</span></td>
+                                <td>
+                                    <a><i class="icon icon-eye"></i>预览</a>
+                                    <a><i class="icon icon-pencil"></i>修改</a>
+                                </td>
+                                <!--根据用户id找他的默认简历，如果没有的话就需要自己创建一个。找到的话就把内容复制到-->
+                                <!--相应的文本框里，当做clone一份新简历-->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span type="button" class="btn btn-default" data-dismiss="modal">关闭</span>
+                    <span type="button" class="btn btn-primary">投递简历</span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</section>
+<section id="nav-bar">
+    <div id="company">
+        <div id="com-avatar">
+            <a>
+                <img>
+                <div id="com-name"></div>
+            </a>
+        </div>
+        <hr class="hr-dotted" />
+        <ul id="com-info">
+            <li><i class="icon icon-home"></i><span id="com-field"></span> </li>
+            <li><i class="icon icon-phone"></i><span id="com-communication"></span> </li>
+            <li><i class="icon icon-address"></i> <span id="com-address"></span> </li>
+        </ul>
+        <hr class="hr-dotted" />
+        <div id="com-intro">
+
+        </div>
+        <hr class="hr-dotted" />
+        <div id="com-href">
+            <a target="_blank"></a>
+        </div>
+    </div>
+</section>
+</div>
+<script type="text/javascript" src="/js/footer.js"></script>
+
+
+<script src="/js/jquery-2.2.3.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootsnav.js"></script>
+<script src="/js/jquery.appear.js"></script>
+<script src="/js/jquery-countTo.js"></script>
+<script src="/js/jquery.parallax-1.1.3.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.cubeportfolio.min.js"></script>
+<script src="/js/jquery.themepunch.tools.min.js"></script>
+<script src="/js/jquery.themepunch.revolution.min.js"></script>
+<script src="/js/revolution.extension.layeranimation.min.js"></script>
+<script src="/js/revolution.extension.navigation.min.js"></script>
+<script src="/js/revolution.extension.parallax.min.js"></script>
+<script src="/js/revolution.extension.slideanims.min.js"></script>
+<script src="/js/revolution.extension.video.min.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/functions.js"></script>
+<script>
+    $(document).ready(function () {
+        var href = window.location.href;
+        let tmp = href.split('\/');
+        var jobId = parseInt(tmp.slice(-2));
+        var companyId = parseInt(tmp.slice(-4));
+        console.log("jobId:"+jobId);
+        console.log("companyId:"+companyId);
+        $.get('/get/companyInfo/'+companyId,function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                let obj = data.returnObject;
+                $("#com-avatar a").attr('href',"/working/"+companyId+'/');//跳转公司的招聘列表
+                $('#com-avatar img').attr('src','/get/company/logo/'+companyId);
+                $("#com-name").html(obj.name);
+                $('#com-address').html(obj.address);
+                $('#com-field').html(obj.field);
+                $('#com-href a').attr('href',obj.website);
+                $('#com-href a').html(obj.website);
+                $('#com-intro').html(obj.introduction);
+                $('#com-communication').html(obj.communication);
+            }
+        });
+        $.get("/get/jobInfo/"+jobId+"/company/"+companyId,function (data) {
+           data = JSON.parse(data);
+           if(data.errorCode=='00'){
+               let obj = data.returnObject;
+               $('#profession').html(obj.profession);
+               $('#location').html(obj.location);
+               $('#title').html(obj.title);
+               $('#salary').html(obj.salary);
+               if(obj.isPractice){
+                   $('#duration').html(obj.duration);
+                   $('#chance').html(obj.chanceToFormal);
+                   $('#emp-title').html('实习职位详情');
+                   $('#title').append('<span class="label label-primary right">实习</span>');
+               }else{
+                   $('#chance').remove();
+                   $('#location').remove();//不显示
+               }
+               if(obj.state==0){//已关闭，无法申请
+                   let $t = $('#apply');
+                   $t.removeClass('btn-success');
+                   $t.addClass('btn-default');
+                   $t.attr('disabled','true');
+                   $t.html('已结束');
+               }
+               $('#intro .info-cont').html(obj.introduction);
+               $('#require .info-cont').html(obj.requirement);
+           }
+        });
+    });
+</script>
+</body>
+</html>

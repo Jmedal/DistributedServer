@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>公司招聘列表</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="/css/cubeportfolio.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootsnav.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/loader.css">
+    <link rel="stylesheet" type="text/css" href="/css/button.css">
+    <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.css" rel="stylesheet">
+
+    <style>
+        #title{
+            font-weight:bold;
+            margin-top:20px;
+            font-size:.9em;
+            margin-bottom:20px;
+        }
+        .emp-item{
+            border:1px #e8d8d8 solid;
+            padding-bottom:20px;
+            border-style:none none solid none;
+            margin-top: 30px;
+        }
+        .emp-item:nth-last-child(1){
+            border-style:none none none none;
+        }
+        .cont {
+            padding: 0 0 0 10px;
+        }
+        #title:before{
+            content:"○ ";
+        }
+        body{
+            background: rgba(227, 229, 228, 0.26);
+        }
+        #com-avatar{
+            text-align:center;
+            margin-top:30px;
+        }
+        #com-avatar img{
+            height:150px;
+            width:150px;
+            border-radius:50%;
+            margin-bottom:20px;
+            transition:all 0.5s ease-in-out;
+        }
+        #com-avatar img:hover{
+            transform:scale(1.1);
+        }
+        #container{
+            width:60%;
+            margin-top:50px;
+            margin-left:5%;
+            float:left;
+            margin-bottom:50px;
+            padding:20px 50px;
+            border:aliceblue 2px solid;
+            background:white;
+            display: inline-block;
+            box-shadow:0px 0px 3px #00000047;
+        }
+        #com-info{
+            padding-left:20px;
+            font-size:0.9em;
+        }
+        #com-info li{
+            margin-top:10px;
+        }
+
+        #com-intro{
+            font-size:0.9em;
+            padding:10px;
+        }
+        #com-href{
+            font-size:0.9em;
+            padding:10px;
+        }
+        #nav-bar{
+            box-shadow:0px 0px 3px #00000047;
+            margin: 50px 5% 100px 2%;
+            display: inline-block;
+            width:27%;
+            background:white;
+            padding:20px 30px;
+        }
+        #other i{
+            margin-left:20px;
+        }
+        #req li{
+            display: inline-block;
+            font-size:0.8em;
+            padding-right:20px;
+            padding-left:20px;
+        }
+        #req li:not(:nth-child(1)){
+            border:1px solid #d6d6d6d9;
+            border-style:none none none solid;
+        }
+        .hr-dotted{
+            height:2px;
+            border:none;
+            border-top:2px dotted #bbbbbb;
+        }
+        .total-page{
+            font-size: .8em;
+        }
+        .total-page::before{
+            content: '共 ';
+        }
+        .total-page::after{
+            content: ' 页';
+        }
+        .page-off{
+            margin-left: 30px;
+        }
+        .page-item{
+            padding: 2px 5px;
+            margin:10px;
+            transition: all .2s;
+            cursor: pointer;
+            color:black;
+        }
+        .page-item:hover{
+            color: #1ec9ff;
+        }
+        .page-ellipsis::after{
+            content: '...';
+        }
+        .this-page{
+            margin:10px;
+            color: #c2ebf0;
+            padding: 2px 5px;
+            background: #51514f;
+        }
+        .paging-box{
+            font-size: 1em;
+            margin: 80px 30px;
+        }
+        div.avatar {
+             padding:0;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy">
+
+<a href="#" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
+<!--Loader-->
+<div class="loader">
+    <div class="bouncybox">
+        <div class="bouncy"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/js/header.js"></script>
+
+<!--Search-->
+<div id="search">
+    <button type="button" class="close">×</button>
+    <form>
+        <input type="search" value="" placeholder="Search here...." required/>
+        <button type="submit" class="btn btn_common blue">Search</button>
+    </form>
+</div>
+
+<!--Page Header-->
+<div class="clearfix">
+    <section class="page_header padding-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 page-content">
+                    <div class="page_nav">
+                        <span>你的位置:</span> <a href="/index">首页</a> <span><i
+                            class="fa fa-angle-double-right"></i>招聘信息</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Page Header-->
+    <!--公司招聘列表-->
+    <section id="container">
+        <div id="list-wrapper">
+            <div id="title">
+                招聘信息列表
+            </div>
+            <div id="emp-list">
+
+            </div>
+        </div>
+    </section>
+    <section id="nav-bar">
+        <div id="company">
+            <div id="com-avatar">
+                <a>
+                    <img>
+                    <div id="com-name"></div>
+                </a>
+            </div>
+            <hr class="hr-dotted" />
+            <ul id="com-info">
+                <li><i class="icon icon-home"></i><span id="com-field"></span> </li>
+                <li><i class="icon icon-phone"></i><span id="com-communication"></span> </li>
+                <li><i class="icon icon-address"></i> <span id="com-address"></span> </li>
+            </ul>
+            <hr class="hr-dotted" />
+            <div id="com-intro">
+
+            </div>
+            <hr class="hr-dotted" />
+            <div id="com-href">
+                <a target="_blank"></a>
+            </div>
+        </div>
+    </section>
+</div>
+<section>
+    <div class="paging-box">
+        <span class="total-page">20</span>
+    </div>
+</section>
+<script type="text/javascript" src="/js/footer.js"></script>
+
+
+<script src="/js/jquery-2.2.3.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootsnav.js"></script>
+<script src="/js/jquery.appear.js"></script>
+<script src="/js/jquery-countTo.js"></script>
+<script src="/js/jquery.parallax-1.1.3.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.cubeportfolio.min.js"></script>
+<script src="/js/jquery.themepunch.tools.min.js"></script>
+<script src="/js/jquery.themepunch.revolution.min.js"></script>
+<script src="/js/revolution.extension.layeranimation.min.js"></script>
+<script src="/js/revolution.extension.navigation.min.js"></script>
+<script src="/js/revolution.extension.parallax.min.js"></script>
+<script src="/js/revolution.extension.slideanims.min.js"></script>
+<script src="/js/revolution.extension.video.min.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/functions.js"></script>
+<script>
+    $(document).ready(function () {
+        var href = window.location.href;
+        var page = 1;//招聘列表当前页
+        function changePageBox(curPage) {
+            if(curPage === undefined)
+                curPage = 1;
+            else curPage = parseInt(curPage);
+            $('.total-page').each(function () {
+                let tot = $(this).html();
+                $(this).siblings().remove();
+                let $span = $('<span class="page-off"></span>');
+                $span.append('<input type="hidden" class="cur-page" value="'+curPage+'">');
+                if(tot>10){//要根据当前页来划分
+                    for(let i = 1; i <= 6; i++){
+                        if(i===curPage)
+                            $span.append('<span class="this-page">'+i+'</span>');
+                        else
+                            $span.append('<span class="page-item">'+i+'</span>');
+                    }
+                    if(curPage<=8){
+                        for(let i = 7; i <= 9; i++){
+                            if(i===curPage)
+                                $span.append('<span class="this-page">'+i+'</span>');
+                            else
+                                $span.append('<span class="page-item">'+i+'</span>');
+                        }
+                        $span.append('<span class="page-ellipsis"></span>');
+                        $span.append('<span class="page-item">'+tot+'</span>');
+                    }else if(curPage<=tot-1){
+                        $span.append('<span class="page-ellipsis"></span>');
+                        $span.append('<span class="page-item">'+(curPage-1)+'</span>');
+                        $span.append('<span class="this-page">'+(curPage)+'</span>');
+                        $span.append('<span class="page-item">'+(curPage+1)+'</span>');
+                        if(curPage+1<tot-1)
+                            $span.append('<span class="page-ellipsis"></span>');
+                        if(curPage+1<tot)
+                            $span.append('<span class="page-item">'+tot+'</span>');
+                    }else{
+                        $span.append('<span class="page-item">'+7+'</span>');
+                        $span.append('<span class="page-item">'+8+'</span>');
+                        $span.append('<span class="page-ellipsis"></span>');
+                        $span.append('<span class="page-item">'+(tot-1)+'</span>');
+                        $span.append('<span class="this-page">'+tot+'</span>');
+                    }
+                }else{
+                    for(let i = 1; i <= tot; i++){
+                        if(i===curPage)
+                            $span.append('<span class="this-page">'+i+'</span>');
+                        else
+                            $span.append('<span class="page-item">'+i+'</span>');
+                    }
+                }
+                $span.find('.page-item').on('click',function () {
+                    let targetPage = parseInt($(this).html());
+                    page = targetPage;//其余参数不变
+                    $('body,html').animate({scrollTop:250},500);
+                    getEmploy();
+                });
+                $(this).after($span);//添加节点
+            });
+        }
+        function showResult(data) {
+            let $div = $('#emp-list');
+            $div.empty();
+            for(let i = 0; i < data.length; i++){
+                let tstr = '';
+                let tend = '';
+                if(data[i].isPractice)
+                    tstr = '<span class="label label-primary" style="font-size:0.75em;margin-left:15px;">实习</span> ';
+                if(data[i].state==0)
+                    tend = '<span class="label label-danger" style="font-size:0.75em;">已结束</span> ';
+                let $$div = $('<div class="emp-item col-md-12">' +
+                    '<div class="avatar col-md-2"><a href="/working/'+data[i].companyId
+                    +'/job/'+data[i].id+'/" target="_blank">' +
+                    '<img src="/get/company/logo/'+data[i].companyId+'" height="50">' +
+                    '</a></div>' +
+                    '<div class="cont col-md-6" style="font-size:0.8em">' +
+                    '<a href="/working/'+data[i].companyId+'/job/'+data[i].id+'/" target="_blank">'+data[i].title+'</a>' +
+                    tstr +tend+
+                    '<div class="com"><a href="/working/'+data[i].companyId+'/job/'+data[i].id+
+                    '/" target="_blank" style="font-size:0.8em">'+data[i].companyName+'</a></div>' +
+                    '</div>' +
+                    '<div class="info col-md-4" style="font-size: 0.7em;">' +
+                    '<div class="up"><span><i class="icon icon-location"></i>'+data[i].location+'</span>' +
+                    '<span style="margin-left:20px"><i class="icon icon-moneybag"></i>'+data[i].salary+'</span></div>' +
+                    '</div>');
+                $div.append($$div);
+            }
+        }
+        //每页10条
+        function getEmploy(){
+            $.get('/get/employ/'+companyId+"?page="+page,function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+                if(data.errorCode=='00'){
+                    let pager = data.returnObject;
+                    let totalPage = Math.ceil(pager.pages);//一页20条
+                    $('.total-page').html(totalPage);
+                    showResult(pager.records);
+                    changePageBox(page);
+                }
+            });
+        }
+        let tmp = href.split('\/');
+        var companyId = parseInt(tmp.slice(-2));
+        $.get("/get/companyInfo/"+companyId,function (data) {
+            data = JSON.parse(data);
+            console.log(data);
+            if(data.errorCode=='00'){
+                let obj = data.returnObject;
+                $("#com-avatar a").attr('href',"/working/"+companyId+'/');//跳转公司的招聘列表
+                $('#com-avatar img').attr('src','/get/company/logo/'+companyId);
+                $("#com-name").html(obj.name);
+                $('#com-address').html(obj.address);
+                $('#com-field').html(obj.field);
+                $('#com-href a').attr('href',obj.website);
+                $('#com-href a').html(obj.website);
+                $('#com-intro').html(obj.introduction);
+                $('#com-communication').html(obj.communication);
+            }
+        });
+        getEmploy();
+    });
+</script>
+</body>
+</html>

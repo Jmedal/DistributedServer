@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-05-07
+ * @since 2019-07-03
  */
 @TableName("sys_learner_info")
 public class LearnerInfo implements Serializable {
@@ -74,6 +74,11 @@ public class LearnerInfo implements Serializable {
      * 目标职业
      */
     private String professional;
+    /**
+     * 学习者默认简历id
+     */
+    @TableField("learner_cv_id")
+    private Long learnerCvId;
 
 
     public Long getId() {
@@ -180,6 +185,14 @@ public class LearnerInfo implements Serializable {
         this.professional = professional;
     }
 
+    public Long getLearnerCvId() {
+        return learnerCvId;
+    }
+
+    public void setLearnerCvId(Long learnerCvId) {
+        this.learnerCvId = learnerCvId;
+    }
+
     @Override
     public String toString() {
         return "LearnerInfo{" +
@@ -196,6 +209,7 @@ public class LearnerInfo implements Serializable {
         ", phone=" + phone +
         ", hobby=" + hobby +
         ", professional=" + professional +
+        ", learnerCvId=" + learnerCvId +
         "}";
     }
 }

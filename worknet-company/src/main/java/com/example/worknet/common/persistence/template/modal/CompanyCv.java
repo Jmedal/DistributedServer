@@ -1,12 +1,11 @@
 package com.example.worknet.common.persistence.template.modal;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-
-import java.io.Serializable;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -14,7 +13,7 @@ import java.util.Date;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-02
+ * @since 2019-07-03
  */
 @TableName("sys_company_cv")
 public class CompanyCv implements Serializable {
@@ -26,6 +25,11 @@ public class CompanyCv implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    /**
+     * 招聘id
+     */
+    @TableField("company_profession_id")
+    private Long companyProfessionId;
     /**
      * 姓名
      */
@@ -41,7 +45,12 @@ public class CompanyCv implements Serializable {
     /**
      * 籍贯
      */
+    @TableField("native_place")
     private String nativePlace;
+    /**
+     * 身份证号
+     */
+    private String identity;
     /**
      * 学历
      */
@@ -50,6 +59,10 @@ public class CompanyCv implements Serializable {
      * 专业
      */
     private String specialty;
+    /**
+     * 毕业院校
+     */
+    private String university;
     /**
      * 电话
      */
@@ -71,10 +84,24 @@ public class CompanyCv implements Serializable {
      */
     private String diploma;
     /**
+     * 当前所在地
+     */
+    @TableField("current_location")
+    private String currentLocation;
+    /**
+     * 最快入职时间
+     */
+    @TableField("in_job_time")
+    private String inJobTime;
+    /**
      * 证件照
      */
     @TableField("head_path")
     private String headPath;
+    /**
+     * 包含（待审核，审核中，拒绝，接受）
+     */
+    private Integer status;
 
 
     public Long getId() {
@@ -83,6 +110,14 @@ public class CompanyCv implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCompanyProfessionId() {
+        return companyProfessionId;
+    }
+
+    public void setCompanyProfessionId(Long companyProfessionId) {
+        this.companyProfessionId = companyProfessionId;
     }
 
     public String getName() {
@@ -117,6 +152,14 @@ public class CompanyCv implements Serializable {
         this.nativePlace = nativePlace;
     }
 
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
     public String getQualification() {
         return qualification;
     }
@@ -131,6 +174,14 @@ public class CompanyCv implements Serializable {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public String getTel() {
@@ -173,6 +224,22 @@ public class CompanyCv implements Serializable {
         this.diploma = diploma;
     }
 
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public String getInJobTime() {
+        return inJobTime;
+    }
+
+    public void setInJobTime(String inJobTime) {
+        this.inJobTime = inJobTime;
+    }
+
     public String getHeadPath() {
         return headPath;
     }
@@ -181,22 +248,36 @@ public class CompanyCv implements Serializable {
         this.headPath = headPath;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "CompanyCv{" +
         ", id=" + id +
+        ", companyProfessionId=" + companyProfessionId +
         ", name=" + name +
         ", sex=" + sex +
         ", birth=" + birth +
         ", nativePlace=" + nativePlace +
+        ", identity=" + identity +
         ", qualification=" + qualification +
         ", specialty=" + specialty +
+        ", university=" + university +
         ", tel=" + tel +
         ", experience=" + experience +
         ", mailbox=" + mailbox +
         ", introduction=" + introduction +
         ", diploma=" + diploma +
+        ", currentLocation=" + currentLocation +
+        ", inJobTime=" + inJobTime +
         ", headPath=" + headPath +
+        ", status=" + status +
         "}";
     }
 }

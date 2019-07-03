@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-02
+ * @since 2019-07-03
  */
 @TableName("sys_company_profession")
 public class CompanyProfession implements Serializable {
@@ -31,10 +31,10 @@ public class CompanyProfession implements Serializable {
     @TableField("company_id")
     private Long companyId;
     /**
-     * 职业id
+     * 职业大类id
      */
-    @TableField("profession_id")
-    private Long professionId;
+    @TableField("profession_type_id")
+    private Long professionTypeId;
     /**
      * 标题
      */
@@ -69,6 +69,20 @@ public class CompanyProfession implements Serializable {
      * 工作地
      */
     private String location;
+    /**
+     * 是否是实习
+     */
+    @TableField("is_practice")
+    private Integer isPractice;
+    /**
+     * 实习时间要求
+     */
+    private String duration;
+    /**
+     * 转正机会
+     */
+    @TableField("chance_to_formal")
+    private String chanceToFormal;
 
 
     public Long getId() {
@@ -87,12 +101,12 @@ public class CompanyProfession implements Serializable {
         this.companyId = companyId;
     }
 
-    public Long getProfessionId() {
-        return professionId;
+    public Long getProfessionTypeId() {
+        return professionTypeId;
     }
 
-    public void setProfessionId(Long professionId) {
-        this.professionId = professionId;
+    public void setProfessionTypeId(Long professionTypeId) {
+        this.professionTypeId = professionTypeId;
     }
 
     public String getTitle() {
@@ -159,12 +173,36 @@ public class CompanyProfession implements Serializable {
         this.location = location;
     }
 
+    public Integer getIsPractice() {
+        return isPractice;
+    }
+
+    public void setIsPractice(Integer isPractice) {
+        this.isPractice = isPractice;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getChanceToFormal() {
+        return chanceToFormal;
+    }
+
+    public void setChanceToFormal(String chanceToFormal) {
+        this.chanceToFormal = chanceToFormal;
+    }
+
     @Override
     public String toString() {
         return "CompanyProfession{" +
         ", id=" + id +
         ", companyId=" + companyId +
-        ", professionId=" + professionId +
+        ", professionTypeId=" + professionTypeId +
         ", title=" + title +
         ", introduction=" + introduction +
         ", requirement=" + requirement +
@@ -173,6 +211,9 @@ public class CompanyProfession implements Serializable {
         ", endTime=" + endTime +
         ", state=" + state +
         ", location=" + location +
+        ", isPractice=" + isPractice +
+        ", duration=" + duration +
+        ", chanceToFormal=" + chanceToFormal +
         "}";
     }
 }

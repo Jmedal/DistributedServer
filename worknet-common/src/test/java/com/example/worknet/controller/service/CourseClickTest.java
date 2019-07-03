@@ -1,6 +1,8 @@
 package com.example.worknet.controller.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.constant.ServiceURL;
+import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestApplyService;
 import com.example.worknet.common.persistence.affair.course.controller.CourseStudiedController;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
@@ -8,6 +10,7 @@ import com.example.worknet.common.persistence.affair.companyContest.dao.CompanyC
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseClickService;
 import com.example.worknet.common.persistence.affair.user.serivce.TeacherInfoService;
+import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,26 +30,26 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CourseClickTest {
 
 
-    @Autowired
-    private CourseClickService courseClickService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AdministratorService administratorService;
-
-    @Autowired
-    private TeacherInfoService teacherInfoService;
-
-    @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private CompanyContestApplyMapper companyContestApplyMapper;
-
-    @Autowired
-    private CourseStudiedController courseStudiedController;
+//    @Autowired
+//    private CourseClickService courseClickService;
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private AdministratorService administratorService;
+//
+//    @Autowired
+//    private TeacherInfoService teacherInfoService;
+//
+//    @Autowired
+//    private CourseService courseService;
+//
+//    @Autowired
+//    private CompanyContestApplyMapper companyContestApplyMapper;
+//
+//    @Autowired
+//    private CourseStudiedController courseStudiedController;
 
     @Test
     public void test() throws Exception {
@@ -74,7 +77,7 @@ public class CourseClickTest {
         //map.put("errorCode","00");
         //map.put("returnObject",questionPage);
 
-        System.out.println(companyContestApplyMapper.getUserCompanyContestPage(new Page<>(1,8),(long)3));
+//        System.out.println(companyContestApplyMapper.getUserCompanyContestPage(new Page<>(1,8),(long)3));
 
 
     }

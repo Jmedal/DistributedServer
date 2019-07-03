@@ -10,5 +10,21 @@ public class HomeController2 {
     public String examDetail(@PathVariable Integer eid){
         return "exam_detail.html";
     }
+
+    @RequestMapping(value = "/working")
+    public String working(){
+        return "working.html";
+    }
+
+    //获取招聘详情
+    @RequestMapping(value = "/working/{companyId}/job/{id}")
+    public String getEmployment(@PathVariable int companyId, @PathVariable int id){
+        return "employment.html";
+    }
+
+    @RequestMapping(value = "/working/{companyId}")
+    public String companyEmploy(@PathVariable int companyId){
+        return "company-employ.html";
+    }
 }
 

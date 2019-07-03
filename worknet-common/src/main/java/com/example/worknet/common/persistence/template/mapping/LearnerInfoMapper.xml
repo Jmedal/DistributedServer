@@ -3,7 +3,7 @@
 <mapper namespace="com.example.worknet.common.persistence.affair.user.dao.LearnerInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.affair.api.user.modal.LearnerInfo">
+    <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.LearnerInfo">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
         <result column="nickname" property="nickname" />
@@ -17,6 +17,7 @@
         <result column="phone" property="phone" />
         <result column="hobby" property="hobby" />
         <result column="professional" property="professional" />
+        <result column="learner_cv_id" property="learnerCvId" />
     </resultMap>
 
 </mapper>

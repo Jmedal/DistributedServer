@@ -62,7 +62,7 @@ public class CompanyController {
     }
 
     /**
-     * 获取笔试公司的头像（作为笔试logo)
+     * 获取笔试公司的头像（作为笔试和求职logo)
      * @param companyId
      * @param request
      * @return

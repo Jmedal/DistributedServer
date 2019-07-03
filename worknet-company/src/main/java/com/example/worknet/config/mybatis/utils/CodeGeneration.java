@@ -24,7 +24,7 @@ public class CodeGeneration {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(System.getProperty("user.dir")+"\\worknet-common\\src\\main\\java");
+        gc.setOutputDir(System.getProperty("user.dir")+"\\worknet-company\\src\\main\\java");
         gc.setFileOverride(true);
         gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
@@ -53,11 +53,7 @@ public class CodeGeneration {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] {"sys_company_profession",
-                "sys_company_cv",
-                "sys_company_invitation",
-                "sys_company_reception",
-                "sys_admin_check_company"}); // 需要生成的表
+        strategy.setInclude(new String[] {""}); // 需要生成的表
 //                 "sys_user",
 //                "sys_curriculum",
 //                "sys_course_video",
@@ -95,7 +91,6 @@ public class CodeGeneration {
 //        "sys_company_profession"  企业发布招聘表
 //        "sys_company_cv" 简历表
 //        "sys_company_invitation"  面试邀约表
-//        "sys_company_reception" 岗位简历记录表
 //        "sys_admin_check_company" 特殊账号注册审核记录表
         strategy.setSuperServiceClass(null);
         strategy.setSuperServiceImplClass(null);

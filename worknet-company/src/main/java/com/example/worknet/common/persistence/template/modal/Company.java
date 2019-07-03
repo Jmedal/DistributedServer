@@ -12,7 +12,7 @@ import java.util.Date;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-05-07
+ * @since 2019-07-03
  */
 @TableName("sys_company")
 public class Company implements Serializable {
@@ -29,6 +29,10 @@ public class Company implements Serializable {
     @TableField("user_id")
     private Long userId;
     /**
+     * 公司从事方向
+     */
+    private String field;
+    /**
      * 公司名称
      */
     private String name;
@@ -40,6 +44,14 @@ public class Company implements Serializable {
      * 公司地址
      */
     private String address;
+    /**
+     * 公司联系方式
+     */
+    private String communication;
+    /**
+     * 公司官方网站
+     */
+    private String website;
     /**
      * 注册时间
      */
@@ -61,6 +73,14 @@ public class Company implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
     }
 
     public String getName() {
@@ -87,6 +107,22 @@ public class Company implements Serializable {
         this.address = address;
     }
 
+    public String getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(String communication) {
+        this.communication = communication;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     public Date getRegisterTime() {
         return registerTime;
     }
@@ -100,9 +136,12 @@ public class Company implements Serializable {
         return "Company{" +
         ", id=" + id +
         ", userId=" + userId +
+        ", field=" + field +
         ", name=" + name +
         ", introduction=" + introduction +
         ", address=" + address +
+        ", communication=" + communication +
+        ", website=" + website +
         ", registerTime=" + registerTime +
         "}";
     }
