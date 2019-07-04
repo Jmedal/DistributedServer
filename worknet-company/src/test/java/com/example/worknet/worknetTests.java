@@ -19,6 +19,6 @@ public class worknetTests {
 	@Test
 	public void contextLoads() {
 
-        System.out.println(companyProfessionService.getJobInfo((long)2,(long)2));
+        System.out.println(companyProfessionService.getJobInfo((long)2));
 	}
 }

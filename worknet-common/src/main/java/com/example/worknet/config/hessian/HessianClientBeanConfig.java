@@ -3,6 +3,7 @@ package com.example.worknet.config.hessian;
 import com.example.worknet.common.constant.ServiceURL;
 import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestApplyService;
 import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,16 @@ public class HessianClientBeanConfig {
     public CompanyService companyService() {
         try {
             return HessianProxyFactoryUtil.getHessianClientBean(CompanyService.class, ServiceURL.CompanyService);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Bean
+    public CompanyProfessionService companyProfessionService() {
+        try {
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyProfessionService.class, ServiceURL.companyProfessionService);
         }catch (Exception e) {
             e.printStackTrace();
         }

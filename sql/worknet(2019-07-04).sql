@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 03/07/2019 14:50:52
+ Date: 04/07/2019 15:53:45
 */
 
 SET NAMES utf8mb4;
@@ -213,6 +213,7 @@ CREATE TABLE `sys_company_cv`  (
   `in_job_time` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最快入职时间',
   `head_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '\\avatar\\default\\avatar.jpg' COMMENT '证件照',
   `status` tinyint(1) NULL DEFAULT 0 COMMENT '包含（待审核，审核中，拒绝，接受）',
+  `last_edit_time` datetime(6) NULL DEFAULT NULL COMMENT '上次提交简历时间',
   PRIMARY KEY (`id`, `company_profession_id`) USING BTREE,
   INDEX `fk_company_profession_id`(`company_profession_id`) USING BTREE,
   CONSTRAINT `fk_company_profession_id` FOREIGN KEY (`company_profession_id`) REFERENCES `sys_company_profession` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -249,7 +250,7 @@ CREATE TABLE `sys_company_profession`  (
   `introduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职位描述',
   `requirement` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职位要求',
   `salary` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '薪水',
-  `start_time` datetime(6) NULL DEFAULT NULL COMMENT '招聘开始时间',
+  `start_time` datetime(6) NULL DEFAULT NULL COMMENT '招聘发布时间',
   `end_time` datetime(6) NULL DEFAULT NULL COMMENT '招聘结束时间',
   `state` int(1) NULL DEFAULT NULL COMMENT '招聘状态',
   `location` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工作地',
@@ -262,7 +263,14 @@ CREATE TABLE `sys_company_profession`  (
   INDEX `id`(`id`) USING BTREE,
   CONSTRAINT `company` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `profession` FOREIGN KEY (`profession_type_id`) REFERENCES `sys_profession_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '企业发布岗位表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '企业发布岗位表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_company_profession
+-- ----------------------------
+INSERT INTO `sys_company_profession` VALUES (1, 2, 1, '腾讯校招', '腾讯校招', '腾讯校招', '月薪：5000', '2019-07-04 15:22:44.000000', NULL, 1, '深圳', 1, '暑期', '有');
+INSERT INTO `sys_company_profession` VALUES (2, 2, 2, '腾讯校招', '腾讯校招', '腾讯校招', '月薪：5000', '2019-07-04 15:22:44.000000', NULL, 1, '深圳', 0, '暑期', '无');
+INSERT INTO `sys_company_profession` VALUES (3, 2, 3, '腾讯校招', '腾讯校招', '腾讯校招', '月薪：5000', '2019-07-04 15:22:44.000000', NULL, 1, '深圳', 1, '暑期', '无');
 
 -- ----------------------------
 -- Table structure for sys_course
@@ -617,7 +625,7 @@ INSERT INTO `sys_curriculum_tree` VALUES (5, 5, 3);
 DROP TABLE IF EXISTS `sys_learner_cv`;
 CREATE TABLE `sys_learner_cv`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '简历id',
-  `learner_id` bigint(255) UNSIGNED NOT NULL COMMENT '学习者信息id',
+  `user_id` bigint(255) UNSIGNED NOT NULL COMMENT '用户id',
   `resume_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '简历名称',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
   `sex` int(1) NOT NULL COMMENT '性别',
@@ -635,10 +643,11 @@ CREATE TABLE `sys_learner_cv`  (
   `current_location` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当前所在地',
   `in_job_time` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最快入职时间',
   `head_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '\\avatar\\default\\avatar.jpg' COMMENT '证件照',
-  PRIMARY KEY (`id`, `learner_id`) USING BTREE,
+  `last_edit_time` datetime(6) NULL DEFAULT NULL COMMENT '上次修改简历时间',
+  PRIMARY KEY (`id`, `user_id`) USING BTREE,
   UNIQUE INDEX `fk_sys_learner_cv_id`(`id`) USING BTREE,
-  INDEX `fk_sys_learner_cv_user_id`(`learner_id`) USING BTREE,
-  CONSTRAINT `fk_sys_learner_cv_user_id` FOREIGN KEY (`learner_id`) REFERENCES `sys_learner_info` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `fk_sys_learner_cv_user_id`(`user_id`) USING BTREE,
+  CONSTRAINT `fk_sys_learner_cv_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '简历表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -730,14 +739,19 @@ CREATE TABLE `sys_profession_type`  (
   `id` bigint(255) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '职业id',
   `type_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '职业分类名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职业分类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '职业分类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_profession_type
 -- ----------------------------
-INSERT INTO `sys_profession_type` VALUES (1, '前端工程师');
-INSERT INTO `sys_profession_type` VALUES (2, '后端工程师');
-INSERT INTO `sys_profession_type` VALUES (3, '数据库工程师');
+INSERT INTO `sys_profession_type` VALUES (1, '研发');
+INSERT INTO `sys_profession_type` VALUES (2, '测试');
+INSERT INTO `sys_profession_type` VALUES (3, '数据');
+INSERT INTO `sys_profession_type` VALUES (4, '算法');
+INSERT INTO `sys_profession_type` VALUES (5, '前端');
+INSERT INTO `sys_profession_type` VALUES (6, '产品');
+INSERT INTO `sys_profession_type` VALUES (7, '运营');
+INSERT INTO `sys_profession_type` VALUES (8, '其他');
 
 -- ----------------------------
 -- Table structure for sys_teacher_info

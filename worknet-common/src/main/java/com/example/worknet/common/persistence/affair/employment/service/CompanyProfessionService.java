@@ -1,7 +1,11 @@
 package com.example.worknet.common.persistence.affair.employment.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.constant.ProfessionConst;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.HashMap;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface CompanyProfessionService extends IService<CompanyProfession> {
 
+    Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionId, String location, String field, String keyword);
+
+    Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> page, Long companyId);
+
+    HashMap<String,Object> getJobInfo(Long employeeId);
 }

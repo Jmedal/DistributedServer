@@ -83,7 +83,7 @@ public class CompanyController {
     @RequestMapping(value = "/get/companyInfo/{companyId}", method = RequestMethod.GET)
     public String getCompanyInfo(@PathVariable(value = "companyId") Long companyId){
         HashMap<String,Object> map = new HashMap<>();
-        HashMap<String,Object> obj = new HashMap<>();
+        HashMap<String,Object> obj = companyService.getCompanyInfo(companyId);
         map.put("returnObject",obj);
         map.put("errorCode","00");
         return JSON.toJSONString(map);

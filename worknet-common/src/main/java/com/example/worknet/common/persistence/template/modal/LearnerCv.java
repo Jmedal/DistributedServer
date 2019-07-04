@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-03
+ * @since 2019-07-04
  */
 @TableName("sys_learner_cv")
 public class LearnerCv implements Serializable {
@@ -103,6 +103,11 @@ public class LearnerCv implements Serializable {
      */
     @TableField("head_path")
     private String headPath;
+    /**
+     * 上次修改简历时间
+     */
+    @TableField("last_edit_time")
+    private Date lastEditTime;
 
 
     public Long getId() {
@@ -257,6 +262,14 @@ public class LearnerCv implements Serializable {
         this.headPath = headPath;
     }
 
+    public Date getLastEditTime() {
+        return lastEditTime;
+    }
+
+    public void setLastEditTime(Date lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
     @Override
     public String toString() {
         return "LearnerCv{" +
@@ -279,6 +292,7 @@ public class LearnerCv implements Serializable {
         ", currentLocation=" + currentLocation +
         ", inJobTime=" + inJobTime +
         ", headPath=" + headPath +
+        ", lastEditTime=" + lastEditTime +
         "}";
     }
 }

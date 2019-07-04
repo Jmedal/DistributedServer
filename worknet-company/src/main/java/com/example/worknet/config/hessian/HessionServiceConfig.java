@@ -3,6 +3,7 @@ package com.example.worknet.config.hessian;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.company.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.companyContest.service.*;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import com.example.worknet.common.persistence.affair.message.service.MessageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -91,6 +92,15 @@ public class HessionServiceConfig {
         return exporter;
     }
 
+    @Bean("/companyProfessionService")
+    public HessianServiceExporter exportCompanyProfessionService()
+    {
+        HessianServiceExporter exporter = new HessianServiceExporter();
+        exporter.setService(companyProfessionService);
+        exporter.setServiceInterface(CompanyProfessionService.class);
+        return exporter;
+    }
+
     @Resource
     private AdministratorService administratorService;
 
@@ -114,4 +124,7 @@ public class HessionServiceConfig {
 
     @Resource
     private CompanyContestService companyContestService;
+
+    @Resource
+    private CompanyProfessionService companyProfessionService;
 }

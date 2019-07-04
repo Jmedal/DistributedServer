@@ -19,15 +19,6 @@ import java.util.List;
  */
 @Component
 public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
-    @Select("select " +
-            "id," +
-            "type_name " +
-            "from sys_profession_type ")
-    @Results(id = "professionTypeResultMap",value = {
-            @Result(property = "professionId",column = "id"),
-            @Result(property = "profession",column = "type_name"),
-    })
-    List<HashMap<String,Object>> getProfessionType();
 
     @Select("SELECT\n" +
             "\tsys_company_profession.id,\n" +
@@ -52,7 +43,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             @Result(property = "id",column = "id"),
             @Result(property = "companyId",column = "company_id"),
             @Result(property = "title",column = "title"),
-            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "isPractice",column = "is_practice", javaType = Boolean.class),
             @Result(property = "companyName",column = "NAME"),
             @Result(property = "salary",column = "salary"),
             @Result(property = "location",column = "location"),
@@ -62,6 +53,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
                                                   @Param("location") String location,
                                                   @Param("field") String field,
                                                   @Param("keyword")String keyword);
+
     @Select("SELECT\n" +
             "\tsys_company_profession.id,\n" +
             "\tsys_company_profession.company_id,\n" +
@@ -85,7 +77,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             @Result(property = "id",column = "id"),
             @Result(property = "companyId",column = "company_id"),
             @Result(property = "title",column = "title"),
-            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "isPractice",column = "is_practice", javaType = Boolean.class),
             @Result(property = "companyName",column = "NAME"),
             @Result(property = "salary",column = "salary"),
             @Result(property = "location",column = "location"),
@@ -119,7 +111,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             @Result(property = "id",column = "id"),
             @Result(property = "companyId",column = "company_id"),
             @Result(property = "title",column = "title"),
-            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "isPractice",column = "is_practice", javaType = Boolean.class),
             @Result(property = "companyName",column = "NAME"),
             @Result(property = "salary",column = "salary"),
             @Result(property = "location",column = "location"),
@@ -148,7 +140,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             @Result(property = "companyId",column = "company_id"),
             @Result(property = "id",column = "id"),
             @Result(property = "title",column = "title"),
-            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "isPractice",column = "is_practice", javaType = Boolean.class),
             @Result(property = "companyName",column = "NAME"),
             @Result(property = "salary",column = "salary"),
             @Result(property = "location",column = "location"),
@@ -172,7 +164,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "ON\n" +
             "sys_company_profession.profession_type_id=sys_profession_type.id\n" +
             "where \n" +
-            "sys_company_profession.id=#{employeeId} and sys_company_profession.company_id=#{companyId}")
+            "sys_company_profession.id=#{employeeId}")
     @Results(id = "companyJobInfoResultMap",value = {
             @Result(property = "introduction",column = "introduction"),
             @Result(property = "requirement",column = "requirement"),
@@ -181,10 +173,9 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             @Result(property = "location",column = "location"),
             @Result(property = "duration",column = "duration"),
             @Result(property = "chanceToFormal",column = "chance_to_formal"),
-            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "isPractice",column = "is_practice", javaType = Boolean.class),
             @Result(property = "profession",column = "type_name"),
             @Result(property = "state",column = "state"),
-
     })
-    HashMap<String,Object> getJobInfo(@Param("employeeId") Long employeeId,@Param("companyId") Long companyId);
+    HashMap<String,Object> getJobInfo(@Param("employeeId") Long employeeId);
 }

@@ -1,7 +1,7 @@
 package com.example.worknet.common.persistence.affair.user.dao;
 
-import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.example.worknet.common.persistence.template.modal.LearnerCv;
 
 /**
  * <p>

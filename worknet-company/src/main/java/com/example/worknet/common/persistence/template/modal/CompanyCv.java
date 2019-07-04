@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-03
+ * @since 2019-07-04
  */
 @TableName("sys_company_cv")
 public class CompanyCv implements Serializable {
@@ -102,6 +102,11 @@ public class CompanyCv implements Serializable {
      * 包含（待审核，审核中，拒绝，接受）
      */
     private Integer status;
+    /**
+     * 上次提交简历时间
+     */
+    @TableField("last_edit_time")
+    private Date lastEditTime;
 
 
     public Long getId() {
@@ -256,6 +261,14 @@ public class CompanyCv implements Serializable {
         this.status = status;
     }
 
+    public Date getLastEditTime() {
+        return lastEditTime;
+    }
+
+    public void setLastEditTime(Date lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
     @Override
     public String toString() {
         return "CompanyCv{" +
@@ -278,6 +291,7 @@ public class CompanyCv implements Serializable {
         ", inJobTime=" + inJobTime +
         ", headPath=" + headPath +
         ", status=" + status +
+        ", lastEditTime=" + lastEditTime +
         "}";
     }
 }

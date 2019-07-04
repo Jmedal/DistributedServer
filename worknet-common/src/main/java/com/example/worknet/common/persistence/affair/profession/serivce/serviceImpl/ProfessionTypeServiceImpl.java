@@ -4,7 +4,11 @@ import com.example.worknet.common.persistence.template.modal.ProfessionType;
 import com.example.worknet.common.persistence.affair.profession.dao.ProfessionTypeMapper;
 import com.example.worknet.common.persistence.affair.profession.serivce.ProfessionTypeService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfessionTypeServiceImpl extends ServiceImpl<ProfessionTypeMapper, ProfessionType> implements ProfessionTypeService {
 
+    /**
+     * 获取职业分类
+     * @return
+     */
+    @Override
+    public List<HashMap<String, Object>> getProfessionType() {
+        return professionTypeMapper.getProfessionType();
+    }
+
+    @Autowired
+    private ProfessionTypeMapper  professionTypeMapper;
 }

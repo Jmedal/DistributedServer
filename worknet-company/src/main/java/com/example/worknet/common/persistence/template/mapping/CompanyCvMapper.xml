@@ -23,6 +23,7 @@
         <result column="in_job_time" property="inJobTime" />
         <result column="head_path" property="headPath" />
         <result column="status" property="status" />
+        <result column="last_edit_time" property="lastEditTime" />
     </resultMap>
 
 </mapper>

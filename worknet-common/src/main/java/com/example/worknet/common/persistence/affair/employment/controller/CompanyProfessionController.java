@@ -4,6 +4,8 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.constant.ProfessionConst;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.example.worknet.common.constant.ProfessionConst.PROFESSION_DEFAULT;
+import static com.example.worknet.common.constant.ProfessionConst.PROFESSION_NEW;
+import static com.example.worknet.common.constant.ProfessionConst.PROFESSION_SALARY;
 
 /**
  * <p>
@@ -25,6 +31,9 @@ import java.util.List;
 @ResponseBody
 public class CompanyProfessionController {
 
+    @Autowired
+    private CompanyProfessionService companyProfessionService;
+
     /**
      * 筛选获得公司招聘列表
      * page,keyword,order(['new'|'salary'|'']),对应最新发布，薪水最高和默认排序
@@ -37,30 +46,30 @@ public class CompanyProfessionController {
      * @return
      */
     @RequestMapping(value = "/get/working", method = RequestMethod.GET)
-    public String getWorking(@RequestParam(value = "page") Integer page,
-                             @RequestParam(value = "order") String order,
-                             @RequestParam(value = "field") String field,
-                             @RequestParam(value = "location") String location,
-                             @RequestParam(value = "keyword") String keyword,
-                             @RequestParam(value = "professionId") String professionId){
-        //一页20条
-        if(keyword == null) keyword = "";
-        if(order == null) order = "";
-        if(page == null) page = 1;
-        Page<HashMap<String,Object>> questionPage = null;
-//        switch (order){
-//            case "new":
-//                questionPage = courseService.getCoursePage(new Page<>(page, 9), ProfessionConst.PROFESSION_NEW,keyword);
-//                break;
-//            case "salary":
-//                questionPage = courseService.getCoursePage(new Page<>(page, 9), CourseConst.COURSE_STAR,keyword);
-//                break;
-//            default:
-//                questionPage = courseService.getCoursePage(new Page<>(page, 9), CourseConst.COURSE_DEFAULT,keyword);
-//                break;
-//        }
+    public String getWorking(@RequestParam(value = "page", required = false) Integer page,
+                             @RequestParam(value = "order", required = false) String order,
+                             @RequestParam(value = "field", required = false) String field,
+                             @RequestParam(value = "location", required = false) String location,
+                             @RequestParam(value = "keyword", required = false) String keyword,
+                             @RequestParam(value = "professionId", required = false) String professionId){
         HashMap<String,Object> map = new HashMap<>();
-        HashMap<String,Object> pager = new HashMap<>();
+        if(page == null) page = 1;
+        if(order == null) order = "";
+        if(field == null) location = "";
+        if(location == null) location = "";
+        Page<HashMap<String,Object>> pager = null;
+        switch (order){
+            case "new":
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_NEW,professionId,location,field,keyword);
+                break;
+            case "salary":
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_SALARY,professionId,location,field,keyword);
+                break;
+            default:
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_DEFAULT,professionId,location,field,keyword);
+                break;
+        }
+        System.out.println(pager.getRecords());
         map.put("returnObject",pager);
         map.put("errorCode","00");
         return JSON.toJSONString(map);
@@ -76,7 +85,7 @@ public class CompanyProfessionController {
     public String getJobInfo(@PathVariable(value = "employId") Long employId,
                              @PathVariable(value = "companyId") Long companyId){
         HashMap<String,Object> map = new HashMap<>();
-        HashMap<String,Object> obj = new HashMap<>();
+        HashMap<String,Object> obj = companyProfessionService.getJobInfo(employId);
         map.put("returnObject",obj);
         map.put("errorCode","00");
         return JSON.toJSONString(map);
@@ -91,9 +100,8 @@ public class CompanyProfessionController {
     @RequestMapping(value = "/get/employ/{companyId}", method = RequestMethod.GET)
     public String getEmployList(@PathVariable(value = "companyId") Long companyId,
                                 @RequestParam(value = "page") Integer page){
-        //一页10条
         HashMap<String, Object> map = new HashMap<>();
-        HashMap<String,Object> pager = new HashMap<>();
+        Page<HashMap<String,Object>> pager = companyProfessionService.getEmployeeList(new Page<>(page, 10),companyId);
         map.put("returnObject",pager);
         map.put("errorCode","00");
         return JSON.toJSONString(map);

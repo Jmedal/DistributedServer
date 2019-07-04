@@ -1,9 +1,9 @@
 package com.example.worknet.common.persistence.affair.user.serivce.serviceImpl;
 
-import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.example.worknet.common.persistence.affair.user.dao.LearnerCvMapper;
 import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import org.springframework.stereotype.Service;
 
 /**

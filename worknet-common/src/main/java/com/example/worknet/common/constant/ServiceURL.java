@@ -11,4 +11,6 @@ public interface ServiceURL {
     String CompanyContestService = Const.SERVER_URL_COMPANY + "/companyContestService";
 
     String CompanyService = Const.SERVER_URL_COMPANY + "/companyService";
+
+    String companyProfessionService = Const.SERVER_URL_COMPANY + "/companyProfessionService";
 }

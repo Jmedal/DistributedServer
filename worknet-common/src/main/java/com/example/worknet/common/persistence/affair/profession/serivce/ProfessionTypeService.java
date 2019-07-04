@@ -3,6 +3,9 @@ package com.example.worknet.common.persistence.affair.profession.serivce;
 import com.example.worknet.common.persistence.template.modal.ProfessionType;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * <p>
  * 职业分类 服务类
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ProfessionTypeService extends IService<ProfessionType> {
 
+    List<HashMap<String,Object>> getProfessionType();
 }

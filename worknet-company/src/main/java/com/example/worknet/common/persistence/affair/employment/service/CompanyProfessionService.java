@@ -21,11 +21,9 @@ import java.util.Map;
  */
 public interface CompanyProfessionService extends IService<CompanyProfession> {
 
-     List<HashMap<String,Object>> getProfessionType();
-
-     Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionid, String location, String field, String keyword);
+     Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionId, String location, String field, String keyword);
 
      Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> page, Long companyId);
 
-     HashMap<String,Object> getJobInfo(Long employeeId, Long companyId);
+     HashMap<String,Object> getJobInfo(Long employeeId);
 }
