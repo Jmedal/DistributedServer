@@ -18,6 +18,7 @@ public class worknetTests {
 
 	@Test
 	public void contextLoads() {
-        System.out.println(companyProfessionService.getProfessionPage(new Page<>(1,5), ProfessionConst.PROFESSION_SALARY,"1","上海","互联网","").getRecords());
+
+        System.out.println(companyProfessionService.getJobInfo((long)2,(long)2));
 	}
 }

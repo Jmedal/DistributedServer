@@ -129,4 +129,62 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
                                                      @Param("location") String location,
                                                      @Param("field") String field,
                                                      @Param("keyword")String keyword);
+
+    @Select("SELECT\n" +
+            "\tsys_company_profession.id,\n" +
+            "\tsys_company_profession.company_id,\n" +
+            "\tsys_company_profession.title,\n" +
+            "\tsys_company.NAME,\n" +
+            "\tsys_company_profession.salary,\n" +
+            "\tsys_company_profession.is_practice,\n" +
+            "\tsys_company_profession.location,\n" +
+            "\tsys_company_profession.state\n" +
+            "FROM\n" +
+            "\tsys_company_profession\n" +
+            "\tJOIN sys_company ON sys_company.id = sys_company_profession.company_id\n" +
+            "WHERE\n" +
+            "\tsys_company_profession.company_id= #{companyId}")
+    @Results(id = "companyProfessionResultMap4",value = {
+            @Result(property = "companyId",column = "company_id"),
+            @Result(property = "id",column = "id"),
+            @Result(property = "title",column = "title"),
+            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "companyName",column = "NAME"),
+            @Result(property = "salary",column = "salary"),
+            @Result(property = "location",column = "location"),
+            @Result(property = "state",column = "state"),
+    })
+    List<HashMap<String,Object>> getEmployList(Pagination pagination,@Param("companyId") Long companyId);
+
+    @Select("SELECT\n" +
+            "sys_company_profession.introduction,\n" +
+            "sys_company_profession.requirement,\n" +
+            "sys_company_profession.salary,\n" +
+            "sys_company_profession.title,\n" +
+            "sys_company_profession.location,\n" +
+            "sys_company_profession.duration,\n" +
+            "sys_company_profession.chance_to_formal,\n" +
+            "sys_company_profession.is_practice,\n" +
+            "sys_profession_type.type_name,\n" +
+            "sys_company_profession.state\n" +
+            "FROM\n" +
+            "sys_company_profession JOIN sys_profession_type\n" +
+            "ON\n" +
+            "sys_company_profession.profession_type_id=sys_profession_type.id\n" +
+            "where \n" +
+            "sys_company_profession.id=#{employeeId} and sys_company_profession.company_id=#{companyId}")
+    @Results(id = "companyJobInfoResultMap",value = {
+            @Result(property = "introduction",column = "introduction"),
+            @Result(property = "requirement",column = "requirement"),
+            @Result(property = "salary",column = "salary"),
+            @Result(property = "title",column = "title"),
+            @Result(property = "location",column = "location"),
+            @Result(property = "duration",column = "duration"),
+            @Result(property = "chanceToFormal",column = "chance_to_formal"),
+            @Result(property = "isPractice",column = "is_practice"),
+            @Result(property = "profession",column = "type_name"),
+            @Result(property = "state",column = "state"),
+
+    })
+    HashMap<String,Object> getJobInfo(@Param("employeeId") Long employeeId,@Param("companyId") Long companyId);
 }

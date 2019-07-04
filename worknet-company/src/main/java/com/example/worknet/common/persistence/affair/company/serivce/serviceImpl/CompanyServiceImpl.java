@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 /**
  * <p>
  * 公司信息表 服务实现类
@@ -30,7 +32,14 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         return userService.getAvatar(super.selectById(companyId).getUserId(),strDirPath);
     }
 
+    @Override
+    public HashMap<String,Object> getCompanyInfo(long companyId){
+        return companyMapper.getCompanyInfo(companyId);
+    }
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CompanyMapper companyMapper;
 }

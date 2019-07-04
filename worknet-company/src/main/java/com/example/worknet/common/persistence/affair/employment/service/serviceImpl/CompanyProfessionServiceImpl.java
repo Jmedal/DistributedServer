@@ -43,7 +43,7 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionId,String location,String field,String keyword){
+    public Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionId, String location, String field, String keyword){
         if(professionId==null||professionId.equals(""))
             professionId="[digit]*";
         if(keyword==null||keyword.equals(""))
@@ -60,7 +60,16 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
             default:
                 return page.setRecords(new ArrayList<HashMap<String,Object>>());
         }
+    }
 
+    @Override
+    public Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> page, Long companyId){
+            return page.setRecords(companyProfessionMapper.getEmployList(page,companyId));
+    }
+
+    @Override
+    public HashMap<String,Object> getJobInfo(Long employeeId, Long companyId){
+        return companyProfessionMapper.getJobInfo(employeeId,companyId);
     }
 
 

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.service.IService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import org.springframework.core.io.Resource;
 
+import java.util.HashMap;
+
 /**
  * <p>
  * 公司信息表 服务类
@@ -15,4 +17,6 @@ import org.springframework.core.io.Resource;
 public interface CompanyService extends IService<Company> {
 
     Resource getCompanyAvatar(long companyId, String strDirPath);
+
+    HashMap<String,Object> getCompanyInfo(long companyId);
 }
