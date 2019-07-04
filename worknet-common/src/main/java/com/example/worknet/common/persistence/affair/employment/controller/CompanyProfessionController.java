@@ -55,21 +55,20 @@ public class CompanyProfessionController {
         HashMap<String,Object> map = new HashMap<>();
         if(page == null) page = 1;
         if(order == null) order = "";
-        if(field == null) location = "";
-        if(location == null) location = "";
+        if(field == null || field.equals("null")) field = "";
+        if(location == null || location.equals("null")) location = "";
         Page<HashMap<String,Object>> pager = null;
         switch (order){
             case "new":
-                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_NEW,professionId,location,field,keyword);
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_NEW, professionId, location, field, keyword);
                 break;
             case "salary":
-                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_SALARY,professionId,location,field,keyword);
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_SALARY, professionId, location, field, keyword);
                 break;
             default:
-                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_DEFAULT,professionId,location,field,keyword);
+                pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_DEFAULT, professionId, location, field, keyword);
                 break;
         }
-        System.out.println(pager.getRecords());
         map.put("returnObject",pager);
         map.put("errorCode","00");
         return JSON.toJSONString(map);

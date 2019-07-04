@@ -36,19 +36,19 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
     @Override
     public Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type,
                                                           String professionId, String location, String field, String keyword){
-        if(professionId == null || professionId.equals(""))
+        if(professionId == null || professionId.equals("null") || professionId.equals(""))
             professionId = "[digit]*";
-        if(keyword == null || keyword.equals(""))
+        if(keyword == null || professionId.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
         else
-            keyword = "[" + keyword.replace(" ","|") + "]";
+            keyword = keyword.trim().replaceAll("\\s+"," ").replace(" ","|");
         switch(type){
             case PROFESSION_NEW:
-                return page.setRecords(companyProfessionMapper.getNewProfessionPage(page,professionId, location, field, keyword));
+                return page.setRecords(companyProfessionMapper.getNewProfessionPage(page, professionId, location, field, keyword));
             case PROFESSION_SALARY:
-                return page.setRecords(companyProfessionMapper.getSalaryProfessionPage(page,professionId, location, field, keyword));
+                return page.setRecords(companyProfessionMapper.getSalaryProfessionPage(page, professionId, location, field, keyword));
             case PROFESSION_DEFAULT:
-                return page.setRecords(companyProfessionMapper.getDefaultProfessionPage(page,professionId, location, field, keyword));
+                return page.setRecords(companyProfessionMapper.getDefaultProfessionPage(page, professionId, location, field, keyword));
             default:
                 return page.setRecords(new ArrayList<HashMap<String,Object>>());
         }

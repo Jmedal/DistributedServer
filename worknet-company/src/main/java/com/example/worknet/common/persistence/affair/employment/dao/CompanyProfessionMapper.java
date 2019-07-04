@@ -35,8 +35,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession.state=1\n" +
             "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
-            "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
-            "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
+            "\tAND  ( sys_company.field REGEXP #{keyword} OR sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
             "ORDER BY\n" +
             "\tsys_company_profession.start_time DESC")
     @Results(id = "companyProfessionResultMap1",value = {
@@ -69,8 +68,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession.state=1\n" +
             "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
-            "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
-            "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
+            "\tAND  ( sys_company.field REGEXP #{keyword} OR sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
             "ORDER BY\n" +
             "\tsys_company_profession.salary DESC")
     @Results(id = "companyProfessionResultMap2",value = {
@@ -103,8 +101,7 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession.state=1\n" +
             "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
-            "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
-            "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
+            "\tAND  ( sys_company.field REGEXP #{keyword} OR sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
             "ORDER BY\n" +
             "\tsys_company_profession.id DESC")
     @Results(id = "companyProfessionResultMap3",value = {

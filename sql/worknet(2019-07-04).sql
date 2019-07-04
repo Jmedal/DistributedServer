@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 04/07/2019 15:53:45
+ Date: 04/07/2019 22:31:42
 */
 
 SET NAMES utf8mb4;
@@ -77,8 +77,8 @@ CREATE TABLE `sys_company`  (
 -- ----------------------------
 -- Records of sys_company
 -- ----------------------------
-INSERT INTO `sys_company` VALUES (1, 1, '', '123', '123', '123', NULL, NULL, '2019-05-07 00:28:05.000000');
-INSERT INTO `sys_company` VALUES (2, 12, '', '腾讯', '腾讯', '腾讯', NULL, NULL, '2019-05-25 20:52:58.000000');
+INSERT INTO `sys_company` VALUES (1, 11, '互联网', '百度', '百度', '百度', '021-55555555', 'http://www.baidu.com', '2019-05-07 00:28:05.000000');
+INSERT INTO `sys_company` VALUES (2, 12, '互联网', '腾讯', '腾讯', '腾讯', '021-55555555', 'https://www.qq.com/', '2019-05-25 20:52:58.000000');
 
 -- ----------------------------
 -- Table structure for sys_company_contest
@@ -806,7 +806,7 @@ INSERT INTO `sys_user` VALUES (7, '16175', 'A1617511', '\\avatar\\default\\avata
 INSERT INTO `sys_user` VALUES (8, '156786', 'AA156786', '\\avatar\\default\\avatar.jpg', 3, 1);
 INSERT INTO `sys_user` VALUES (9, 'AAD13456', 'AAD13456', '\\avatar\\default\\avatar.jpg', 3, 1);
 INSERT INTO `sys_user` VALUES (10, 'lst', 'Lstlstlst', '\\avatar\\2019\\778c8477-4dc7-469c-b6aa-caa14abb787a.png', 3, 1);
-INSERT INTO `sys_user` VALUES (11, 'dddddd', 'Ddddddddddddd', '\\avatar\\2019\\d51ba82a-ac54-4845-8b0c-4cd78f99f099.png', 3, 1);
+INSERT INTO `sys_user` VALUES (11, 'dddddd', 'Ddddddddddddd', '\\avatar\\2019\\d51ba82a-ac54-4845-8b0c-4cd78f99f099.png', 1, 1);
 INSERT INTO `sys_user` VALUES (12, 'tencent', 'tencent', '\\avatar\\2019\\timg.jpg', 1, 1);
 
 -- ----------------------------
