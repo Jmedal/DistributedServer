@@ -13,6 +13,4 @@ import org.springframework.core.io.Resource;
  * @since 2019-05-06
  */
 public interface CompanyService extends IService<Company> {
-
-    Resource getCompanyAvatar(long companyId, String strDirPath);
 }

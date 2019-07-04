@@ -20,7 +20,9 @@ import java.util.Map;
  * @since 2019-07-02
  */
 public interface CompanyProfessionService extends IService<CompanyProfession> {
+
      List<HashMap<String,Object>> getProfessionType();
+
      Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionid, String location, String field, String keyword);
 
      Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> page, Long companyId);

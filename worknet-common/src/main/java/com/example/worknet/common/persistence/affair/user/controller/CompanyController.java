@@ -1,5 +1,6 @@
 package com.example.worknet.common.persistence.affair.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 
 /**
@@ -27,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @ResponseBody
 public class CompanyController {
-
     private final static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
@@ -55,7 +56,7 @@ public class CompanyController {
         String realPath=request.getServletContext().getRealPath("/static");
         logger.info(realPath);
         try {
-            return ResponseEntity.ok(userService.getAvatar(companyService.selectById(companyId).getUserId(),strDirPath));
+            return ResponseEntity.ok(userService.getCompanyAvatar(companyId,strDirPath));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -72,6 +73,20 @@ public class CompanyController {
     public ResponseEntity getCompanyLogo(@PathVariable(value = "cid") long companyId,
                                          HttpServletRequest request) {
         return getCoursePic(companyId, request);
+    }
+
+    /**
+     * 获取公司招聘信息
+     * @param companyId
+     * @return
+     */
+    @RequestMapping(value = "/get/companyInfo/{companyId}", method = RequestMethod.GET)
+    public String getCompanyInfo(@PathVariable(value = "companyId") Long companyId){
+        HashMap<String,Object> map = new HashMap<>();
+        HashMap<String,Object> obj = new HashMap<>();
+        map.put("returnObject",obj);
+        map.put("errorCode","00");
+        return JSON.toJSONString(map);
     }
 }
 

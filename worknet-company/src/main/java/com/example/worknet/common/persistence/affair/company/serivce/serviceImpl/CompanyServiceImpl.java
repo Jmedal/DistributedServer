@@ -23,22 +23,14 @@ import java.util.HashMap;
 public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> implements CompanyService {
 
     /**
-     * 获取公司头像
+     * 获取公司信息
      * @param companyId
      * @return
      */
     @Override
-    public Resource getCompanyAvatar(long companyId, String strDirPath) {
-        return userService.getAvatar(super.selectById(companyId).getUserId(),strDirPath);
-    }
-
-    @Override
     public HashMap<String,Object> getCompanyInfo(long companyId){
         return companyMapper.getCompanyInfo(companyId);
     }
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private CompanyMapper companyMapper;

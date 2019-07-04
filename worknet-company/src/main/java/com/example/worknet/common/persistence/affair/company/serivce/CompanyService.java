@@ -16,7 +16,5 @@ import java.util.HashMap;
  */
 public interface CompanyService extends IService<Company> {
 
-    Resource getCompanyAvatar(long companyId, String strDirPath);
-
     HashMap<String,Object> getCompanyInfo(long companyId);
 }

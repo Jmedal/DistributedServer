@@ -213,6 +213,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         FileToolsUtil.fileToUpload(strDirPath, filePath);
         return resourceLoader.getResource("file:" + strDirPath + Const.FILE_SEPARATOR + filePath.substring(filePath.lastIndexOf(Const.FILE_SEPARATOR) + 1));
     }
+    /**
+     * 获取公司头像
+     * @param companyId
+     * @return
+     */
+    @Override
+    public Resource getCompanyAvatar(long companyId, String strDirPath) {
+        User user = userService.selectById(companyService.selectById(companyId).getUserId());
+        if(user==null)
+            throw new RuntimeException();
+        //绝对保存路径
+        String filePath = Const.FILE_PATH + user.getHeadPath();
+        strDirPath = strDirPath + "WEB-INF" + Const.FILE_SEPARATOR + "classes" + Const.FILE_SEPARATOR + "static" + Const.FILE_SEPARATOR + "upload";
+        FileToolsUtil.fileToUpload(strDirPath, filePath);
+        return resourceLoader.getResource("file:" + strDirPath + Const.FILE_SEPARATOR + filePath.substring(filePath.lastIndexOf(Const.FILE_SEPARATOR) + 1));
+    }
 
     /**
      * 更新用户头像

@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="worknet-company" />
         <module name="worknet-common" />
+        <module name="worknet-company" />
       </profile>
     </annotationProcessing>
   </component>
