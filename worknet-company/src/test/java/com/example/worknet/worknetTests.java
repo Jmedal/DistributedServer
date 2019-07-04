@@ -1,7 +1,11 @@
 package com.example.worknet;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.constant.ProfessionConst;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -9,8 +13,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class worknetTests {
 
+    @Autowired
+    private CompanyProfessionService companyProfessionService;
+
 	@Test
 	public void contextLoads() {
+        System.out.println(companyProfessionService.getProfessionPage(new Page<>(1,5), ProfessionConst.PROFESSION_SALARY,"1","上海","互联网","").getRecords());
 	}
-
 }

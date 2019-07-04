@@ -6,7 +6,6 @@ import com.example.worknet.common.persistence.affair.companyContest.service.Comp
 import com.example.worknet.common.persistence.affair.course.controller.CourseStudiedController;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
-import com.example.worknet.common.persistence.affair.companyContest.dao.CompanyContestApplyMapper;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseClickService;
 import com.example.worknet.common.persistence.affair.user.serivce.TeacherInfoService;

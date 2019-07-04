@@ -1,7 +1,15 @@
 package com.example.worknet.common.persistence.affair.employment.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
+import com.example.worknet.common.constant.ProfessionConst;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -12,5 +20,6 @@ import com.example.worknet.common.persistence.template.modal.CompanyProfession;
  * @since 2019-07-02
  */
 public interface CompanyProfessionService extends IService<CompanyProfession> {
-
+     List<HashMap<String,Object>> getProfessionType();
+     Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type, String professionid, String location, String field, String keyword);
 }
