@@ -41,7 +41,8 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession\n" +
             "\tJOIN sys_company ON sys_company.id = sys_company_profession.company_id \n" +
             "WHERE\n" +
-            "\tsys_company_profession.profession_type_id REGEXP #{professionId}\n" +
+            "\tsys_company_profession.state=1\n" +
+            "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
             "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
             "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
@@ -73,7 +74,8 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession\n" +
             "\tJOIN sys_company ON sys_company.id = sys_company_profession.company_id \n" +
             "WHERE\n" +
-            "\tsys_company_profession.profession_type_id REGEXP #{professionId}\n" +
+            "\tsys_company_profession.state=1\n" +
+            "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
             "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
             "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +
@@ -106,7 +108,8 @@ public interface CompanyProfessionMapper extends BaseMapper<CompanyProfession> {
             "\tsys_company_profession\n" +
             "\tJOIN sys_company ON sys_company.id = sys_company_profession.company_id \n" +
             "WHERE\n" +
-            "\tsys_company_profession.profession_type_id REGEXP #{professionId}\n" +
+            "\tsys_company_profession.state=1\n" +
+            "\tAND sys_company_profession.profession_type_id REGEXP #{professionId}\n" +
             "\tAND sys_company_profession.location LIKE CONCAT( '%', #{location}, '%' ) \n" +
             "\tAND sys_company.field LIKE CONCAT( '%', #{field}, '%' ) \n" +
             "\tAND  ( sys_company.NAME REGEXP #{keyword} OR sys_company_profession.title REGEXP #{keyword} ) \n" +

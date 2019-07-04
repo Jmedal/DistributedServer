@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f99442c-5139-4db6-bb8b-908297fc829b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/constant/ProfessionConst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/test/java/com/example/worknet/controller/service/CourseClickTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/test/java/com/example/worknet/controller/service/CourseClickTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyProfessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyProfessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyProfessionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyProfessionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/test/java/com/example/worknet/worknetTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/test/java/com/example/worknet/worknetTests.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -43,8 +36,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="76" column="47" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
+            <state relative-caret-position="239">
+              <caret line="76" column="50" lean-forward="true" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -73,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
+            <state relative-caret-position="184">
+              <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -156,8 +149,8 @@
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/constant/ProfessionConst.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyProfessionService.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyProfessionServiceImpl.java" />
-        <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/test/java/com/example/worknet/worknetTests.java" />
+        <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java" />
       </list>
     </option>
   </component>
@@ -624,20 +617,19 @@
       <workItem from="1562116039366" duration="1237000" />
       <workItem from="1562126818679" duration="564000" />
       <workItem from="1562153391753" duration="7998000" />
-      <workItem from="1562200916908" duration="7708000" />
+      <workItem from="1562200916908" duration="8219000" />
     </task>
+    <task id="LOCAL-00001" summary="提交 公司招聘查询api实现">
+      <created>1562208742858</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562208742858</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="worknetTests_contextLoads - 2019.07.03 at 21h 55m 53s.xml">
-      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="worknetTests_contextLoads - 2019.07.03 at 21h 56m 31s.xml">
-      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 36m 49s.xml">
-      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 39m 38s.xml">
       <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
     </history-entry>
@@ -659,9 +651,18 @@
     <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 49m 47s.xml">
       <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 55m 30s.xml">
+      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 56m 41s.xml">
+      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="worknetTests_contextLoads - 2019.07.04 at 10h 57m 08s.xml">
+      <configuration name="worknetTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25290000" />
+    <option name="totallyTimeSpent" value="25801000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -686,7 +687,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38269794" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28592375" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -753,6 +754,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="提交 公司招聘查询api实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交 公司招聘查询api实现" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseRecommendServiceImpl.java">
@@ -1003,13 +1008,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="40" column="49" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/dao/CourseMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="779">
@@ -1034,10 +1032,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyProfessionMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="76" column="47" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
+        <state relative-caret-position="239">
+          <caret line="76" column="50" lean-forward="true" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
         </state>
       </provider>
     </entry>
