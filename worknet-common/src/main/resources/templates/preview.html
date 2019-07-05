@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>预览</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <style>
+        #container{
+            width:60%;
+            margin-left:20%;
+            border:1px solid #e0d5d585;
+            padding:20px 60px;
+            margin-top:40px;
+            margin-bottom: 80px;
+            background:white;
+        }
+        body{
+            background:#fdfdfd;
+        }
+        #name{
+            font-size:2em;
+            font-weight:bold;
+        }
+        .resume-info span{
+            padding-right:10px;
+        }
+        #user-info{
+            margin-bottom:40px;
+            margin-top:40px;
+        }
+        dl{
+            min-height:250px;
+        }
+        dd{
+            padding:10px 20px;
+        }
+        dt{
+            border:5px solid #1fa27b;
+            border-style:none none none solid;
+            padding-left:10px;
+            font-size:1.3em;
+            margin-top:10px;
+            margin-bottom:20px;
+        }
+        .right{
+            float:right;
+        }
+    </style>
+</head>
+<body>
+<div id='container'>
+    <div id="user-info" class="clearfix">
+        请稍后...
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+
+<script src="/js/jquery-2.2.3.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var href = window.location.href;
+        var resumeId = parseInt(href.split('\/').slice(-1)[0]);
+        var qu = ['博士后','博士','硕士','本科','专科',"高中","初中","小学"];
+        console.log(resumeId);
+        $('#avatar img').attr('src','/get/resume-mode/avatar/'+resumeId);
+        function getSplitStr(str){
+            let tt = str.split('\n');
+            let into='';
+            for(let i = 0; i < tt.length; i++){
+                into += '<p>'+tt[i]+'</p>'
+            }
+            return into;
+        }
+        $.get('/resume-mode/get/'+resumeId,function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                let obj = data.returnObject;
+                $('#user-info').html('<div id="avatar" class="right">\n' +
+                    '            <img src="/get/resume-mode/avatar/'+obj.id+'" width="100">\n' +
+                    '        </div>\n' +
+                    '        <div id="info">\n' +
+                    '            <p id="name">'+obj.name+'</p>\n' +
+                    '            <p class="resume-info">\n' +
+                    '                <span>'+(obj.sex==1?"女":"男")+'</span>\n' +
+                    '                <span>'+obj.birth+'</span>\n' +
+                    '                <span>'+obj.nativePlace+'</span>\n' +
+                    '                <span>'+qu[obj.qualification]+'</span>\n' +
+                    '            </p>\n' +
+                    '            <p class="resume-info">\n' +
+                    '                <span>'+obj.tel+'</span>\n' +
+                    '                <span>'+obj.mailbox+'</span>\n' +
+                    '            </p>\n' +
+                    '        </div>');
+                $('#content').html('<hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>教育经历</dt>\n' +
+                    '            <dd>\n' +
+                    '                <p>\n' +
+                    '                    <span>'+qu[obj.qualification]+'</span>\n' +
+                    '                    <span>'+obj.university+'</span>\n' +
+                    '                    <span>'+obj.speciality+'</span>\n' +
+                    '                </p>\n' +
+                    '            </dd>\n' +
+                    '        </dl>\n' +
+                    '        <hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>经历经验</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.experience)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>\n' +
+                    '        <hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>证书奖状</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.diploma)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>' +
+                    '<hr>' +
+                    '        <dl class="item">\n' +
+                    '            <dt>自我介绍</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.introduction)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>');
+            }
+        });
+    });
+</script>
+</body>
+</html>

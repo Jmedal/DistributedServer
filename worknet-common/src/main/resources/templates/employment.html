@@ -17,9 +17,53 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/loader.css">
     <link rel="stylesheet" type="text/css" href="/css/button.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
     <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.css" rel="stylesheet">
 
     <style>
+        #preview-container{
+            width:100%;
+            margin-left:0;
+            border:1px solid #e0d5d585;
+            padding:20px 60px;
+            margin-top:0;
+            margin-bottom: 80px;
+            background:white;
+        }
+        #preview-container #preview-name{
+            font-size:2em;
+            font-weight:bold;
+        }
+        #preview-container .resume-info span{
+            padding-right:10px;
+        }
+        #preview-container #user-info{
+            margin-bottom:40px;
+            margin-top:40px;
+        }
+        #preview-container dl{
+            min-height:250px;
+        }
+        #preview-container dd{
+            padding:10px 20px;
+        }
+        #preview-container dt{
+            border:5px solid #1fa27b;
+            border-style:none none none solid;
+            padding-left:10px;
+            font-size:1.3em;
+            margin-top:10px;
+            margin-bottom:20px;
+        }
+        .modal-footer{
+            text-align:center;
+            margin-top:20px;
+        }
+        .control-label{
+            font-size:0.9em;
+            margin-top:10px;
+            padding-bottom:5px;
+        }
         body{
             background: rgba(227, 229, 228, 0.26);
         }
@@ -37,6 +81,12 @@
         #com-avatar img:hover{
             transform:scale(1.1);
         }
+        div.row{
+            margin-bottom:10px;
+        }
+        div.modal-body{
+            height:300px;
+        }
         #container{
             width:60%;
             margin-top:50px;
@@ -47,7 +97,7 @@
             border:aliceblue 2px solid;
             background:white;
             display: inline-block;
-            box-shadow:0px 0px 3px #00000047;
+            box-shadow:0 0 3px #00000047;
         }
         #com-info{
             padding-left:20px;
@@ -139,19 +189,23 @@
         #resume-select{
             margin-top:20px;
             margin-left:10px;
+            margin-bottom: 30px;
         }
-        #resume-select-title{
+        .resume-select-title{
             margin-left:20px;
         }
         #resume-select td:nth-last-child(1) a, i{
             margin-right:5px;
+        }
+        #avatar_img,#avatar_file{
+            cursor: pointer;
         }
         td{
             display:inline-block;
         }
         .resume-title{
             display:inline-block;
-            width:270px;
+            width:250px;
             text-overflow:ellipsis;
             overflow:hidden;
             white-space:nowrap;
@@ -160,6 +214,11 @@
         td a:hover{
             cursor: pointer;
             color:#48d26b;
+        }
+        #info-group{
+            font-size:0.8em;
+            margin-left:20px;
+            margin-top:20px;
         }
     </style>
 </head>
@@ -193,7 +252,7 @@
         <div class="row">
             <div class="col-md-12 page-content">
                 <div class="page_nav">
-                    <span>你的位置:</span> <a href="/index">首页</a> <span><i
+                    <span>你的位置:</span> <a href="index.html">首页</a> <span><i
                         class="fa fa-angle-double-right"></i>招聘信息</span>
                 </div>
             </div>
@@ -249,39 +308,210 @@
                     <h4 class="modal-title" id="myModalLabel">投递简历</h4>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <div id="resume-select-title">选择投递简历</div>
-                        <table id="resume-select">
-                            <tr>
-                                <td><input type="radio" name="check" id="check-online"></td>
-                                <td><span><i class="icon icon-screen"></i>
-                                在线简历</span></td>
-                                <td><span class="resume-title" id="online-resume-title">
-                                    aaaaaaaaaaaxx职位申请_张三阿斯达所大所大所多</span></td>
-                                <td>
-                                    <a><i class="icon icon-eye"></i>预览</a>
-                                    <a><i class="icon icon-pencil"></i>修改</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="radio" name="check" id="check-file"></td>
-                                <td><span><i class="icon icon-clip"></i>
-                                附件简历</span></td>
-                                <td><span class="resume-title" id="file-resume-title">
-                                    xx职位申请_张三</span></td>
-                                <td>
-                                    <a><i class="icon icon-eye"></i>预览</a>
-                                    <a><i class="icon icon-pencil"></i>修改</a>
-                                </td>
-                                <!--根据用户id找他的默认简历，如果没有的话就需要自己创建一个。找到的话就把内容复制到-->
-                                <!--相应的文本框里，当做clone一份新简历-->
-                            </tr>
-                        </table>
+                    <div id="resume-body">
+                        请稍后...
+                    </div>
+                    <div id="resume-info">
+                        <div class="resume-select-title"></div>
+                        <div id="info-group">
+                            <div class="row col-md-12">
+                                <span class="col-md-5">最快入职时间：</span>
+                                <select class="selectpicker col-md-7" id="inJobTime">
+                                    <option value="本周">本周</option>
+                                    <option value="本月">本月</option>
+                                    <option value="三个月内">三个月内</option>
+                                    <option value="半年内">半年内</option>
+                                    <option value="一年内">一年内</option>
+                                    <option value="一年以后">一年以后</option>
+                                </select>
+                            </div>
+                            <div class="row col-md-12">
+                                <span class="col-md-5">目前所在地：</span>
+                                <select id="currentLocation" class="selectpicker col-md-7" data-live-search="true" >
+                                    <option value="北京">北京</option>
+                                    <option value="上海">上海</option>
+                                    <option value="广州">广州</option>
+                                    <option value="深圳">深圳</option>
+                                    <option value="杭州">杭州</option>
+                                    <option value="南京">南京</option>
+                                    <option value="成都">成都</option>
+                                    <option value="厦门">厦门</option>
+                                    <option value="武汉">武汉</option>
+                                    <option value="西安">西安</option>
+                                    <option value="长沙">长沙</option>
+                                    <option value="哈尔滨">哈尔滨</option>
+                                    <option value="合肥">合肥</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <span type="button" class="btn btn-default" data-dismiss="modal">关闭</span>
-                    <span type="button" class="btn btn-primary">投递简历</span>
+                    <span type="button" class="btn btn-primary" id="deliver-resume">投递简历</span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="resume-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel2">修改简历</h4>
+                </div>
+                <div class="modal-body" style="height:1630px;">
+                    <div class="col-md-12" id="resume-detail-info">
+                        <form class="form-horizontal col-md-10 col-md-offset-1" >
+                            <fieldset>
+                                <!-- Button Drop Down -->
+                                <div class="avatar">
+                                    <div style="position: relative;border: 5px solid lightblue;width: 150px;height:150px;margin: 5px auto;border-radius: 50%;">
+                                        <img alt="选择并上传头像" id="avatar_img"
+                                             style="width: 140px;height: 140px;left:0;top: 0;border-radius: 50%;"/>
+                                        <input type="file" id="avatar_file" name="avatar_file"
+                                               accept="image/jpg,image/png,image/gif"
+                                               style="width: 100%;height:100%;opacity: 0;position: absolute;left:0;top: 0;"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="name">姓名</label>
+                                    <div class="controls">
+                                        <input id="name" name="name" class="input-medium form-control" placeholder="请输入姓名" type="text">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="sex">性别</label>
+                                    <div class="controls">
+                                        <select id="sex" name="sex" class="input-xlarge selectpicker">
+                                            <option value="0">男</option>
+                                            <option value="1">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="birth">出生年月</label>
+                                    <div class="controls">
+                                        <input id="birth" name="birth" type="text" placeholder="请输入出生年月，如1997.04" class="input-xlarge form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Select Basic -->
+                                <div class="control-group">
+                                    <label class="control-label" for="qualification">最高学历</label>
+                                    <div class="controls">
+                                        <select id="qualification" name="qualification" class="input-xlarge selectpicker">
+                                            <option value="0">博士后</option>
+                                            <option value="1">博士</option>
+                                            <option value="2">硕士</option>
+                                            <option value="3">本科</option>
+                                            <option value="4">专科</option>
+                                            <option value="5">高中</option>
+                                            <option value="6">初中</option>
+                                            <option value="7">小学</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="university">学校</label>
+                                    <div class="controls">
+                                        <input id="university" name="university" type="text" placeholder="请输入最高学历的毕业院校，如果没有则输入无" class="input-xlarge form-control">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="speciality">专业</label>
+                                    <div class="controls">
+                                        <input id="speciality" name="speciality" type="text" placeholder="请输入最高学历的专业，如果没有输入无" class="input-xlarge form-control">
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="tel">手机</label>
+                                    <div class="controls">
+                                        <input id="tel" name="tel" type="text" placeholder="请输入手机号" class="input-xlarge form-control">
+
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="mailbox">邮箱</label>
+                                    <div class="controls">
+                                        <input id="mailbox" name="mailbox" type="text" placeholder="请输入邮箱" class="input-xlarge form-control">
+
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="identity">身份证</label>
+                                    <div class="controls">
+                                        <input id="identity" name="identity" type="text" placeholder="请输入身份证号" class="input-xlarge form-control">
+
+                                    </div>
+                                </div>
+
+                                <!-- Text input-->
+                                <div class="control-group">
+                                    <label class="control-label" for="nativePlace">籍贯</label>
+                                    <div class="controls">
+                                        <input id="nativePlace" name="nativePlace" type="text" placeholder="请输入籍贯" class="input-xlarge form-control">
+
+                                    </div>
+                                </div>
+
+                                <!-- Select Basic -->
+                                <div class="control-group">
+                                    <label class="control-label" for="policyRole">政治面貌</label>
+                                    <div class="controls">
+                                        <select id="policyRole" name="policyRole" class="input-xlarge selectpicker">
+                                            <option value="0">群众</option>
+                                            <option value="1">共青团员</option>
+                                            <option value="2">中共党员</option>
+                                            <option value="3">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="experience">经历</label>
+                                    <div class="controls">
+                                        <textarea id="experience" rows="5" name="experience" placeholder="经历，包括实习经历或校内经历，需要记录时间阶段" class="input-xlarge form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="introduction">自我介绍</label>
+                                    <div class="controls">
+                                        <textarea id="introduction" rows="5" name="introduction" placeholder="介绍一下你自己吧" class="input-xlarge form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="diploma">获奖证书</label>
+                                    <div class="controls">
+                                        <textarea id="diploma" name="diploma" rows="5" placeholder="获奖或证书的情况，需要包含时间节点和奖项名称" class="input-xlarge form-control"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span type="button" class="btn btn-success" id="finish-change-resume">完成并退出</span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="resume-preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div id='preview-container'>
+                    <div id="user-info" class="clearfix">
+                        请稍后...
+                    </div>
+                    <div id="content">
+
+                    </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
@@ -318,6 +548,7 @@
 <script src="/js/jquery-2.2.3.js"></script>
 <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-select.js"></script>
 <script src="/js/bootsnav.js"></script>
 <script src="/js/jquery.appear.js"></script>
 <script src="/js/jquery-countTo.js"></script>
@@ -334,13 +565,29 @@
 <script src="/js/wow.min.js"></script>
 <script src="/js/functions.js"></script>
 <script>
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
     $(document).ready(function () {
         var href = window.location.href;
         let tmp = href.split('\/');
-        var jobId = parseInt(tmp.slice(-2));
+        var employId = parseInt(tmp.slice(-2));
         var companyId = parseInt(tmp.slice(-4));
-        console.log("jobId:"+jobId);
-        console.log("companyId:"+companyId);
+        var available = true;
+        var resumeMap = {};
+        var formData = new FormData();
         $.get('/get/companyInfo/'+companyId,function (data) {
             data = JSON.parse(data);
             if(data.errorCode=='00'){
@@ -356,7 +603,7 @@
                 $('#com-communication').html(obj.communication);
             }
         });
-        $.get("/get/jobInfo/"+jobId+"/company/"+companyId,function (data) {
+        $.get("/get/jobInfo/"+employId+"/company/"+companyId,function (data) {
            data = JSON.parse(data);
            if(data.errorCode=='00'){
                let obj = data.returnObject;
@@ -383,6 +630,259 @@
                $('#intro .info-cont').html(obj.introduction);
                $('#require .info-cont').html(obj.requirement);
            }
+        });
+        $('#resume-detail').on('hide.bs.modal',function (object) {
+            checkAvailable();
+        });
+        $('#finish-change-resume').on('click',function (object) {
+            checkAvailable();
+            if(available){
+                $('#resume-detail').modal('hide');
+            }
+            else if(resumeMap.headPath==null)
+                toastr.warning('请上传头像');
+            else toastr.warning('还有信息没有填写完全');
+        });
+        function gD(d) {
+            if(d!=undefined && d!=null && d!=='') return d;
+            else {
+                available = false;
+                return null;
+            }
+        }
+        $("#avatar_file").change(function () {
+
+            var file = $(this)[0].files[0];
+            if(file.size>2048*1024){//2MB
+                toastr.warning('头像图片太大！限制2MB以下');
+                return;
+            }
+            console.log('大小合适');
+            // 读取文件URL
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            // console.log(file.name);
+            formData.append("avatar",file);
+            formData.append("fileName",file.name);
+            // 阅读文件完成后触发的事件
+            reader.onload = function () {
+                let res = this.result;
+                $("#avatar_img").attr("src", res);
+                resumeMap.headPath = res;
+            };
+        });
+        $('#resume-detail input').on('blur',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        $('#resume-detail textarea').on('blur',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        $('#resume-detail select').on('change',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        function fillResume(obj){
+            available = true;
+            resumeMap.learnerId = gD(obj.learnerId);
+            resumeMap.name = gD(obj.name);//真实姓名
+            $('#name').val(resumeMap.name);
+            resumeMap.sex = gD(obj.sex);
+            if(resumeMap.sex!=null){
+                $('select#sex option:eq('+resumeMap.sex+')').attr('selected',true);
+                $('select#sex').selectpicker('refresh');
+            }else{
+                resumeMap.sex = 0;
+            }
+            resumeMap.birth = gD(obj.birth);
+            $('#birth').val(resumeMap.birth);
+            resumeMap.nativePlace = gD(obj.nativePlace);
+            $('#nativePlace').val(resumeMap.nativePlace);
+            resumeMap.identity = gD(obj.identity);
+            $('#identity').val(resumeMap.identity);
+            resumeMap.qualification = gD(obj.qualification);
+            if(resumeMap.qualification!=null){
+                $('select#qualification option:eq('+resumeMap.qualification+')').attr('selected',true);
+                $('select#qualification').selectpicker('refresh');
+            }else{
+                resumeMap.qualification = 0;
+            }
+            resumeMap.speciality = gD(obj.speciality);
+            $('#speciality').val(resumeMap.speciality);
+            resumeMap.university = gD(obj.university);
+            $('#university').val(resumeMap.university);
+            resumeMap.tel = gD(obj.tel);
+            $('#tel').val(resumeMap.tel);
+            resumeMap.experience = gD(obj.experience);
+            $('#experience').html(resumeMap.experience);
+            resumeMap.mailbox = gD(obj.mailbox);
+            $('#mailbox').val(resumeMap.mailbox);
+            resumeMap.introduction = gD(obj.introduction);
+            $('#introduction').html(resumeMap.introduction);
+            resumeMap.diploma = gD(obj.diploma);
+            $('#diploma').html(resumeMap.diploma);
+            resumeMap.headPath = gD(obj.headPath);//如果headPath==null，那就说明没有上传头像
+            console.log("resumeMap:");
+            console.log(resumeMap);
+        }
+        function checkAvailable(){
+            let $tt = $('#resume-select td:last');
+            $tt.empty();
+            let tstr = '<a id="preview-online-resume"><i class="icon icon-eye"></i>预览</a>'+'<a id="change-online-resume">' +
+                '<i class="icon icon-pencil"></i>修改</a>';
+            if(!available)
+                tstr = '<span style="color:red">简历未完善</span>'+'<a id="change-online-resume">' +
+                    '<i class="icon icon-pencil"></i>修改</a>';
+            $tt.html(tstr);
+            $('#change-online-resume').on('click',function (object1) {
+                $('#resume-detail').modal('show');//显示修改简历的modal
+            });
+            $("#preview-online-resume").on('click',function (object) {
+               console.log("预览简历");
+               $("#resume-preview").modal('show');
+               let obj = resumeMap;
+                let qu = ['博士后','博士','硕士','本科','专科',"高中","初中","小学"];
+
+                $('#user-info').html('<div id="preview-avatar" class="right">\n' +
+                    '            <img src="'+obj.headPath+'" width="150">\n' +
+                    '        </div>\n' +
+                    '        <div id="info">\n' +
+                    '            <p id="preview-name">'+obj.name+'</p>\n' +
+                    '            <p class="resume-info">\n' +
+                    '                <span>'+(obj.sex==1?"女":"男")+'</span>\n' +
+                    '                <span>'+obj.birth+'</span>\n' +
+                    '                <span>'+obj.nativePlace+'</span>\n' +
+                    '                <span>'+qu[obj.qualification]+'</span>\n' +
+                    '            </p>\n' +
+                    '            <p class="resume-info">\n' +
+                    '                <span>'+obj.tel+'</span>\n' +
+                    '                <span>'+obj.mailbox+'</span>\n' +
+                    '            </p>\n' +
+                    '        </div>');
+                $('#content').html('<hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>教育经历</dt>\n' +
+                    '            <dd>\n' +
+                    '                <p>\n' +
+                    '                    <span>'+qu[obj.qualification]+'</span>\n' +
+                    '                    <span>'+obj.university+'</span>\n' +
+                    '                    <span>'+obj.speciality+'</span>\n' +
+                    '                </p>\n' +
+                    '            </dd>\n' +
+                    '        </dl>\n' +
+                    '        <hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>经历经验</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.experience)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>\n' +
+                    '        <hr>\n' +
+                    '        <dl class="item">\n' +
+                    '            <dt>证书奖状</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.diploma)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>' +
+                    '<hr>' +
+                    '        <dl class="item">\n' +
+                    '            <dt>自我介绍</dt>\n' +
+                    '            <dd>\n' +
+                    '                '+getSplitStr(obj.introduction)+'\n' +
+                    '            </dd>\n' +
+                    '        </dl>');
+            });
+        }
+        function getSplitStr(str){
+            let tt = str.split('\n');
+            let into='';
+            for(let i = 0; i < tt.length; i++){
+                into += '<p>'+tt[i]+'</p>'
+            }
+            return into;
+        }
+
+        $('#apply').on('click',function (object) {
+            $.get('/getFavorResumeMode/',function (data) {
+                data = JSON.parse(data);
+                if(data.errorCode=='00'){
+                    let obj = data.returnObject;
+                    let tstr = '<a id="preview-online-resume"><i class="icon icon-eye"></i>预览</a>\n';
+                    if(obj.headPath!=null){
+                        //如果头像存在
+                        obj.headPath='/get/resume-mode/avatar/'+obj.id;
+                    }
+                    fillResume(obj);//填写mapper
+                    if(obj.id==null){
+                        $('#avatar_img').attr('src','/user/default/avatar');//默认头像
+                    }else $('#avatar_img').attr('src','/get/resume-mode/avatar/'+obj.id);
+                    if(obj.learnerId == null){
+                        obj.learnerId = uid;
+                    }
+                    $('#avatar_img').attr('src','/get/resume-mode/avatar/'+obj.id);
+                    if(!available)
+                        tstr = '<span style="color:red">简历未完善</span>';
+                    $('#resume-body').html('<div>\n' +
+'                        <div class="resume-select-title">选择投递简历</div>\n' +
+'                        <table id="resume-select">\n' +
+'                            <tr>\n' +
+'                                <td><input type="checkbox" name="check" id="check-online"></td>\n' +
+'                                <td><span><i class="icon icon-screen"></i>\n' +
+'                                在线简历</span></td>\n' +
+'                                <td><span class="resume-title" id="online-resume-title">'+obj.resumeName+'</span></td>\n' +
+'                                <td></td>\n' +
+'                            </tr>\n' +
+'                        </table>\n' +
+'                    </div>');
+                    $('#resume-info .resume-select-title').html('你要申请的职位是：'+$("#title").text());
+                    checkAvailable();
+                }
+            })
+        });
+        $('#deliver-resume').on('click',function (object) {
+            if(!$('#check-online').is(':checked')){
+                //没选中
+                toastr.warning('请先选择一种简历方式');
+            }else if(!available){
+                toastr.warning('简历未完善');
+            }else{
+                resumeMap.inJobTime = $('#inJobTime').selectpicker('val');
+                resumeMap.currentLocation = $('#currentLocation').selectpicker('val');
+                let currentTime = new Date();
+                resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
+                console.log(resumeMap);
+                $.post('/resume/deliver/',resumeMap,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        let resumeId = data.returnObject;
+                        $.ajax({
+                            url:'/resume/deliver/avatar/'+resumeId,
+                            type: 'POST',
+                            processData: false,
+                            data:formData,
+                            contentType: false,
+                            success:function (msg) {
+                                msg = JSON.parse(msg);
+                                if(msg.errorCode==='00'){
+                                    toastr.success('成功投递简历');
+                                    setTimeout(function () {
+                                        window.location.reload();
+                                    },1000);
+                                }else{
+                                    toastr.error('未知错误，上传头像失败');
+                                }
+                            },
+                            error:function (data) {
+                                console.log(data);
+                            }
+                        });
+                    }
+                })
+            }
         });
     });
 </script>

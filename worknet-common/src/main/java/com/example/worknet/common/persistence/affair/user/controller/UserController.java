@@ -278,7 +278,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/get/avatar/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/get/avatar/{id}", method = RequestMethod.GET)
     public ResponseEntity downLoadPicture(@PathVariable(value = "id") long userId ,
                                           HttpServletRequest request){
         String strDirPath = request.getSession().getServletContext().getRealPath("/");
@@ -304,7 +304,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/personal/change/password",method = RequestMethod.POST)
+    @RequestMapping(value = "/personal/change/password", method = RequestMethod.POST)
     public String changePass(@RequestParam(value = "old_pass") String oldPassword,
                              @RequestParam(value = "new_pass") String newPassword,
                              @RequestParam(value = "confirm_pass") String confirmPassword,
@@ -369,5 +369,7 @@ public class UserController {
             map.put("errorCode","error");
         return JSON.toJSONString(map);
     }
+
+
 }
 

@@ -2,6 +2,10 @@ package com.example.worknet.common.persistence.affair.user.serivce;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.example.worknet.common.persistence.template.modal.LearnerCv;
+import org.springframework.core.io.Resource;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,13 @@ import com.example.worknet.common.persistence.template.modal.LearnerCv;
  */
 public interface LearnerCvService extends IService<LearnerCv> {
 
+    HashMap<String,Object> getDefaultLearnerCvInfo(Long userId);
+
+    Resource getLearnerCvAvatar(Long cvId, String strDirPath);
+
+    Long createLearnerCv(LearnerCv learnerCv);
+
+    List<HashMap<String,Object>> getLearnerCvList(Long userId);
+
+    boolean deleteLearnerCv(Long cvId);
 }
