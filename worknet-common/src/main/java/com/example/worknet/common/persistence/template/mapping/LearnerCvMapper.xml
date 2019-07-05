@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.LearnerCv">
         <id column="id" property="id" />
-        <result column="user_id" property="userId" />
+        <result column="user_id" property="learnerId" />
         <result column="resume_name" property="resumeName" />
         <result column="name" property="name" />
         <result column="sex" property="sex" />

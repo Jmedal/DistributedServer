@@ -56,7 +56,7 @@ public class LearnerCvController {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             User user = userService.selectById(userId);
             if(user.getRole().equals(3)){
-                map.put("returnObject", learnerCvService.getDefaultLearnerCvInfo(userId));
+                map.put("returnObject", learnerCvService.getLearnerCvInfo(userId));
                 map.put("errorCode", "00");
             }
             else
@@ -142,7 +142,7 @@ public class LearnerCvController {
                 LearnerCv learnerCv = new LearnerCv();
                 learnerCv.setResumeName(resumeName);
                 learnerCv.setName(name);
-                learnerCv.setUserId(userId);
+                learnerCv.setLearnerId(userId);
                 learnerCv.setSex(sex);
                 learnerCv.setBirth(DateUtil.getSqlDateTime(birth,DateUtil.YMD_TIME));
                 learnerCv.setNativePlace(nativePlace);
@@ -156,7 +156,7 @@ public class LearnerCvController {
                 learnerCv.setIntroduction(introduction);
                 learnerCv.setDiploma(diploma);
                 learnerCv.setLastEditTime(DateUtil.getSqlDateTime(lastEditTime,DateUtil.YMD_TIME));
-                Long learnerCvId = learnerCvService.createLearnerCv(learnerCv);
+                Long learnerCvId = learnerCvService.createLearnerCv(learnerCv,userId);
                 if (learnerCvId != null) {
                     map.put("returnObject", learnerCvId);
                     map.put("errorCode", "00");
@@ -171,8 +171,13 @@ public class LearnerCvController {
     }
 
 
+    /**
+     * 加载学习者简历模版列表
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/get/resume-mode/list", method = RequestMethod.GET)
-    public String getResumeModeList(HttpServletRequest request){
+    public String getResumeModeList(HttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
@@ -196,42 +201,56 @@ public class LearnerCvController {
 
 
     //需要注意，当删除的简历模板为该用户的默认模板时，需要从该用户其他模板中选取一份作为默认模板
+    //检查该简历是否属于该用户
     /**
      * 删除简历模版
      * @param resumeId
      * @return
      */
     @RequestMapping(value = "/resume-mode/delete/{resumeId}", method = RequestMethod.GET)
-    public String deleteResumeMode(@PathVariable(value = "resumeId") Long resumeId){
+    public String deleteResumeMode(@PathVariable(value = "resumeId") Long resumeId,
+                                   HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
+        if(request.getSession(true).getAttribute("userId") != null) {
+            Long userId = (long)request.getSession(true).getAttribute("userId");
+            if(userService.selectById(userId).getRole().equals(3)) {
+                if(learnerCvService.deleteLearnerCv(resumeId,userId))
+                    map.put("errorCode", "00");
+                else
+                    map.put("errorCode", "error");
+            }
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 
 
     //根据模板id获取模板的内容
+    //需要判断简历是否属于该用户
     @RequestMapping(value = "/resume-mode/get/{resumeId}")
     public String getResumeMode(@PathVariable int resumeId){
         HashMap<String, Object> map = new HashMap<>();
         map.put("errorCode","00");
         HashMap<String,Object> obj = new HashMap<>();
-        obj.put("id",55);//简历模板的id！！！
-        obj.put("resumeName","简历名称1231");//简历的名字
-        obj.put("learnerId",131);
-        obj.put("name","张萨姆");
-        obj.put("sex",1);
-        obj.put("birth","1997-05");
-        obj.put("nativePlace","上海市");
-        obj.put("identity","124124124");
-        obj.put("qualification",3);//存0-7的数字
-        obj.put("speciality","计算机");
-        obj.put("university","上海大学");
-        obj.put("tel","18888888888");
-        obj.put("experience","2008-2011 白宫洗碗三年");//格式为字符串，存入格式为时间+内容
-        obj.put("mailbox","88888888@qq.com");
-        obj.put("introduction","我是一个xxxxxx");
-        obj.put("diploma","2018-03-21 洗碗全国大奖");
-        obj.put("headPath","http://www.baidu.com");
+//        obj.put("id",55);//简历模板的id！！！
+//        obj.put("resumeName","简历名称1231");//简历的名字
+//        obj.put("learnerId",131);
+//        obj.put("name","张萨姆");
+//        obj.put("sex",1);
+//        obj.put("birth","1997-05");
+//        obj.put("nativePlace","上海市");
+//        obj.put("identity","124124124");
+//        obj.put("qualification",3);//存0-7的数字
+//        obj.put("speciality","计算机");
+//        obj.put("university","上海大学");
+//        obj.put("tel","18888888888");
+//        obj.put("experience","2008-2011 白宫洗碗三年");//格式为字符串，存入格式为时间+内容
+//        obj.put("mailbox","88888888@qq.com");
+//        obj.put("introduction","我是一个xxxxxx");
+//        obj.put("diploma","2018-03-21 洗碗全国大奖");
+//        obj.put("headPath","http://www.baidu.com");
         map.put("returnObject",obj);
         return JSON.toJSONString(map);
     }

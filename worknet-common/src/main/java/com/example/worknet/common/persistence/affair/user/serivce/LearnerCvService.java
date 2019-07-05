@@ -17,13 +17,15 @@ import java.util.List;
  */
 public interface LearnerCvService extends IService<LearnerCv> {
 
-    HashMap<String,Object> getDefaultLearnerCvInfo(Long userId);
+    LearnerCv getLearnerCvInfo(Long userId);
+
+    LearnerCv getLearnerCvInfo(Long cvId, Long userId);
 
     Resource getLearnerCvAvatar(Long cvId, String strDirPath);
 
-    Long createLearnerCv(LearnerCv learnerCv);
+    Long createLearnerCv(LearnerCv learnerCv, Long userId);
 
     List<HashMap<String,Object>> getLearnerCvList(Long userId);
 
-    boolean deleteLearnerCv(Long cvId);
+    boolean deleteLearnerCv(Long cvId,Long userId);
 }

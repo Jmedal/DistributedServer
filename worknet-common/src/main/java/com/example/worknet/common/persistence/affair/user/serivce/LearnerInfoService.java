@@ -13,4 +13,7 @@ import com.example.worknet.common.persistence.template.modal.LearnerInfo;
  */
 public interface LearnerInfoService extends IService<LearnerInfo> {
 
+    Long getLearnerDefaultCvId(Long userId);
+
+    LearnerInfo getLearnerInfoByUserId(Long userId);
 }

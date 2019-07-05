@@ -12,5 +12,4 @@ import com.example.worknet.common.persistence.template.modal.LearnerCv;
  * @since 2019-07-02
  */
 public interface LearnerCvMapper extends BaseMapper<LearnerCv> {
-
 }

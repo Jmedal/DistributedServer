@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean verify(String account, String password) {
-        List<User> userList = userService.selectList(new EntityWrapper<User>().eq("account",account));
+        List<User> userList = super.selectList(new EntityWrapper<User>().eq("account",account));
         if(userList.size() != 0 &&
                 userList.get(0).getPassword().equals(password)){
             return true;
@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean checkAccount(String account) {
-        List<User> userList = userService.selectList(new EntityWrapper<User>().eq("account",account));
+        List<User> userList = super.selectList(new EntityWrapper<User>().eq("account",account));
         if(userList.size() != 0)
             return true;
         return false;
@@ -95,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public String getNickname(Long id) {
-        int role = userService.selectById(id).getRole();
+        int role = super.selectById(id).getRole();
         switch (role){
             case 3:
                 return learnerInfoService.selectOne(new EntityWrapper<LearnerInfo>().eq("user_id",id)).getNickname();
@@ -118,8 +118,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int role=user.getRole();
         if(role == 0)
             return false;
-        userService.insert(user);
-        user = userService.selectOne(new EntityWrapper<User>().eq("account",user.getAccount()));
+        super.insert(user);
+        user = super.selectOne(new EntityWrapper<User>().eq("account",user.getAccount()));
         switch (role){
             case 3:
                 LearnerInfo learnerInfo = new LearnerInfo();
@@ -171,7 +171,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean updateUserInfo(User user) {
         if(user.getId()==null)
             return false;
-        return userService.updateById(user);
+        return super.updateById(user);
     }
 
     /**
@@ -204,7 +204,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Resource getAvatar(long userId, String strDirPath) {
-        User user = userService.selectById(userId);
+        User user = super.selectById(userId);
         if(user==null)
             throw new RuntimeException();
         //绝对保存路径
@@ -220,7 +220,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Resource getCompanyAvatar(long companyId, String strDirPath) {
-        User user = userService.selectById(companyService.selectById(companyId).getUserId());
+        User user = super.selectById(companyService.selectById(companyId).getUserId());
         if(user==null)
             throw new RuntimeException();
         //绝对保存路径
@@ -237,10 +237,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean updateAvatar(long userId,MultipartHttpServletRequest request) {
-        User user = userService.selectById(userId);
+        User user = super.selectById(userId);
         if(user==null)
             return false;
-        if(user.getHeadPath()!=null&&!user.getHeadPath().equals("")&&!user.getHeadPath().equals(userService.selectById(1).getHeadPath()))
+        if(user.getHeadPath()!=null&&!user.getHeadPath().equals("")&&!user.getHeadPath().equals(super.selectById(1).getHeadPath()))
             FileToolsUtil.deleteFile(Const.FILE_PATH + user.getHeadPath());//删除旧图片
         //相对保存路径
         String file_path = Const.FILE_SEPARATOR + Const.HEAD_PATH + Const.FILE_SEPARATOR + Calendar.getInstance().get(Calendar.YEAR);
@@ -250,7 +250,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String file_name = FileToolsUtil.fileUpload(request.getFile("avatar"),FileToolsUtil.createDiretory(file_full_path));
         //更新数据库路径信息
         user.setHeadPath(file_path + Const.FILE_SEPARATOR + file_name);
-        userService.updateById(user);
+        super.updateById(user);
         return true;
     }
 
@@ -276,8 +276,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return companyContestApplyService.getUserContestPage(page, uid);
     }
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private UserMapper userMapper;

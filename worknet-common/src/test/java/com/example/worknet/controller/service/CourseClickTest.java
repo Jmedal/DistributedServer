@@ -9,6 +9,7 @@ import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseClickService;
 import com.example.worknet.common.persistence.affair.user.serivce.TeacherInfoService;
+import com.example.worknet.common.persistence.template.modal.User;
 import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +33,8 @@ public class CourseClickTest {
 //    @Autowired
 //    private CourseClickService courseClickService;
 //
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 //
 //    @Autowired
 //    private AdministratorService administratorService;
@@ -52,6 +53,13 @@ public class CourseClickTest {
 
     @Test
     public void test() throws Exception {
+        User user = new  User();
+        user.setAccount("123456");
+        user.setPassword("123");
+        user.setRole(3);
+        user.setActivity(1);
+        userService.insert(user);
+        System.out.println(user.getId());
 
 //        System.out.println("3".hashCode());
 //

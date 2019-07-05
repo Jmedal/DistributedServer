@@ -29,7 +29,7 @@ public class LearnerCv implements Serializable {
      * 用户id
      */
     @TableField("user_id")
-    private Long userId;
+    private Long learnerId;
     /**
      * 简历名称
      */
@@ -118,12 +118,12 @@ public class LearnerCv implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getLearnerId() {
+        return learnerId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setLearnerId(Long learnerId) {
+        this.learnerId = learnerId;
     }
 
     public String getResumeName() {
@@ -274,7 +274,7 @@ public class LearnerCv implements Serializable {
     public String toString() {
         return "LearnerCv{" +
         ", id=" + id +
-        ", userId=" + userId +
+        ", learnerId=" + learnerId +
         ", resumeName=" + resumeName +
         ", name=" + name +
         ", sex=" + sex +

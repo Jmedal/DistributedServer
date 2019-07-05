@@ -1,50 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>系统消息</title>
-<link rel="stylesheet" href="/personal/css/myMsg.css" />
-
+	<meta charset="UTF-8">
+	<title>公司邀请</title>
+	<link rel="stylesheet" href="/personal/css/myMsg.css" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+	<style>
+		.preview a{
+			text-decoration: none;
+		}
+		.preview i{
+			padding-right:5px;
+		}
+		td span.btn{
+			margin-left:5px;
+		}
+		td{
+			max-width:250px;
+			text-overflow:ellipsis;
+			overflow:hidden;
+			white-space:nowrap;
+			word-break:keep-all;
+		}
+	</style>
 </head>
 <body>
-	<div class="msg-center-inform-box">
-		<div class="msg-center-inform-con">
-			<p class="msg-center-num-results">
-				<span class="msg-show-results active" style="margin-right: 20px;">全部消息<em>(5)</em></span>
-				<span class="msg-show-results active" >未读消息<em>(4)</em></span>
-				<!-- <i class="divide">|</i><span>未读消息<em>(123)</em></span> -->
-			</p>
-	<ul class="list">
-		<li class="item">
-			<div class="clearfix">
-				<p class="msg-center-info-detail fl ">
-					恭喜你已成功报名<a target="_blank" class="link"
-						href="https://www.saikr.com/neccs/usst/2019">2019年全国大学生英语竞赛上海理工大学分赛区</a>，关注竞赛动态更利于顺利参赛哦！（报名如需审核，请等待主办方审核结果），更多详情请登录赛氪官网查询http://www.saikr.com
-				</p>
-			</div>
-			<p class="clearfix bottom-hint-msg">
-				<span class="pub-time fl">2019-03-02 11:33:43</span> <span
-					class="delete fr js_del_msg" action-method="post"
-					action-url="/un/l/dn" action-data='{"id":"4398352"}'>删&nbsp;除</span>
-			</p>
-		</li>
-		<li class="item">
-			<div class="clearfix">
-				<p class="msg-center-info-detail fl ">
-					您参加的<a target="_blank" class="link"
-						href="https://www.saikr.com/neccs/usst/2018">2018年全国大学生英语竞赛上海理工大学分赛区</a>给您发来了准考证，请到<a
-						class="link" href="/ce/ct/35356" target="_blank">报名信息</a>页面下载。
-					<!-- 你的文章<a href="#" class="link">算法递归</a>太棒了，被<a href="#" class="link">琪琪</a>收藏了哦！-->
-				</p>
-			</div>
-			<p class="clearfix bottom-hint-msg">
-				<span class="pub-time fl">2018-03-28 16:25:01</span> <span
-					class="delete fr js_del_msg" action-method="post"
-					action-url="/un/l/dn" action-data='{"id":"3350002"}'>删&nbsp;除</span>
-			</p>
-		</li>
-	</ul>
-		</div>
+<div class="msg-center-inform-box">
+	<div class="msg-center-inform-con">
+		<!--用bootstrap的表格展示即可-->
+		<table id="my-resume"></table>
 	</div>
+</div>
+
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+
+    dynamicTable = $("#my-resume").bootstrapTable({
+        url: "/get/welcome-company",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+		onLoadSuccess:function(data){
+			$('span.agreeToWelcome').on('click',function (object) {
+			    let welcomeId = $(this).attr('data-id');
+			    $.get('/agree-welcome/'+welcomeId,function (data) {
+					data = JSON.parse(data);
+					if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已同意该公司的邀请");
+                        $('#my-resume').bootstrapTable('refresh');
+					}else{
+                        window.top.showToastr(2,"未知错误");
+					}
+                }).error(function () {
+					window.top.showToastr(2,"未知错误");
+                });
+			});
+			$('span.rejectToWelcome').on('click',function (object) {
+                let welcomeId = $(this).attr('data-id');
+                $.get('/reject-welcome/'+welcomeId,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已拒绝该公司的邀请");
+                        $('#my-resume').bootstrapTable('refresh');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+			})
+		},
+        columns:[{
+            field:"companyName",
+            title:"邀请公司",
+            align: "center",
+            formatter:function (v,r,i) {
+                return '<a target="_blank" href="/working/'+r.companyId+'/"><span>'+v+'</span></a>'
+            }
+
+        },{
+            field:"title",
+            title:"招聘职位",
+            align: "center",
+            formatter:function (v,r,i) {
+                return '<a target="_blank" href="/working/'+r.companyId+'/job/'+r.employId+'/"><span>'+v+'</span></a>'
+            }
+        },{
+            field:"inviteTime",
+            title:"邀请时间",
+            align: "center",
+            formatter: function(v){
+                return "<span>"+v+"</span>";
+            }
+        },{
+            field:"status",
+            title:"邀约状态",
+            align: "center",
+            formatter: function(v,r,i){
+                //0未读，1同意，2拒绝
+                if(v==1){//已同意
+                    return "<span class='btn btn-default btn-xs' disabled='true'>已同意</span>";
+				}
+				if(v==2)
+                    return "<span class='btn btn-default btn-xs' disabled='true'>已拒绝</span>";
+                return "<span data-id='"+r.id+"' class='btn btn-success btn-xs agreeToWelcome'>同意</span>" +
+					"<span data-id='"+r.id+"' class='btn btn-danger btn-xs rejectToWelcome'>拒绝</span>";
+            }
+        }]
+    });
+</script>
 </body>
 </html>

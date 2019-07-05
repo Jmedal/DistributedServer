@@ -72,14 +72,14 @@ public interface Const {
     String COURSE_VIEW_PATH = "course_view";
 
     /**
-     * 问题图片文件夹
+     * 简历模版头像文件夹
      */
-    String PICTURE_PATH = "picture";
+    String LEARNER_CV_HEAD_PATH = "learner_cv_avatar";
 
     /**
-     * 回答图片文件夹
+     * 公司简历头像文件夹
      */
-    String FILE_SHARE = "answer";
+    String COMPANY_CV_HEAD_PATH = "company_cv_avatar";
 
     String SERVER_URL_MY = "http://localhost:8080";
 

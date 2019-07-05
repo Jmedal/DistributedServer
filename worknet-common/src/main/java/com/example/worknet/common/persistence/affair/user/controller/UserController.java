@@ -97,8 +97,11 @@ public class UserController {
         HashMap<String,String> map = new HashMap<>();
         if(userService.verify(username,password)){
             User user = userService.selectOne(new EntityWrapper<User>().eq("account",username));
-            request.getSession().setAttribute("userId",user.getId());
-            map.put("errorCode","00");
+            if(user.getRole().equals(3)){
+                request.getSession().setAttribute("userId",user.getId());
+                map.put("errorCode","00");
+            }else
+                map.put("errorCode","error");
         }else
             map.put("errorCode","error");
         return JSON.toJSONString(map);

@@ -4,50 +4,589 @@
 <meta charset="UTF-8">
 <title>我的消息</title>
 <link rel="stylesheet" href="/personal/css/myMsg.css" />
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
+	<link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+	<style>
+		#myModalLabel2{
+			width:200px;
+			display:inline-block;
+		}
+		.modal-footer{
+			text-align:center;
+			margin-top:20px;
+		}
+		.control-label{
+			font-size:0.9em;
+			margin-top:10px;
+			padding-bottom:5px;
+		}
+		.mode-hint p{
+			width:85%;
+			display:inline-block
+		}
+		.mode-hint span{
+			float:right;
+		}
+		.mode-hint{
+			margin-top:20px;
+			background:#c8f5da75;
+			padding:30px 20px;
+			font-size:1.1em;
+			border-radius:10px;
+		}
+		.mode-item>span{
+			margin-left:10px;
+		}
+		.progress-percent{
+			padding-left:5px;
+		}
+		.mode-item:hover{
+			background:#d5ece6;
+			color:#0e426f;
+			cursor:pointer;
+		}
+		.mode-item i{
+			padding-right:3px;
+		}
+		.mode-item{
+			transition:all 0.5s;
+			padding: 10px 20px;
+			border:8px #90dea4 solid;
+			border-radius:4px;
+			border-style:none none none solid;
+			background:#f4fbf963;
+		}
+		.mode-item a{
+			text-decoration:none;
+		}
+		.mode-item a:hover{
+			text-decoration:none;
+		}
+		.mode-item a:active{
+			text-decoration:none;
+		}
+		.mode-item{
+			text-align:center;
+			margin-top:10px;
+			padding-top:0;
+		}
+		span.left-star{
+			font-size:1.8em;
+			color:#31e031;
+		}
+		.mode-item span{
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		.mode-info{
+			width:50%;
+			display:inline-block;
+			text-align:left;
+			margin-left:80px;
+			margin-top:10px;
+		}
+		.mode-name{
+			display:inline-block;
+			max-width:90px;
+			text-overflow:ellipsis;
+			overflow:hidden;
+			white-space:nowrap;
+			word-break:keep-all;
+			font-size:1.1em;
+			margin-right:10px;
+		}
+		div.mode-progress{
+			width:50%;
+			display:inline-block;
+			margin:0;
+		}
 
+	</style>
 </head>
 <body>
 
 <div class="msg-center-inform-box">
 	<div class="msg-center-inform-con">
-		<p class="msg-center-num-results">
-			<span class="msg-show-results active" style="margin-right: 20px;">全部消息<em>(2)</em></span>
-			<span class="msg-show-results active" >未读消息<em>(0)</em></span>
-			<!-- <i class="divide">|</i><span>未读消息<em>(123)</em></span> -->
-		</p>
-		<ul class="list">
-			<li class="item">
-				<div class="clearfix">
-					<p class="msg-center-info-detail fl ">
-						恭喜你已成功报名<a target="_blank" class="link"
-								   href="https://www.saikr.com/neccs/usst/2019">2019年全国大学生英语竞赛上海理工大学分赛区</a>，关注竞赛动态更利于顺利参赛哦！（报名如需审核，请等待主办方审核结果），更多详情请登录赛氪官网查询http://www.saikr.com
-					</p>
-				</div>
-				<p class="clearfix bottom-hint-msg">
-					<span class="pub-time fl">2019-03-02 11:33:43</span>
-					<span class="delete fr js_del_msg" action-method="post"
-						  action-url="/un/l/dn" action-data='{"id":"4398352"}'>删&nbsp;除</span>
-					<span class="read">已&nbsp;读</span>
-				</p>
-			</li>
-			<li class="item">
-				<div class="clearfix">
-					<p class="msg-center-info-detail fl ">
-						您参加的<a target="_blank" class="link"
-							   href="https://www.saikr.com/neccs/usst/2018">2018年全国大学生英语竞赛上海理工大学分赛区</a>给您发来了准考证，请到<a
-							class="link" href="/ce/ct/35356" target="_blank">报名信息</a>页面下载。
-						<!-- 你的文章<a href="#" class="link">算法递归</a>太棒了，被<a href="#" class="link">琪琪</a>收藏了哦！-->
-					</p>
-				</div>
-				<p class="clearfix bottom-hint-msg">
-					<span class="pub-time fl">2018-03-28 16:25:01</span> <span
-						class="delete fr js_del_msg" action-method="post"
-						action-url="/un/l/dn" action-data='{"id":"3350002"}'>删&nbsp;除</span>
-					<span class="noread">未&nbsp;读</span>
-				</p>
-			</li>
-		</ul>
+		<h4>我的简历模板 （<span id="resume-count">0</span> / <span id="resume-max">3</span>）</h4>
+		<hr>
+		<div class="mode-list">
+			<div class="mode-hint">
+				<p>请选择一份简历作为默认简历，用于快速生成投递简历。默认简历只有一份。</p>
+				<span class="btn btn-success" id="create-resume">新建简历</span>
+			</div>
+		</div>
 	</div>
 </div>
+<div class="modal fade bs-example-modal-lg" id="resume-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">简历名称：<input id="myModalLabel2" class="form-control" type="text" placeholder="请输入简历名称" value="未命名简历模板" /></h4>
+			</div>
+			<div class="modal-body" style="height:1430px;">
+				<div class="col-md-12" id="resume-detail-info">
+					<form class="form-horizontal col-md-10 col-md-offset-1" >
+						<fieldset>
+							<!-- Button Drop Down -->
+							<div class="avatar">
+								<div style="position: relative;border: 5px solid lightblue;width: 150px;height:150px;margin: 5px auto;border-radius: 50%;">
+									<img src="/user/default/avatar" alt="选择并上传头像" id="avatar_img2"
+										 style="width: 140px;height: 140px;left:0;top: 0;border-radius: 50%;"/>
+									<input type="file" id="avatar_file2" name="avatar_file2"
+										   accept="image/jpg,image/png,image/gif"
+										   style="width: 100%;height:100%;opacity: 0;position: absolute;left:0;top: 0;"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="name">姓名</label>
+								<div class="controls">
+									<input id="name" name="name" class="input-medium form-control" placeholder="请输入姓名" type="text">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="sex">性别</label>
+								<div class="controls">
+									<select id="sex" name="sex" class="input-xlarge selectpicker">
+										<option value="0">男</option>
+										<option value="1">女</option>
+									</select>
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="control-group">
+								<label class="control-label" for="birth">出生年月</label>
+								<div class="controls">
+									<input id="birth" name="birth" type="text" placeholder="请输入出生年月，如1997.04" class="input-xlarge form-control">
+								</div>
+							</div>
+
+							<!-- Select Basic -->
+							<div class="control-group">
+								<label class="control-label" for="qualification">最高学历</label>
+								<div class="controls">
+									<select id="qualification" name="qualification" class="input-xlarge selectpicker">
+										<option value="0">博士后</option>
+										<option value="1">博士</option>
+										<option value="2">硕士</option>
+										<option value="3">本科</option>
+										<option value="4">专科</option>
+										<option value="5">高中</option>
+										<option value="6">初中</option>
+										<option value="7">小学</option>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="university">学校</label>
+								<div class="controls">
+									<input id="university" name="university" type="text" placeholder="请输入最高学历的毕业院校，如果没有则输入无" class="input-xlarge form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="speciality">专业</label>
+								<div class="controls">
+									<input id="speciality" name="speciality" type="text" placeholder="请输入最高学历的专业，如果没有输入无" class="input-xlarge form-control">
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="control-group">
+								<label class="control-label" for="tel">手机</label>
+								<div class="controls">
+									<input id="tel" name="tel" type="text" placeholder="请输入手机号" class="input-xlarge form-control">
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="control-group">
+								<label class="control-label" for="mailbox">邮箱</label>
+								<div class="controls">
+									<input id="mailbox" name="mailbox" type="text" placeholder="请输入邮箱" class="input-xlarge form-control">
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="control-group">
+								<label class="control-label" for="identity">身份证</label>
+								<div class="controls">
+									<input id="identity" name="identity" type="text" placeholder="请输入身份证号" class="input-xlarge form-control">
+
+								</div>
+							</div>
+
+							<!-- Text input-->
+							<div class="control-group">
+								<label class="control-label" for="nativePlace">籍贯</label>
+								<div class="controls">
+									<input id="nativePlace" name="nativePlace" type="text" placeholder="请输入籍贯" class="input-xlarge form-control">
+
+								</div>
+							</div>
+
+							<!-- Select Basic -->
+							<div class="control-group">
+								<label class="control-label" for="policyRole">政治面貌</label>
+								<div class="controls">
+									<select id="policyRole" name="policyRole" class="input-xlarge selectpicker">
+										<option value="0">群众</option>
+										<option value="1">共青团员</option>
+										<option value="2">中共党员</option>
+										<option value="3">其他</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label class="control-label" for="experience">经历</label>
+								<div class="controls">
+									<textarea id="experience" rows="5" name="experience" placeholder="经历，包括实习经历或校内经历，需要记录时间阶段" class="input-xlarge form-control"></textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="introduction">自我介绍</label>
+								<div class="controls">
+									<textarea id="introduction" rows="5" name="introduction" placeholder="介绍一下你自己吧" class="input-xlarge form-control"></textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="diploma">获奖证书</label>
+								<div class="controls">
+									<textarea id="diploma" name="diploma" rows="5" placeholder="获奖或证书的情况，需要包含时间节点和奖项名称" class="input-xlarge form-control"></textarea>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<span type="button" class="btn btn-success" id="finish-change-resume">完成并退出</span>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<script src="/js/jquery-2.2.3.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-select.js"></script>
+<script>
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+	$(document).ready(function () {
+	    var ht = $('#main-iframe',top.window.document).attr('height');
+        var resumeMap = {};
+        var available = true;
+        var formData = new FormData();
+        var resumeMax = 3;
+        var createOrChange = 0;
+        $('#resume-max').html(resumeMax);
+        //返回用户的简历模板列表
+        $.get('/get/resume-mode/list',function (data) {
+			data = JSON.parse(data);
+			if(data.errorCode=='00'){
+			    let list = data.returnObject;//应该是list
+				let $div = $('div.mode-list');
+				$('#resume-count').html(list.length);
+				for(let i = 0; i < list.length; i++){
+				    let obj = list[i];
+				    let tstr = ' icon-star-empty';
+				    if(obj.isFavor)
+				        tstr = ' selected-star icon-star-full';
+				    let $$div = $(
+                        '\t\t\t<div class="mode-item">\n' +
+						'<input type="hidden" class="resumeId" value="'+obj.resumeId+'"> ' +
+                        '\t\t\t\t<span class="left-star"><i class="icon '+tstr+'"></i></span>\n' +
+                        '\t\t\t\t<div class="mode-info">\n' +
+                        '\t\t\t\t\t<div class="mode-name">'+obj.resumeName+'</div>\n' +
+                        '\t\t\t\t\t<div class="progress mode-progress">\n' +
+                        '\t\t\t\t\t\t<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"\n' +
+                        '\t\t\t\t\t\t\t aria-valuemin="0" aria-valuemax="100" style="width: '+obj.resumePercent+';">\n' +
+                        '\t\t\t\t\t\t</div>\n' +
+                        '\t\t\t\t\t</div>\n' +
+                        '\t\t\t\t\t<span class="progress-percent">'+obj.resumePercent+'</span>\n' +
+                        '\t\t\t\t\t<div class="mode-time" style="display:inline-block;">\n' +
+                        '\t\t\t\t\t\t最近更新 '+obj.lastEditTime+'\n' +
+                        '\t\t\t\t\t</div>\n' +
+                        '\t\t\t\t</div>\n' +
+                        '\t\t\t\t<span class="preview"><a href="/resume/preview/'+obj.resumeId
+						+'" target="_blank"><i class="icon icon-eye"></i>预览</a></span>\n' +
+                        '\t\t\t\t<span class="edit"><a><i class="icon icon-pencil"></i>编辑</a></span>\n' +
+                        '\t\t\t\t<span class="delete"><a><i class="icon icon-bin"></i>删除</a></span>\n' +
+                        '\t\t\t</div>\n');
+				    $div.append($$div);
+				}
+                $('.mode-item .left-star').on('mouseenter',function (object) {
+                    let $i = $(this).find('i');
+                    $i.removeClass('icon-star-empty');
+                    $i.addClass('icon-star-full');
+                });
+                $('.mode-item .left-star').on('mouseleave',function (object) {
+                    let $i = $(this).find('i');
+                    $i.removeClass('icon-star-empty');
+                    $i.removeClass('icon-star-full');
+                    if($i.hasClass('selected-star')){
+                        $i.addClass('icon-star-full');
+                    }else{
+                        $i.addClass('icon-star-empty');
+                    }
+                });
+                $('#myModalLabel2').on('change',function (object) {
+                    resumeMap.resumeName = $(this).val();
+				});
+                $('.mode-item .left-star').on('click',function (object) {
+                    //选择默认简历
+                    let resumeId = $(this).parent().find('input.resumeId').val();
+                    $.get('/setFavorResume/'+resumeId,function (data) {
+                        data = JSON.parse(data);
+                        if(data.errorCode=='00'){
+                            window.top.showToastr(0,"更改默认简历成功");
+                            setTimeout(function () {
+                                window.top.location.reload();
+                            },1000);
+                        }else
+                            window.top.showToastr(2,"未知错误");
+                    }).error(function () {
+                        window.top.showToastr(2,"未知错误");
+                    });
+                });
+                $('.mode-item span[class="delete"]').on('click',function (object) {
+                    $.get('/resume-mode/delete/'+$(this).parent().find('input.resumeId').val(),function (msg) {
+                        msg = JSON.parse(msg);
+                        if(msg.errorCode=='00'){
+                            window.top.showToastr(0,'删除成功');
+                            setTimeout(function () {
+                                window.top.location.reload();
+                            },1000);
+                        }else
+                            window.top.showToastr(2,'未知错误');
+                    }).error(function () {
+                        window.top.showToastr(2,'未知错误');
+                    });
+                });
+                $('.mode-item span[class="edit"]').on('click',function (object) {
+                    let resumeId = $(this).parent().find('input.resumeId').val();
+                    createOrChange = resumeId;
+                    $.get('/resume-mode/get/'+resumeId,function (msg) {
+                        msg = JSON.parse(msg);
+                        if(msg.errorCode=='00'){
+                            fillResume(msg.returnObject);
+							$('#resume-detail img').attr('src','/get/resume-mode/avatar/'+resumeId);
+                            $('#resume-detail').modal('show');
+                        }else
+                            window.top.showToastr(2,'未知错误');
+                    }).error(function () {
+                        window.top.showToastr(2,'未知错误');
+                    });
+                });
+
+			}
+        });
+        $('#create-resume').on('click',function (object) {
+            resumeMap = {};
+            createOrChange = 0;
+            fillResume(resumeMap);//清空
+            $('#resume-detail img').attr('src','/user/default/avatar');
+            if(resumeMax<=parseInt($('#resume-count').html())){
+                window.top.showToastr(1,"已达到模板上限，请删除模板");
+			}else{
+                $('#resume-detail').modal('show');
+                resumeMap.learnerId = 1;//无所谓的选项
+                available = false;
+			}
+		});
+        function gD(d) {
+            if(d!=undefined && d!=null && d!=='') return d;
+            else {
+                available = false;
+                return null;
+            }
+        }
+        $("#avatar_file2").change(function () {
+
+            var file = $(this)[0].files[0];
+            if(file.size>2048*1024){//2MB
+                window.top.showToastr(1,'头像图片太大！限制2MB以下');
+                return;
+            }
+            console.log('大小合适');
+            // 读取文件URL
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            // console.log(file.name);
+            formData.append("avatar",file);
+            formData.append("fileName",file.name);
+            // 阅读文件完成后触发的事件
+            reader.onload = function () {
+                let res = this.result;
+                $("#avatar_img2").attr("src", res);
+                resumeMap.headPath = res;
+            };
+        });
+        $('#resume-detail input').on('blur',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        $('#resume-detail textarea').on('blur',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        $('#resume-detail select').on('change',function (object) {
+            let t = $(this).attr('name');
+            resumeMap[t] = $(this).val();
+            fillResume(resumeMap);
+        });
+        function fillResume(obj){
+            available = true;
+            resumeMap.resumeName = gD(obj.resumeName);
+            $('#myModalLabel2').val(resumeMap.resumeName);
+            resumeMap.learnerId = gD(obj.learnerId);
+            resumeMap.name = gD(obj.name);//真实姓名
+            $('#name').val(resumeMap.name);
+            resumeMap.sex = gD(obj.sex);
+            if(resumeMap.sex!=null){
+                $('select#sex option:eq('+resumeMap.sex+')').attr('selected',true);
+                $('select#sex').selectpicker('refresh');
+            }else{
+                resumeMap.sex = 0;
+            }
+            resumeMap.birth = gD(obj.birth);
+            $('#birth').val(resumeMap.birth);
+            resumeMap.nativePlace = gD(obj.nativePlace);
+            $('#nativePlace').val(resumeMap.nativePlace);
+            resumeMap.identity = gD(obj.identity);
+            $('#identity').val(resumeMap.identity);
+            resumeMap.qualification = gD(obj.qualification);
+            if(resumeMap.qualification!=null){
+                $('select#qualification option:eq('+resumeMap.qualification+')').attr('selected',true);
+                $('select#qualification').selectpicker('refresh');
+            }else{
+                resumeMap.qualification = 0;
+            }
+            resumeMap.speciality = gD(obj.speciality);
+            $('#speciality').val(resumeMap.speciality);
+            resumeMap.university = gD(obj.university);
+            $('#university').val(resumeMap.university);
+            resumeMap.tel = gD(obj.tel);
+            $('#tel').val(resumeMap.tel);
+            resumeMap.experience = gD(obj.experience);
+            $('#experience').html(resumeMap.experience);
+            resumeMap.mailbox = gD(obj.mailbox);
+            $('#mailbox').val(resumeMap.mailbox);
+            resumeMap.introduction = gD(obj.introduction);
+            $('#introduction').html(resumeMap.introduction);
+            resumeMap.diploma = gD(obj.diploma);
+            $('#diploma').html(resumeMap.diploma);
+            resumeMap.headPath = gD(obj.headPath);//如果headPath==null，那就说明没有上传头像
+            console.log("resumeMap:");
+            console.log(resumeMap);
+        }
+        $('#resume-detail').on('hide.bs.modal',function (object) {
+            $('#msg-iframe',window.parent.document).attr('height',ht);
+            $('#main-iframe',top.window.document).attr('height',ht);
+            available = false;
+            resumeMap = {};
+        });
+        $('#resume-detail').on('show.bs.modal',function (object) {
+            $('#msg-iframe',window.parent.document).attr('height','1680px');
+            $('#main-iframe',top.window.document).attr('height','1680px');
+        });
+        $('#finish-change-resume').on('click',function (object) {
+            console.log("available:"+available);
+            if(available){
+                let currentTime = new Date();
+                resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
+                resumeMap.resumeName = $('#myModalLabel2').html();
+                if(createOrChange==0){//create创建新的模板
+                    $.post('/create-resume-mode',resumeMap,function (data) {
+                        data = JSON.parse(data);
+                        if(data.errorCode=='00'){
+                            let resumeId = data.returnObject;
+                            $.ajax({
+                                url:'/resume-mode/deliver/avatar/'+resumeId,
+                                type: 'POST',
+                                processData: false,
+                                data:formData,
+                                contentType: false,
+                                success:function (msg) {
+                                    msg = JSON.parse(msg);
+                                    if(msg.errorCode==='00'){
+                                        window.top.showToastr(0,"简历操作成功");
+                                        $('body,html',top.window.document).animate({scrollTop:30},500);
+                                        setTimeout(function () {
+                                            window.top.location.reload();
+                                        },1500);
+                                    }else{
+                                        window.top.showToastr(2,'未知错误，上传头像失败');
+                                    }
+                                },
+                                error:function (data) {
+                                    console.log(data);
+                                }
+                            });
+                        }else{
+                            window.top.showToastr(2,'未知错误');
+                        }
+                    }).error(function () {
+                        window.top.showToastr(2,'未知错误');
+                    });
+				}else{
+                    $.post('/change-resume-mode/'+createOrChange,resumeMap,function (data) {
+                        data = JSON.parse(data);
+                        if(data.errorCode=='00'){
+                            $.ajax({
+                                url:'/resume-mode/deliver/avatar/'+createOrChange,
+                                type: 'POST',
+                                processData: false,
+                                data:formData,
+                                contentType: false,
+                                success:function (msg) {
+                                    msg = JSON.parse(msg);
+                                    if(msg.errorCode==='00'){
+                                        window.top.showToastr(0,"简历操作成功");
+                                        $('body,html',top.window.document).animate({scrollTop:30},500);
+                                        setTimeout(function () {
+                                            window.top.location.reload();
+                                        },1500);
+                                    }else{
+                                        window.top.showToastr(2,'未知错误，上传头像失败');
+                                    }
+                                },
+                                error:function (data) {
+                                    console.log(data);
+                                }
+                            });
+                        }else{
+                            window.top.showToastr(2,'未知错误');
+                        }
+                    }).error(function () {
+                        window.top.showToastr(2,'未知错误');
+                    });
+				}
+            }
+            else if(resumeMap.headPath==null)
+                window.top.showToastr(1,"请上传头像");
+            else
+                window.top.showToastr(1,'还有信息没有填写完全');
+        });
+    });
+
+</script>
 </body>
 </html>
