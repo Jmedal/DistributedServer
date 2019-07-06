@@ -13,7 +13,7 @@
         <result column="native_place" property="nativePlace" />
         <result column="identity" property="identity" />
         <result column="qualification" property="qualification" />
-        <result column="specialty" property="specialty" />
+        <result column="specialty" property="speciality" />
         <result column="university" property="university" />
         <result column="tel" property="tel" />
         <result column="experience" property="experience" />
@@ -25,5 +25,7 @@
         <result column="head_path" property="headPath" />
         <result column="last_edit_time" property="lastEditTime" />
     </resultMap>
+    <!-- 通用查询映射结果 -->
+
 
 </mapper>

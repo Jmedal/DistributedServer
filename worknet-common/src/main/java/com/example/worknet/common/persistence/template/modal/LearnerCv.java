@@ -1,5 +1,6 @@
 package com.example.worknet.common.persistence.template.modal;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -46,6 +47,7 @@ public class LearnerCv implements Serializable {
     /**
      * 出生年月
      */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date birth;
     /**
      * 籍贯
@@ -63,7 +65,8 @@ public class LearnerCv implements Serializable {
     /**
      * 专业
      */
-    private String specialty;
+    @TableField("specialty")
+    private String speciality;
     /**
      * 毕业院校
      */
@@ -107,6 +110,7 @@ public class LearnerCv implements Serializable {
      * 上次修改简历时间
      */
     @TableField("last_edit_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastEditTime;
 
 
@@ -182,12 +186,12 @@ public class LearnerCv implements Serializable {
         this.qualification = qualification;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String specialty) {
+        this.speciality = specialty;
     }
 
     public String getUniversity() {
@@ -282,7 +286,7 @@ public class LearnerCv implements Serializable {
         ", nativePlace=" + nativePlace +
         ", identity=" + identity +
         ", qualification=" + qualification +
-        ", specialty=" + specialty +
+        ", speciality=" + speciality +
         ", university=" + university +
         ", tel=" + tel +
         ", experience=" + experience +

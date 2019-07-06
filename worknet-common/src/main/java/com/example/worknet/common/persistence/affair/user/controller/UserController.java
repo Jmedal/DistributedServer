@@ -3,12 +3,14 @@ package com.example.worknet.common.persistence.affair.user.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -97,7 +101,7 @@ public class UserController {
         HashMap<String,String> map = new HashMap<>();
         if(userService.verify(username,password)){
             User user = userService.selectOne(new EntityWrapper<User>().eq("account",username));
-            if(user.getRole().equals(3)){
+            if(user.getRole().equals(3) && user.getActivity().equals(1)){
                 request.getSession().setAttribute("userId",user.getId());
                 map.put("errorCode","00");
             }else
@@ -265,7 +269,7 @@ public class UserController {
         if(request.getSession(true).getAttribute("userId") != null){
             Long userId = (long)request.getSession(true).getAttribute("userId");
             try {
-                if(userService.updateAvatar(userId,request))
+                if(userService.insertOrUpdateAvatar(userId,request))
                     map.put("errorCode","00");
             } catch (Exception e) {
                 map.put("errorCode", "error");
@@ -373,6 +377,18 @@ public class UserController {
         return JSON.toJSONString(map);
     }
 
-
+    /**
+     * 加载用户的默认头像
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/user/default/avatar",produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getDefaultAvatar() throws IOException {
+        File file = new File(Const.FILE_PATH + Const.FILE_SEPARATOR + Const.HEAD_PATH + Const.FILE_SEPARATOR + "default\\avatar.jpg");
+        FileInputStream inputStream = new FileInputStream(file);
+        byte[] bytes = new byte[(int)file.length()];
+        inputStream.read(bytes, 0, inputStream.available());
+        return bytes;
+    }
 }
 

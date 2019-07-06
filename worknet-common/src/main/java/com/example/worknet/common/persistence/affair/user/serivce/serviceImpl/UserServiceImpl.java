@@ -236,7 +236,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public boolean updateAvatar(long userId,MultipartHttpServletRequest request) {
+    public boolean insertOrUpdateAvatar(long userId,MultipartHttpServletRequest request) {
         User user = super.selectById(userId);
         if(user==null)
             return false;

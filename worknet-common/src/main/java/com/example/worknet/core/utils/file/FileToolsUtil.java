@@ -22,7 +22,6 @@ public class FileToolsUtil {
         System.out.println("System: "+ Const.os);
         System.out.println("Upload dictionary: "+Const.FILE_PATH);
         System.out.println("Upload file: "+filePath);
-
         try {
             FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(filePath));
             System.out.println("upload file success:"+filePath);
@@ -86,7 +85,7 @@ public class FileToolsUtil {
                 int length;
                 while ( (byteread = inStream.read(buffer)) != -1) {
                     bytesum += byteread; //字节数 文件大小
-                    System.out.println(bytesum);
+                    //System.out.println(bytesum);
                     fs.write(buffer, 0, byteread);
                 }
                 inStream.close();

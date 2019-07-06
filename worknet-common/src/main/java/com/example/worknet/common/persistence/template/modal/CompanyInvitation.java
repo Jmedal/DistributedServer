@@ -1,8 +1,10 @@
 package com.example.worknet.common.persistence.template.modal;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-
 import java.io.Serializable;
 
 /**
@@ -11,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-03
+ * @since 2019-07-07
  */
 @TableName("sys_company_invitation")
 public class CompanyInvitation implements Serializable {
@@ -21,6 +23,7 @@ public class CompanyInvitation implements Serializable {
     /**
      * 邀约id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
      * 公司id
@@ -41,6 +44,11 @@ public class CompanyInvitation implements Serializable {
      * 邀约状态
      */
     private Integer status;
+    /**
+     * 邀请时间
+     */
+    @TableField("invite_time")
+    private Date inviteTime;
 
 
     public Long getId() {
@@ -83,6 +91,14 @@ public class CompanyInvitation implements Serializable {
         this.status = status;
     }
 
+    public Date getInviteTime() {
+        return inviteTime;
+    }
+
+    public void setInviteTime(Date inviteTime) {
+        this.inviteTime = inviteTime;
+    }
+
     @Override
     public String toString() {
         return "CompanyInvitation{" +
@@ -91,6 +107,7 @@ public class CompanyInvitation implements Serializable {
         ", userId=" + userId +
         ", companyProfessionId=" + companyProfessionId +
         ", status=" + status +
+        ", inviteTime=" + inviteTime +
         "}";
     }
 }

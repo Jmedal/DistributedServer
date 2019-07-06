@@ -1,10 +1,13 @@
 package com.example.worknet.common.persistence.affair.user.serivce.serviceImpl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvService;
 import com.example.worknet.common.persistence.affair.user.serivce.LearnerInfoService;
 import com.example.worknet.common.persistence.affair.user.dao.LearnerInfoMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +38,23 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
     }
 
     /**
+     * 更新学习者默认简历id
+     * @param userId
+     * @param cvId
+     * @return
+     */
+    @Override
+    public boolean updateDefaultCvId(Long userId, Long cvId) {
+        LearnerCv learnerCv = learnerCvService.selectById(cvId);
+        if(learnerCv != null && learnerCv.getLearnerId().equals(userId)){
+            LearnerInfo learnerInfo = getLearnerInfoByUserId(userId);
+            learnerInfo.setLearnerCvId(cvId);
+            return super.updateAllColumnById(learnerInfo);
+        }
+        return false;
+    }
+
+    /**
      * 根据用户id获取学习者信息
      * @param userId
      * @return
@@ -48,4 +68,7 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
         return null;
     }
 
+
+    @Autowired
+    private LearnerCvService learnerCvService;
 }

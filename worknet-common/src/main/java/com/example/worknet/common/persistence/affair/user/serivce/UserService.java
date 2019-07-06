@@ -44,7 +44,7 @@ public interface UserService extends IService<User>{
 
     Resource getCompanyAvatar(long userId, String strDirPath);
 
-    boolean updateAvatar(long userId, MultipartHttpServletRequest request);
+    boolean insertOrUpdateAvatar(long userId, MultipartHttpServletRequest request);
 
     Page<HashMap<String, Object>> getUserStudiedPage(Page<HashMap<String, Object>> page, long uid);
 

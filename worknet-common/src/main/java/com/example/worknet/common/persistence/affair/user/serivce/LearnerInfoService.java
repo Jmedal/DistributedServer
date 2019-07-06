@@ -15,5 +15,8 @@ public interface LearnerInfoService extends IService<LearnerInfo> {
 
     Long getLearnerDefaultCvId(Long userId);
 
+    boolean updateDefaultCvId(Long userId, Long cvId);
+
     LearnerInfo getLearnerInfoByUserId(Long userId);
+
 }

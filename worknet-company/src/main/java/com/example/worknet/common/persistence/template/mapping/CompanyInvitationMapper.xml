@@ -9,6 +9,7 @@
         <result column="user_id" property="userId" />
         <result column="company_profession_id" property="companyProfessionId" />
         <result column="status" property="status" />
+        <result column="invite_time" property="inviteTime" />
     </resultMap>
 
 </mapper>

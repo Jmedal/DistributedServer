@@ -9,17 +9,17 @@ import com.example.worknet.common.persistence.affair.user.serivce.LearnerInfoSer
 import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.User;
+import com.example.worknet.core.utils.Date.DateUtil;
 import com.example.worknet.core.utils.file.FileToolsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -86,16 +86,29 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
      */
     @Override
     public Long createLearnerCv(LearnerCv learnerCv, Long userId) {
-        if (super.selectList(new EntityWrapper<LearnerCv>().eq("user_id",userId)).size() < 5){
+        if (super.selectList(new EntityWrapper<LearnerCv>().eq("user_id",userId)).size() < 4){
             if(super.insert(learnerCv)){
                 LearnerInfo learnerInfo = learnerInfoService.getLearnerInfoByUserId(userId);
-                if(learnerInfo.getLearnerCvId().equals((long)0) || learnerInfo.getLearnerCvId() == null){
-                    learnerInfo.setLearnerCvId(learnerCv.getId());
+                if(learnerInfo.getLearnerCvId() == null){
+                    learnerInfoService.updateDefaultCvId(userId,learnerCv.getId());
                     return learnerCv.getId();
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * 修改简历模版信息
+     * @param learnerCv
+     * @return
+     */
+    @Override
+    public boolean updateLearnerCv(LearnerCv learnerCv) {
+        Long learnerId = super.selectById(learnerCv.getId()).getLearnerId();
+        if (learnerCv.getLearnerId().equals(learnerId))
+            return super.updateById(learnerCv);
+        return false;
     }
 
     /**
@@ -112,20 +125,20 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
             HashMap<String, Object> map = new HashMap<>();
             map.put("resumeId", learnerCv.getId());
             map.put("resumeName", learnerCv.getResumeName());
-            map.put("lastEditTime", learnerCv.getLastEditTime());
+            map.put("lastEditTime", DateUtil.stampToDate(learnerCv.getLastEditTime(),DateUtil.YMDHMS_TIME));
             map.put("isFavor",learnerCv.getId().equals(defaultCvId));
             int count = 0;
             for (Field f : learnerCv.getClass().getDeclaredFields()) {
                 f.setAccessible(true);
                 try {
-                    if (f.get(learnerCv) != null || !f.get(learnerCv).toString().equals("")) {
+                    if (f.get(learnerCv) != null && !f.get(learnerCv).toString().equals("")) {
                         count++;
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
-            map.put("resumePercent",String.format("%.2f", (Double) (count-3/15.0)));
+            map.put("resumePercent",(count-3)/15*100 + "%");
             list.add(map);
         }
         return list;
@@ -139,10 +152,47 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
      */
     @Override
     public boolean deleteLearnerCv(Long cvId, Long userId) {
+        LearnerInfo learnerInfo = learnerInfoService.getLearnerInfoByUserId(userId);
+        if(learnerInfo.getLearnerCvId().equals(cvId)){
+            learnerInfo.setLearnerCvId(null);
+            learnerInfoService.updateAllColumnById(learnerInfo);
+        }
         LearnerCv learnerCv = super.selectById(cvId);
-        if (learnerCv.getLearnerId().equals(userId))
-            return super.deleteById(cvId);
+        if (learnerCv.getLearnerId().equals(userId)){
+            super.deleteById(cvId);
+            List<HashMap<String, Object>> list = getLearnerCvList(userId);
+            if(list.size() > 0){
+                learnerInfo.setLearnerCvId(Long.valueOf(list.get(0).get("resumeId").toString()));
+                return learnerInfoService.updateAllColumnById(learnerInfo);
+            }
+            return true;
+        }
         return false;
+    }
+
+    /**
+     * 上传或者更新简历模版头像
+     * @param cvId
+     * @param request
+     * @return
+     */
+    @Override
+    public boolean insertOrUpdateCvAvatar(Long cvId, MultipartHttpServletRequest request) {
+        LearnerCv learnerCv = super.selectById(cvId);
+        if(learnerCv==null)
+            return false;
+        if(learnerCv.getHeadPath() != null && !learnerCv.getHeadPath().equals("") && !learnerCv.getHeadPath().equals("\\avatar\\default\\avatar.jpg"))
+            FileToolsUtil.deleteFile(Const.FILE_PATH + learnerCv.getHeadPath());//删除旧图片
+        //相对保存路径
+        String file_path = Const.FILE_SEPARATOR + Const.LEARNER_CV_HEAD_PATH + Const.FILE_SEPARATOR + Calendar.getInstance().get(Calendar.YEAR);
+        //绝对保存路径
+        String file_full_path = Const.FILE_PATH + file_path;
+        //保存头像
+        String file_name = FileToolsUtil.fileUpload(request.getFile("avatar"),FileToolsUtil.createDiretory(file_full_path));
+        //更新数据库路径信息
+        learnerCv.setHeadPath(file_path + Const.FILE_SEPARATOR + file_name);
+        super.updateAllColumnById(learnerCv);
+        return true;
     }
 
     @Autowired
