@@ -1,5 +1,6 @@
 package com.example.worknet.common.persistence.affair.api.user.modal;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -30,7 +31,7 @@ public class LearnerCv implements Serializable {
      * 用户id
      */
     @TableField("user_id")
-    private Long userId;
+    private Long learnerId;
     /**
      * 简历名称
      */
@@ -47,6 +48,7 @@ public class LearnerCv implements Serializable {
     /**
      * 出生年月
      */
+    @JSONField(format = "yyyy-MM-dd")
     private Date birth;
     /**
      * 籍贯
@@ -64,7 +66,8 @@ public class LearnerCv implements Serializable {
     /**
      * 专业
      */
-    private String specialty;
+    @TableField("specialty")
+    private String speciality;
     /**
      * 毕业院校
      */
@@ -108,6 +111,7 @@ public class LearnerCv implements Serializable {
      * 上次修改简历时间
      */
     @TableField("last_edit_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastEditTime;
 
 
@@ -119,12 +123,12 @@ public class LearnerCv implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getLearnerId() {
+        return learnerId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setLearnerId(Long learnerId) {
+        this.learnerId = learnerId;
     }
 
     public String getResumeName() {
@@ -183,12 +187,12 @@ public class LearnerCv implements Serializable {
         this.qualification = qualification;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String specialty) {
+        this.speciality = specialty;
     }
 
     public String getUniversity() {
@@ -275,7 +279,7 @@ public class LearnerCv implements Serializable {
     public String toString() {
         return "LearnerCv{" +
         ", id=" + id +
-        ", userId=" + userId +
+        ", learnerId=" + learnerId +
         ", resumeName=" + resumeName +
         ", name=" + name +
         ", sex=" + sex +
@@ -283,7 +287,7 @@ public class LearnerCv implements Serializable {
         ", nativePlace=" + nativePlace +
         ", identity=" + identity +
         ", qualification=" + qualification +
-        ", specialty=" + specialty +
+        ", speciality=" + speciality +
         ", university=" + university +
         ", tel=" + tel +
         ", experience=" + experience +

@@ -1,5 +1,6 @@
 package com.example.worknet.common.persistence.template.modal;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -14,7 +15,7 @@ import java.util.Date;
  * </p>
  *
  * @author YunJieJiang123
- * @since 2019-07-04
+ * @since 2019-07-07
  */
 @TableName("sys_company_cv")
 public class CompanyCv implements Serializable {
@@ -32,6 +33,11 @@ public class CompanyCv implements Serializable {
     @TableField("company_profession_id")
     private Long companyProfessionId;
     /**
+     * 用户id
+     */
+    @TableField("user_id")
+    private Long userId;
+    /**
      * 姓名
      */
     private String name;
@@ -42,6 +48,7 @@ public class CompanyCv implements Serializable {
     /**
      * 出生年月
      */
+    @JSONField(format = "yyyy-MM-dd")
     private Date birth;
     /**
      * 籍贯
@@ -59,7 +66,8 @@ public class CompanyCv implements Serializable {
     /**
      * 专业
      */
-    private String specialty;
+    @TableField("specialty")
+    private String speciality;
     /**
      * 毕业院校
      */
@@ -107,6 +115,7 @@ public class CompanyCv implements Serializable {
      * 上次提交简历时间
      */
     @TableField("last_edit_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastEditTime;
 
 
@@ -124,6 +133,14 @@ public class CompanyCv implements Serializable {
 
     public void setCompanyProfessionId(Long companyProfessionId) {
         this.companyProfessionId = companyProfessionId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -174,12 +191,12 @@ public class CompanyCv implements Serializable {
         this.qualification = qualification;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
     public String getUniversity() {
@@ -275,13 +292,14 @@ public class CompanyCv implements Serializable {
         return "CompanyCv{" +
         ", id=" + id +
         ", companyProfessionId=" + companyProfessionId +
+        ", userId=" + userId +
         ", name=" + name +
         ", sex=" + sex +
         ", birth=" + birth +
         ", nativePlace=" + nativePlace +
         ", identity=" + identity +
         ", qualification=" + qualification +
-        ", specialty=" + specialty +
+        ", speciality=" + speciality +
         ", university=" + university +
         ", tel=" + tel +
         ", experience=" + experience +

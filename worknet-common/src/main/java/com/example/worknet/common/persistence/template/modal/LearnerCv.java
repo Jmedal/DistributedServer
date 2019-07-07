@@ -47,7 +47,7 @@ public class LearnerCv implements Serializable {
     /**
      * 出生年月
      */
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd")
     private Date birth;
     /**
      * 籍贯
