@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public interface CompanyContestApplyService extends IService<CompanyContestApply> {
 
-    Page<HashMap<String, Object>> getUserContestPage(Page<HashMap<String, Object>> page, Long uid);
+    Page<HashMap<String, Object>> getUserContestPage(Page<HashMap<String, Object>> pager, Long uid);
 
     boolean insertContestApply(Long uid, Long eid);
 }

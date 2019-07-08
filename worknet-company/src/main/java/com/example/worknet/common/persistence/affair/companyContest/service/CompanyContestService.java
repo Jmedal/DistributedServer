@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public interface CompanyContestService extends IService<CompanyContest> {
 
-    Page<HashMap<String,Object>> getContestPage(Page<HashMap<String, Object>> page, ContestConst type, String keyword);
+    Page<HashMap<String,Object>> getContestPage(Page<HashMap<String, Object>> pager, ContestConst type, String keyword);
 
     HashMap<String,Object> getContestInfo(Long eid, Long uid);
 }

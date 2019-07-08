@@ -38,6 +38,5 @@ public interface CompanyCvService extends IService<CompanyCv> {
 
     HashMap<String, Object> getCvInfo(Long resumeId);
 
-    Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
-                                                 String userId, String searchText);
+    Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> pager, String userId, String searchText);
 }

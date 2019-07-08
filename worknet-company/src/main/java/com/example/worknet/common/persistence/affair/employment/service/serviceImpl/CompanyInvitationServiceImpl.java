@@ -47,7 +47,7 @@ public class CompanyInvitationServiceImpl extends ServiceImpl<CompanyInvitationM
         if(companyInvitation != null && companyInvitation.getUserId().equals(userId)
                 && companyInvitation.getStatus().equals(0)) {
             companyInvitation.setStatus(status);
-            return super.updateAllColumnById(companyInvitation);
+            return super.updateById(companyInvitation);
         }
         return false;
     }

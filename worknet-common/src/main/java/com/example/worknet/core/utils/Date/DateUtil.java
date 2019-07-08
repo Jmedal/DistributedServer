@@ -31,6 +31,7 @@ public class DateUtil {
     }
 
     public static Date getSqlDate(String date, String type){
+        if(date == null) return null;
         DateFormat dateFormat = new SimpleDateFormat(type);
         Date myDate = null;
         try {
@@ -42,6 +43,7 @@ public class DateUtil {
     }
 
     public static Timestamp getSqlDateTime(String date, String type) {
+        if(date == null) return null;
         DateFormat dateFormat = new SimpleDateFormat(type);
         Date myDate = null;
         try {
@@ -62,6 +64,7 @@ public class DateUtil {
      * @throws ParseException
      */
     public static String dateToStamp(String s, String type) {
+        if(s == null) return null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(type);
         Date date = null;
         try {
@@ -79,6 +82,7 @@ public class DateUtil {
      * @return
      */
     public static String stampToDate(Date date, String type){
+        if(date == null) return null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(type);
         return simpleDateFormat.format(date);
     }

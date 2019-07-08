@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public interface CompanyInvitationService extends IService<CompanyInvitation> {
 
-    Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> page, Long userId, String search);
+    Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> pager, Long userId, String search);
 
     boolean changeInvitationStatus(Long inviteId, Long userId, Integer status);
 

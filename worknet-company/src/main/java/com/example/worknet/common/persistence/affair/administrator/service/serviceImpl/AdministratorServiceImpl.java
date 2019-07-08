@@ -6,11 +6,9 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.administrator.dao.AdministratorMapper;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
-import com.example.worknet.common.persistence.template.modal.LearnerInfo;
-import com.example.worknet.common.persistence.template.modal.User;
+import com.example.worknet.common.persistence.affair.api.profession.ProfessionTypeService;
+import com.example.worknet.common.persistence.template.modal.*;
 import com.example.worknet.common.persistence.affair.api.user.UserService;
-import com.example.worknet.common.persistence.template.modal.Administrator;
-import com.example.worknet.common.persistence.template.modal.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,7 +101,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
     public Page<HashMap<String, Object>> getUserPage(Page<HashMap<String, Object>> pager, UserConst role, String keyword) {
         if(keyword == null || keyword.equals(""))
             keyword = "[digit]*";
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
         return page.setRecords(administratorMapper.getUserPage(page, role.getState(), keyword));
     }
 
@@ -120,7 +118,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
             keyword = "[digit]*";
         else
             keyword = keyword.trim().replaceAll("\\s+","|");
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
         switch (role){
             case COMPANY:
                 return page.setRecords(administratorMapper.getCompanyInfoPage(page, keyword));
@@ -165,7 +163,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
             keyword = "[digit]*";
         else
             keyword = keyword.trim().replaceAll("\\s+","|");
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
         return page.setRecords(administratorMapper.getCompanyCvPage(page, keyword));
     }
 
@@ -181,8 +179,64 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
             keyword = "[digit]*";
         else
             keyword = keyword.trim().replaceAll("\\s+","|");
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
         return page.setRecords(administratorMapper.getCompanyInvitationPage(page, keyword));
+    }
+
+    /**
+     * 获取公司招聘信息列表
+     * @param pager
+     * @param keyword
+     * @return
+     */
+    @Override
+    public Page<HashMap<String, Object>> getCompanyProfessionPage(Page<HashMap<String, Object>> pager, String keyword) {
+        if(keyword == null || keyword.equals("null") || keyword.equals(""))
+            keyword = "[digit]*";
+        else
+            keyword = keyword.trim().replaceAll("\\s+","|");
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
+        return page.setRecords(administratorMapper.getCompanyProfessionPage(page, keyword));
+    }
+
+    /**
+     * 获取职业列表
+     * @param pager
+     * @param keyword
+     * @return
+     */
+    @Override
+    public Page<HashMap<String, Object>> getProfessionTypePage(Page<HashMap<String, Object>> pager, String keyword) {
+        if(keyword == null || keyword.equals("null") || keyword.equals(""))
+            keyword = "[digit]*";
+        else
+            keyword = keyword.trim().replaceAll("\\s+","|");
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
+        return page.setRecords(administratorMapper.getProfessionTypePage(page, keyword));
+    }
+
+    /**
+     * 插入或者更新“职业类型”信息
+     * @param professionType
+     * @return
+     */
+    @Override
+    public boolean changeProfessionType(ProfessionType professionType) {
+        return professionTypeService.insertOrUpdate(professionType);
+    }
+
+    /**
+     * 删除“职业类型”
+     * @param professionTypeId
+     * @return
+     */
+    @Override
+    public boolean deleteProfessionType(Long professionTypeId) {
+        try {
+            return professionTypeService.deleteById(professionTypeId);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Autowired
@@ -190,4 +244,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
 
     @Autowired
     private AdministratorMapper administratorMapper;
+
+    @Autowired
+    private ProfessionTypeService professionTypeService;
 }
