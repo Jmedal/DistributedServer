@@ -1,6 +1,8 @@
 package com.example.worknet.common.persistence.template.modal;
 
 import java.util.Date;
+
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
@@ -55,6 +57,7 @@ public class Company implements Serializable {
      * 注册时间
      */
     @TableField("register_time")
+    @JSONField(format = "yyyy-MM-dd")
     private Date registerTime;
 
 

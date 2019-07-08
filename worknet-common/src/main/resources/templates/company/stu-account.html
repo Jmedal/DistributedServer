@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link href="/personal/fonts/icomoon/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        #avatar-mask{
+            transition: all .4s;
+        }
+        #avatar-mask *{
+            cursor: pointer;
+        }
+        #avatar-mask i{
+            position: absolute;
+            opacity: 0;
+            transition: all .4s;
+            font-size: 60px;
+            top:50%;
+            left: 50%;
+            margin-left: -30px;
+            margin-top:-30px;
+        }
+        #avatar-mask:hover{
+            opacity: 0.6;
+            transform: scale(1.03);
+        }
+        #avatar-mask:hover i{
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <section class="section brd-btm" id="account-info">
+        <div class="ace-card-inner text-center">
+            <div style="position: relative;width: 195px;height:195px;margin: 5px auto;border-radius: 50%;">
+
+                <div id="avatar-mask" class="avatar avatar-195">
+                    <i class="ace-icon ace-icon-camera center-block"></i>
+                    <img src="/company/get/myAvatar" alt="" id="avatar_img"
+                         class="avatar avatar-195"
+                         width="195" height="195"/>
+                    <input type="file" id="avatar_file" name="avatar_file"
+                           accept="image/jpg,image/png,image/gif"
+                           style="width: 100%;height:100%;opacity: 0;position: absolute;left:0;top: 0;"/>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <form role="form" class="form-horizontal">
+                <div class="col-md-12 clear-mrg">
+                    <h2 class="title-thin text-muted">账户信息</h2>
+                </div><!-- .col-sm-6 -->
+                <div class="mt-30" style="margin-top:30px;"></div>
+                <div class="form-group" style="padding-left: 3em;">
+                    <label for="old-pass" class="control-label col-md-2">
+                        <i class="icon-key"></i>旧密码：
+                        <input id="old-pass" type="password" class="form-control col-md-5"
+                               maxlength="15" placeholder="old password"
+                               style="width: auto;display: inline;" autocomplete="new-password">
+                    </label>
+                </div>
+                <div class="form-group" style="padding-left: 3em;">
+                    <label for="new-pass" class="control-label col-md-2">
+                        <i class="icon-lock-open"></i>新密码：
+                        <input id="new-pass" type="password" class="form-control col-md-5"
+                               maxlength="15" placeholder="new password" autocomplete="off"
+                               style="width: auto;display: inline;">
+                    </label>
+                </div>
+                <div class="form-group" style="padding-left: 3em;">
+                    <label for="confirm-pass" class="control-label col-md-2">
+                        <i class="icon-locked"></i>确认密码：
+                        <input id="confirm-pass" type="password" class="form-control col-md-5"
+                               maxlength="15" placeholder="confirm new password" autocomplete="off"
+                               style="width: auto;display: inline;">
+                    </label>
+                </div>
+                <div class="form-group pull-right" style="padding-left: 3em;">
+                    <span class="btn btn-primary" id="save-pass">修改密码</span>
+                </div>
+
+            </form>
+        </div>
+    </section><!-- .section -->
+
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+
+    $('.main').height($(window).height());
+    $('#save-pass').on('click',function (object) {
+        let data = {};
+        data.old_pass = $('#old-pass').val();
+        data.new_pass = $('#new-pass').val();
+        data.confirm_pass = $('#confirm-pass').val();
+        $.post('/company/change/password',data,function (msg) {
+            msg = JSON.parse(msg);
+            window.top.showToastrMsg(msg.errorCode);
+            window.location.reload();
+        });
+    });
+    $('#avatar_file').change(function () {
+        // 获取上传文件对象
+        var file = $(this)[0].files[0];
+        if(file.size>2048*1024){//2MB
+            window.top.showToastr(1,'头像图片太大！限制2MB以下');
+            return;
+        }
+        console.log('大小合适');
+        // 读取文件URL
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        var formData = new FormData();
+        // console.log(file.name);
+        formData.append("avatar",file);
+        formData.append("fileName",file.name);
+        // 阅读文件完成后触发的事件
+        reader.onload = function () {
+            let res = this.result;
+            $.ajax({
+                url:'/personal/change/myAvatar',
+                type: 'POST',
+                processData: false,
+                data:formData,
+                contentType: false,
+                success:function (msg) {
+                    msg = JSON.parse(msg);
+                    if(msg.errorCode==='00'){
+                        $("#avatar_img").attr("src", res);
+                        window.top.showToastr(0,'修改成功');
+                        window.location.reload();
+                    }else{
+                        window.top.showToastr(2,'未知错误');
+                    }
+                },
+                error:function (data) {
+                    window.top.showToastr(2,'未知错误');
+                    console.log(data);
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

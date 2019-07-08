@@ -10,10 +10,12 @@ public class LoginController {
     public String login(){
         return "/login/login.html";
     }
+
     @RequestMapping(value = "/sign-up")
     public String signUp(){
         return "/login/sign-up.html";
     }
+
     @RequestMapping(value = "/login/forgot")
     public String forget() {
         return "/login/forget.html";

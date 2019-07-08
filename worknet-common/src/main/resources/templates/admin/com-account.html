@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        span.password{
+            cursor: pointer;
+        }
+        #myModal{
+            transform:translateY(20%);
+        }
+        #register-company{
+            position:fixed;
+            left:20px;
+            top:10px;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <span class="btn btn-success" id="register-company">注册公司账号</span>
+    <table id="stu-account"></table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    请输入想要修改的密码
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <!--用户框-->
+                    <!--密码框-->
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label" >密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="password" id="password" placeholder="password" required="required">
+                        </div>
+                    </div>
+                    <!--登陆按钮-->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="btn btn-success" id="change-pass">确认修改</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">
+                    请输入公司账户信息
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <!--用户框-->
+                    <!--密码框-->
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label" >用户名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="username" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label" >密码</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="password" id="password" placeholder="password" required="required">
+                        </div>
+                    </div>
+                    <!--登陆按钮-->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="btn btn-success" id="create-com">确认创建</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+    var userId;
+    $('.main').height($(window).height());
+    $('#register-company').on('click',function (object) {
+        $('#register').modal('show');
+    });
+    $('#create-com').on('click',function (object) {
+        let currentTime = new Date();
+        currentTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
+        $.post('/admin/create-com',{username:$('#username').val()
+                ,password:$('#password').val(),
+            registerTime:currentTime},
+        function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                window.top.showToastr(0,"创建公司账号成功");
+                $('#register').modal('hide');
+                $('#stu-account').bootstrapTable("refresh");
+            }else{
+                window.top.showToastr(2,"未知错误");
+            }
+        }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    $('#change-pass').on('click',function (object) {
+        $.post('/admin/change-pass',{userId:userId,password:$('#password').val()},function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                window.top.showToastr(0,"修改密码成功");
+                $('#stu-account').bootstrapTable('refresh');
+                $('#myModal').modal('hide');
+            }else{
+                window.top.showToastr(2,"未知错误");
+            }
+        }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    dynamicTable = $("#stu-account").bootstrapTable({
+        url: "/admin/get/com-account",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.password').on('click',function (object) {
+                userId = parseInt($(this).attr('data-id'));
+                $('#password').val($(this).html());
+                $('#myModal').modal('show');
+            });
+            $('span.resume').on('click',function (object) {
+                let uid = parseInt($(this).attr('data-id'));
+                $.get('/admin/resume/'+uid,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已恢复该用户");
+                        $('#stu-account').bootstrapTable('refresh');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+            });
+            $('.search-input').attr('placeholder',"搜索用户名/id");
+            $('span.ban').on('click',function (object) {
+                let uid = $(this).attr('data-id');
+                $.get('/admin/ban/'+uid,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已禁用该用户");
+                        $('#stu-account').bootstrapTable('refresh');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+            });
+        },
+        columns:[{
+            field:"id",
+            title:"公司id",
+            align: "center",
+            formatter:function (v,r,i) {
+                return '<span>'+v+'</span>';
+            }
+
+        },{
+            field:"account",
+            title:"用户名",
+            align: "center"
+        },{
+            field:"password",
+            title:"密码（点击修改）",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span class='password' data-id='"+r.id+"' title='单击修改'>"+v+"</span>"
+            }
+        },{
+            field:"activity",
+            title:"是否激活",
+            align: "center",
+            formatter: function(v,r,i){
+                if(v==1){//激活中
+                    return "<span class='label label-success'>激活中</span>";
+                }
+                return "<span class='label label-warning'>已禁用</span>";
+            }
+        },{
+            field:"operate",
+            title:"操作",
+            align:"center",
+            formatter:function (v,r,i) {
+                if(r.activity==0){//已禁止
+                    return "<span data-id='"+r.id+"' class='btn btn-success btn-xs resume'>恢复</span>";
+                }
+                return "<span data-id='"+r.id+"' class='btn btn-danger btn-xs ban'>禁用</span>";
+            }
+        }]
+    });
+
+</script>
+</body>
+</html>

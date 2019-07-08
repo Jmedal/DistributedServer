@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        span.password{
+            cursor: pointer;
+        }
+        #myModal{
+            transform:translateY(20%);
+        }
+        #register-company{
+            left:20px;
+            top:10px;
+            position:fixed;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+
+    <span class="btn btn-success" id="register-company">创建职业</span>
+    <table id="stu-account"></table>
+</div>
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">
+                    请输入职业名称
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <!--用户框-->
+                    <!--密码框-->
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label" >职业名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="职业名称" required="required">
+                        </div>
+                    </div>
+                    <!--登陆按钮-->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="btn btn-success" id="create-com">确认创建</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    请输入想要修改的密码
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <!--用户框-->
+                    <!--密码框-->
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label" >职业名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="password" id="password" placeholder="password" required="required">
+                        </div>
+                    </div>
+                    <!--登陆按钮-->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="btn btn-success" id="change-pass">确认修改</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+    var userId;
+    $('#register-company').on('click',function (object) {
+        $('#register').modal('show');
+    });
+    $('#create-com').on('click',function (object) {
+        $.post('/admin/create-profession',{professionType:$('#username').val()},
+            function (data) {
+                data = JSON.parse(data);
+                if(data.errorCode=='00'){
+                    window.top.showToastr(0,"创建职业成功");
+                    $('#register').modal('hide');
+                    $('#stu-account').bootstrapTable("refresh");
+                }else{
+                    window.top.showToastr(2,"未知错误");
+                }
+            }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    $('.main').height($(window).height());
+    $('#change-pass').on('click',function (object) {
+        $.post('/admin/change-profession',{professionTypeId:userId,professionType:$('#password').val()},function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                window.top.showToastr(0,"修改职业成功");
+                $('#stu-account').bootstrapTable('refresh');
+                $('#myModal').modal('hide');
+            }else{
+                window.top.showToastr(2,"未知错误");
+            }
+        }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    dynamicTable = $("#stu-account").bootstrapTable({
+        url: "/admin/get/profession",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.password').on('click',function (object) {
+                userId = parseInt($(this).attr('data-id'));
+                $('#password').val($(this).html());
+                $('#myModal').modal('show');
+            });
+            $('.delete').on('click',function (object) {
+                $.post('/admin/delete-profession',{professionTypeId:$(this).attr('data-id')},
+                function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"修改职业成功");
+                        $('#stu-account').bootstrapTable('refresh');
+                        $('#myModal').modal('hide');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+            });
+        },
+        columns:[{
+            field:"professionTypeId",
+            title:"职业id",
+            align: "center",
+            formatter:function (v,r,i) {
+                return '<span>'+v+'</span>';
+            }
+
+        },{
+            field:"professionType",
+            title:"职业分类（点击修改）",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span class='password' data-id='"+r.professionTypeId+"' title='单击修改'>"+v+"</span>"
+            }
+        },{
+            field:"operate",
+            title:"操作",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span class='delete btn btn-danger btn-xs' data-id='"+r.professionTypeId+"' title='删除职业'>删除</span>"
+            }
+        }]
+    });
+
+</script>
+</body>
+</html>

@@ -38,10 +38,10 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
                                                           String professionId, String location, String field, String keyword){
         if(professionId == null || professionId.equals("null") || professionId.equals(""))
             professionId = "[digit]*";
-        if(keyword == null || professionId.equals("null") || keyword.equals(""))
+        if(keyword == null || keyword.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
         else
-            keyword = keyword.trim().replaceAll("\\s+"," ").replace(" ","|");
+            keyword = keyword.trim().replaceAll("\\s+","|");
         switch(type){
             case PROFESSION_NEW:
                 return page.setRecords(companyProfessionMapper.getNewProfessionPage(page, professionId, location, field, keyword));

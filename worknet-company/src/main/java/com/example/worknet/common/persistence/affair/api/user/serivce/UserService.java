@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.example.worknet.common.persistence.affair.api.user.modal.LearnerInfo;
 import com.example.worknet.common.persistence.affair.api.user.modal.TeacherInfo;
 import com.example.worknet.common.persistence.affair.api.user.modal.User;
+import com.example.worknet.common.persistence.template.modal.Company;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -30,6 +31,8 @@ public interface UserService extends IService<User>{
 
     boolean userRegister(User user);
 
+    boolean insertCompanyInfo(Company company);
+
     boolean insertTeacherInfo(TeacherInfo teacherInfo);
 
     boolean insertLearnerInfo(LearnerInfo learnerInfo);
@@ -38,11 +41,15 @@ public interface UserService extends IService<User>{
 
     boolean updateTeacherInfo(TeacherInfo teacherInfo);
 
+    boolean updateCompanyInfo(Company company);
+
     boolean updateLearnerInfo(LearnerInfo learnerInfo);
 
     Resource getAvatar(long userId, String strDirPath);
 
-    boolean updateAvatar(long userId, MultipartHttpServletRequest request);
+    Resource getCompanyAvatar(long userId, String strDirPath);
+
+    boolean insertOrUpdateAvatar(long userId, MultipartHttpServletRequest request);
 
     Page<HashMap<String, Object>> getUserStudiedPage(Page<HashMap<String, Object>> page, long uid);
 

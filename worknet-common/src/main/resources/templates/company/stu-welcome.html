@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
+    <style>
+        div#myModal{
+            transform:translateY(10%);
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+
+    <table id="stu-account"></table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    邀请学生
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="name">姓名</label>
+                    <div class="controls">
+                        <input id="name" name="name" type="text" disabled class="input-xlarge form-control">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="select-employ">邀请职业：</label>
+                    <div class="controls">
+                        <select id="select-employ" class="selectpicker input-xlarge" data-live-search="true"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span type="button" class="btn btn-success" id="welcome">邀请</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script src="/js/bootstrap-select.js"></script>
+<script>
+    $('.main').height($(window).height());
+    var welcomeInfo={};
+    $('#welcome').on('click',function (object) {
+        welcomeInfo.companyProfessionId = $('#select-employ').val();
+        console.log(welcomeInfo);
+        $.post('/company/welcome',
+            welcomeInfo,function (data) {
+                data = JSON.parse(data);
+                if(data.errorCode=='00'){
+                    window.top.showToastr(0,"修改信息成功");
+                    $('#stu-account').bootstrapTable('refresh');
+                    $('#myModal').modal('hide');
+                }else{
+                    window.top.showToastr(2,"未知错误");
+                }
+            }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    dynamicTable = $("#stu-account").bootstrapTable({
+        url: "/company/get/stu-info",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.edit-info').on('click',function (object) {
+                welcomeInfo.studentId = $(this).attr('data-id');
+                $('#name').val($(this).attr('data-name'));
+                $('#myModal').modal('show');
+            });
+            $('.search-input').attr('placeholder',"搜索姓名/id/昵称/手机号");
+        },
+        columns:[{
+            field:"realname",
+            title:"真实姓名",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<a href='/info/"+r.studentId+"/' target='_blank'><span>"+v+"</span></a>"
+            }
+        },{
+            field:"sex",
+            title:"性别",
+            align: "center"
+        },{
+            field:"age",
+            title:"年龄",
+            align: "center"
+        },{
+            field:"vacation",
+            title:"学历",
+            align: "center"
+        },{
+            field:"github",
+            title:"GitHub",
+            align: "center"
+        },{
+            field:"email",
+            title:"邮箱",
+            align: "center"
+        },{
+            field:"phone",
+            title:"手机",
+            align: "center"
+        },{
+            field:"hobby",
+            title:"兴趣",
+            align: "center"
+        },{
+            field:"professional",
+            title:"目标职业",
+            align: "center"
+        },{
+            field:"edit",
+            title:"操作",
+            align: "center",
+            formatter: function(v,r,i){
+                return "<span data-id='"+r.studentId+"' data-name='"+r.realname+"' class='btn btn-success btn-xs edit-info'>邀请面试</span>";
+            }
+        }]
+    });
+    $(document).ready(function () {
+        let $sl = $('#select-employ');
+        $sl.selectpicker({
+            noneSelectedText : '请选择'//默认显示内容
+        });
+        $.get('/company/get/employ-list',function (data) {
+            data = JSON.parse(data);
+            if(data.errorCode=='00'){
+                let list = data.returnObject;
+                for(let i = 0; i < list.length; i++){
+                    let $opt = $('<option value="'+list[i].companyProfessionId+'">'
+                        +list[i].title+'</option>');
+                    $sl.append($opt);
+                }
+                $sl.selectpicker('refresh');
+            }
+        });
+    });
+</script>
+</body>
+</html>

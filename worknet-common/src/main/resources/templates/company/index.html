@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>公司管理界面</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.css" rel="stylesheet">
+    <style>
+        div.container{
+            width:20%;
+            height:100%;
+            position:fixed;
+            background:#191475;
+            font-weight:normal;
+
+        }
+        div.container li a{
+            color:#e1eaffcf;
+            font-size: 1.1em;
+            transition:all .4s;
+        }
+        div.container li:hover a,div.container li.active a{
+            color:#0000009c;
+            font-weight:bold;
+        }
+        div.container li.active{
+            background-color:white;
+        }
+        #frame-wrapper{
+            position:fixed;
+            right:0;
+            bottom:0;
+            width:80%;
+            height:100%;
+        }
+        #frame-wrapper iframe{
+            width:100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="nav nav-list">
+                    <li class="active"><a href="#">首页</a></li>
+                    <li><a href="#account">企业账户管理</a></li>
+                    <li><a href="#info">企业信息管理</a></li>
+                    <li><a href="#employ">接收简历管理</a></li>
+                    <li><a href="#welcome">邀请面试</a></li>
+                    <li><a href="#welcome-info">邀请信息管理</a></li>
+                    <li><a href="#resume">招聘信息管理</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="frame-wrapper">
+        <iframe scrolling="yes" id="frame" frameborder="0">
+            <p>你的浏览器不支持iframe，请升级。</p>
+            <p>建议使用chrome最新版本</p>
+        </iframe>
+    </div>
+</div>
+<script src="/js/jquery-2.2.3.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let href = window.location.href;
+        let sharp = (href.split("#").slice(-1));
+        $('.nav-list li').each(function () {
+            $(this).on('click',function (object) {
+                $(this).siblings().each(function () {
+                    $(this).removeClass('active');
+                });
+                $(this).addClass('active');
+                let to = $(this).find('a').attr('href');
+                to = to.split('#');
+                to = to[1];
+                $('#frame').attr('src',"/company/"+to);
+            });
+            if(($(this).find('a').attr('href'))=='#'+sharp){
+                $(this).click();
+            }else{
+                $(this).removeClass('active');
+            }
+        });
+        $('#frame').height($(window).height());
+    });
+    function showToastr(code,msg){
+        if(code===0){
+            toastr.success(msg);
+        }else if(code===1)
+            toastr.warning(msg);
+        else toastr.error(msg);
+    }
+    function showToastrMsg(code){
+        if(code==='00')
+            toastr.success('修改成功');
+        else if (code==='too_long') {
+            toastr.error('内容过长，超过255个字符！');
+        }
+        else if (code==='confirm_error') {
+            toastr.error('两次输入的新密码不同！');
+        }
+        else if (code==='old_error') {
+            toastr.error('旧密码输入错误！');
+        }
+        else
+            toastr.error('未知错误，修改失败');
+    }
+</script>
+</body>
+</html>

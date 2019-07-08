@@ -1,8 +1,11 @@
 package com.example.worknet.config.hessian;
 
 import com.example.worknet.common.constant.ServiceURL;
+import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestApplyService;
 import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyInvitationService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
@@ -50,6 +53,36 @@ public class HessianClientBeanConfig {
     public CompanyProfessionService companyProfessionService() {
         try {
             return HessianProxyFactoryUtil.getHessianClientBean(CompanyProfessionService.class, ServiceURL.companyProfessionService);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Bean
+    public CompanyInvitationService companyInvitationService() {
+        try {
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyInvitationService.class, ServiceURL.companyInvitationService);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Bean
+    public CompanyCvService companyCompanyCvService() {
+        try {
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyCvService.class, ServiceURL.companyCvService);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Bean
+    public AdministratorService AdministratorService() {
+        try {
+            return HessianProxyFactoryUtil.getHessianClientBean(AdministratorService.class, ServiceURL.administratorService);
         }catch (Exception e) {
             e.printStackTrace();
         }

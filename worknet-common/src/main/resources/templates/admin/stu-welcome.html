@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        span a i{
+            padding-right:3px;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <table id="stu-account"></table>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+    $('.main').height($(window).height());
+    var stuInfo;
+    dynamicTable = $("#stu-account").bootstrapTable({
+        url: "/admin/get/stu-welcome",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.edit-info').on('click',function (object) {
+                stuInfo = JSON.parse($(this).attr('data-json'));
+                $('#myModal').modal('show');
+            });
+            $('.search-input').attr('placeholder',"搜索岗位/姓名/id");
+        },
+        columns:[{
+            field:"employTitle",
+            title:"邀请岗位",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span>"+v+"</span>"
+            }
+        },{
+            field:"companyName",
+            title:"公司名称",
+            align: "center"
+        },{
+            field:"companyId",
+            title:"公司id",
+            align: "center"
+        },{
+            field:"realname",
+            title:"学生姓名",
+            align: "center"
+        },{
+            field:"userId",
+            title:"学生id",
+            align: "center"
+        },{
+            field:"status",
+            title:"邀请状态",
+            align: "center",
+            formatter:function (v,r,i) {
+                switch(v){
+                    case 0:return "<div class='btn-group'>"+
+                        "<span class='label label-primary'>未读</span>"+
+                        "</div>";
+                    case 1:return "<div class='btn-group'>"+
+                        "<span class='label label-success'>已同意</span>"+
+                        "</div>";
+                    case 2:return "<div class='btn-group'>"+
+                        "<span class='label label-danger'>已拒绝</span>"+
+                        "</div>";
+                }
+                return '';
+            }
+        },{
+            field:"companyProfessionId",
+            title:"招聘链接",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span><a href='/working/"+r.companyId+"/job/"+
+                    v+"/' target='_blank'><i class='icon icon-link'></i>跳转</a></span>"
+            }
+        }]
+    });
+
+</script>
+</body>
+</html>

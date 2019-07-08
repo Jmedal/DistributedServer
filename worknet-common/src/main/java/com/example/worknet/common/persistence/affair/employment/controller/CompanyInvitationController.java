@@ -2,11 +2,13 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyInvitationService;
+import com.example.worknet.common.persistence.affair.user.serivce.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,51 +27,83 @@ import java.util.HashMap;
 @ResponseBody
 public class CompanyInvitationController {
 
+    @Autowired
+    private CompanyInvitationService companyInvitationService;
+
+    @Autowired
+    private UserService userService;
+
     /**
      * 获取邀请用户的公司及其招聘信息
+     * @param pageSize
+     * @param page
+     * @param keyword
      * @param request
-     * @param response
      * @return
      */
-    @RequestMapping(value = "/get/welcome-company")
-    public String getWelcome(HttpServletRequest request, HttpServletResponse response){
-        response.setContentType("application/json;charset=utf-8");
+
+    @RequestMapping(value = "/get/welcome-company", method = RequestMethod.GET)
+    public String getWelcome(@RequestParam("pageNumber") Integer page,
+                             @RequestParam("pageSize") Integer pageSize,
+                             @RequestParam("searchText") String keyword,
+                             HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
-        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
-        String searchText = request.getParameter("searchText");
-        System.out.println("关键字："+searchText);
-        map.put("total",145);//数据总条数
-        ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-        for(int i = 0; i < pageSize; i++){
-            HashMap<String,Object> obj = new HashMap<>();
-            obj.put("id",(i+page*pageSize+1));//邀请id，用来同意邀请时使用，唯一标识一份邀请
-            obj.put("companyName","百度");
-            obj.put("companyId",(i+page*pageSize+1));
-            obj.put("title","实习招聘凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数凑字数"+(i+page*pageSize+1));//应聘的信息标题
-            obj.put("employId",(i+page*pageSize+100));//招聘信息的id
-            obj.put("status",i%3);//3种状态，未读，同意，拒绝
-            obj.put("inviteTime","2019-08-05 15:33:25");//上次操作时间（待审核状态的操作时间即上传的时间）
-            list.add(obj);
-        }
-        map.put("rows",list);//list集合
+        if(request.getSession(true).getAttribute("userId") != null) {
+            Long userId = (long)request.getSession(true).getAttribute("userId");
+            if(userService.selectById(userId).getRole().equals(3)) {
+                Page<HashMap<String, Object>> pager = companyInvitationService.getCompanyInvitationPage(new Page<>(page,pageSize), userId, keyword);
+                map.put("total",pager.getTotal());//数据总条数
+                map.put("rows",pager.getRecords());//数据列表
+                map.put("errorCode","00");
+            }
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 
-
-    //同意邀请
-    @RequestMapping(value = "/agree-welcome/{welcomeId}")
-    public String agreeWelcome(@PathVariable int welcomeId){
+    /**
+     * 同意公司招聘邀请 [status = 1]
+     * @param inviteId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/agree-welcome/{welcomeId}", method = RequestMethod.GET)
+    public String agreeWelcome(@PathVariable(value = "welcomeId") Long inviteId,
+                               HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
+        if(request.getSession(true).getAttribute("userId") != null) {
+            Long userId = (long)request.getSession(true).getAttribute("userId");
+            if(userService.selectById(userId).getRole().equals(3)
+                    && companyInvitationService.changeInvitationStatus(inviteId, userId, 1))
+                map.put("errorCode","00");
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 
-    //拒绝邀请
-    @RequestMapping(value = "/reject-welcome/{welcomeId}")
-    public String rejectWelcome(@PathVariable int welcomeId){
+    /**
+     * 拒绝公司招聘邀请 [status = 2]
+     * @param inviteId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/reject-welcome/{welcomeId}", method = RequestMethod.GET)
+    public String rejectWelcome(@PathVariable(value = "welcomeId") Long inviteId,
+                                HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
+        if(request.getSession(true).getAttribute("userId") != null) {
+            Long userId = (long)request.getSession(true).getAttribute("userId");
+            if(userService.selectById(userId).getRole().equals(3)
+                    && companyInvitationService.changeInvitationStatus(inviteId, userId, 2))
+                map.put("errorCode","00");
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 }

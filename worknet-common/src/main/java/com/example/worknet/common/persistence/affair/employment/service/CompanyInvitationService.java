@@ -1,7 +1,10 @@
 package com.example.worknet.common.persistence.affair.employment.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.HashMap;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface CompanyInvitationService extends IService<CompanyInvitation> {
 
+    Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> page, Long userId, String keyword);
+
+    boolean changeInvitationStatus(Long inviteId, Long userId, Integer status);
 }

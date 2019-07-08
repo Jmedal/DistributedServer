@@ -1,6 +1,7 @@
 package com.example.worknet.common.persistence.affair.user.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.LearnerCv;
@@ -52,7 +53,7 @@ public class LearnerCvController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             User user = userService.selectById(userId);
-            if(user.getRole().equals(3)){
+            if(user.getRole().equals(UserConst.STUDENT.ordinal())){
                 map.put("returnObject", learnerCvService.getLearnerCvInfo(userId));
                 map.put("errorCode", "00");
             }
@@ -143,7 +144,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 LearnerCv learnerCv = new LearnerCv();
                 learnerCv.setResumeName(resumeName);
                 learnerCv.setName(name);
@@ -186,7 +187,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 map.put("returnObject", learnerCvService.getLearnerCvList(userId));
                 map.put("errorCode", "00");
             }
@@ -209,7 +210,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 if(learnerCvService.deleteLearnerCv(resumeId,userId))
                     map.put("errorCode", "00");
                 else
@@ -233,7 +234,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 LearnerCv learnerCv = learnerCvService.getLearnerCvInfo(resumeId,userId);
                 if(learnerCv !=null){
                     map.put("returnObject",learnerCv);
@@ -291,7 +292,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 LearnerCv learnerCv = new LearnerCv();
                 learnerCv.setId(resumeId);
                 learnerCv.setLearnerId(userId);
@@ -329,13 +330,13 @@ public class LearnerCvController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/resume-mode/deliver/avatar/{resumeId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/resume-mode/deliver/avatar/{resumeId}", method = RequestMethod.POST)
     public String deliverModeAvatar(@PathVariable(value = "resumeId") Long resumeId,
                                     MultipartHttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(3)) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
                 if(learnerCvService.insertOrUpdateCvAvatar(resumeId,request))
                     map.put("errorCode", "00");
                 else

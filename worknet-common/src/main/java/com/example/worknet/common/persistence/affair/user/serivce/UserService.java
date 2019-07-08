@@ -1,6 +1,7 @@
 package com.example.worknet.common.persistence.affair.user.serivce;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.TeacherInfo;
 import com.example.worknet.common.persistence.template.modal.User;
@@ -30,6 +31,8 @@ public interface UserService extends IService<User>{
 
     boolean userRegister(User user);
 
+    boolean insertCompanyInfo(Company company);
+
     boolean insertTeacherInfo(TeacherInfo teacherInfo);
 
     boolean insertLearnerInfo(LearnerInfo learnerInfo);
@@ -37,6 +40,8 @@ public interface UserService extends IService<User>{
     boolean updateUserInfo(User user);
 
     boolean updateTeacherInfo(TeacherInfo teacherInfo);
+
+    boolean updateCompanyInfo(Company company);
 
     boolean updateLearnerInfo(LearnerInfo learnerInfo);
 

@@ -3,6 +3,8 @@ package com.example.worknet.config.hessian;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.company.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.companyContest.service.*;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyInvitationService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import com.example.worknet.common.persistence.affair.message.service.MessageService;
 import org.springframework.context.annotation.Bean;
@@ -101,6 +103,24 @@ public class HessionServiceConfig {
         return exporter;
     }
 
+    @Bean("/companyInvitationService")
+    public HessianServiceExporter exportCompanyInvitationService()
+    {
+        HessianServiceExporter exporter = new HessianServiceExporter();
+        exporter.setService(companyInvitationService);
+        exporter.setServiceInterface(CompanyInvitationService.class);
+        return exporter;
+    }
+
+    @Bean("/companyCvService")
+    public HessianServiceExporter exportCompanyCvService()
+    {
+        HessianServiceExporter exporter = new HessianServiceExporter();
+        exporter.setService(companyCvService);
+        exporter.setServiceInterface(CompanyCvService.class);
+        return exporter;
+    }
+
     @Resource
     private AdministratorService administratorService;
 
@@ -127,4 +147,10 @@ public class HessionServiceConfig {
 
     @Resource
     private CompanyProfessionService companyProfessionService;
+
+    @Resource
+    private CompanyInvitationService companyInvitationService;
+
+    @Resource
+    private CompanyCvService companyCvService;
 }

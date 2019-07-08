@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        div#myModal{
+            transform:translateY(5%);
+        }
+        #stu-info td{
+            max-width:200px;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            white-space:nowrap;
+            word-break:keep-all;
+            margin-right:10px;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <table id="stu-info"></table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--登陆框头部-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    修改公司信息
+                </h4>
+            </div>
+            <!--登陆框中间部分(from表单)-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label" >公司名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="公司名称" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="field" class="col-sm-2 control-label" >研究方向</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="field" id="field" placeholder="研究方向" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 control-label" >地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="address" id="address" placeholder="地址" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="communication" class="col-sm-2 control-label" >联系方式</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="communication" id="communication" placeholder="住址" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="website" class="col-sm-2 control-label" >网址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="website" id="website" placeholder="网址" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="introduction" class="col-sm-2 control-label" >简介</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" class="form-control" name="introduction"
+                                      id="introduction" rows="5" placeholder="简介" required="required"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="btn btn-success" id="change-info">确认修改</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+    $('.main').height($(window).height());
+    var stuInfo;
+    $('#myModal').on('show.bs.modal',function (object) {
+        $.each(stuInfo,function (k) {
+            let key = k;
+            let val = stuInfo[key];
+            let $t = $('#'+key);
+            $t.val(val);
+            $t.on('change',function (object1) {
+                stuInfo[key] = $(this).val();
+            });
+        });
+    });
+    $('#change-info').on('click',function (object) {
+        console.log(stuInfo);
+        $.post('/admin/com/change-info',
+            stuInfo,function (data) {
+                data = JSON.parse(data);
+                if(data.errorCode=='00'){
+                    window.top.showToastr(0,"修改信息成功");
+                    $('#stu-info').bootstrapTable('refresh');
+                    $('#myModal').modal('hide');
+                }else{
+                    window.top.showToastr(2,"未知错误");
+                }
+            }).error(function () {
+            window.top.showToastr(2,"未知错误");
+        });
+    });
+    dynamicTable = $("#stu-info").bootstrapTable({
+        url: "/admin/get/com-info",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.edit-info').on('click',function (object) {
+                stuInfo = JSON.parse($(this).attr('data-json'));
+                $('#myModal').modal('show');
+            });
+            $('.search-input').attr('placeholder',"搜索姓名/id/昵称/手机号");
+        },
+        columns:[{
+            field:"userId",
+            title:"公司id",
+            align: "center"
+        },{
+            field:"name",
+            title:"公司名称",
+            align: "center"
+        },{
+            field:"registerTime",
+            title:"注册时间",
+            align: "center"
+        },{
+            field:"field",
+            title:"研究方向",
+            align: "center"
+        },{
+            field:"address",
+            title:"公司地址",
+            align: "center"
+        },{
+            field:"communication",
+            title:"联系方式",
+            align: "center"
+        },{
+            field:"website",
+            title:"公司网站",
+            align: "center"
+        },{
+            field:"introduction",
+            title:"公司简介",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span title='"+v+"'>"+v+"</span>"
+            }
+        },{
+            field:"edit",
+            title:"操作",
+            align: "center",
+            formatter: function(v,r,i){
+                return "<span data-json='"+JSON.stringify(r)+"' class='btn btn-success btn-xs edit-info'>修改</span>";
+            }
+        }]
+    });
+
+</script>
+</body>
+</html>

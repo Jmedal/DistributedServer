@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/personal/css/myMsg.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/edua-icons.css">
+    <style>
+        span a i{
+            padding-right:3px;
+        }
+        #stu-account span.reject{
+            margin-left:5px;
+        }
+    </style>
+</head>
+<body>
+<div class='main'>
+    <table id="stu-account"></table>
+</div>
+<script type="text/javascript" src="/personal/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.2/dist/bootstrap-table.min.js"></script>
+<script>
+    $('.main').height($(window).height());
+    var stuInfo;
+    dynamicTable = $("#stu-account").bootstrapTable({
+        url: "/company/get/resume",
+        striped: true,
+        pagination: true,
+        singleSelect: true,
+        clickToSelect: true,
+        showColumns:true,
+        pageNumber:1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        sidePagination: "server",
+        queryParamsType: "",
+        search: true,
+        queryParams: function getPageMessage(params){
+            let temp={
+                pageSize: params.pageSize,
+                pageNumber: params.pageNumber,
+                searchText:params.searchText
+            };
+            return temp;
+        },
+        minimunCountColumns: 2,
+        height:$(window).height()*0.85,
+        onLoadSuccess:function(data){
+            $('span.agree').on('click',function (object) {
+                let resumeId = JSON.parse($(this).attr('data-id'));
+                $.get('/company/agree/'+resumeId,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已通过该简历");
+                        $('#stu-account').bootstrapTable('refresh');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+            });
+            $('span.reject').on('click',function (object) {
+                let resumeId = JSON.parse($(this).attr('data-id'));
+                $.get('/company/reject/'+resumeId,function (data) {
+                    data = JSON.parse(data);
+                    if(data.errorCode=='00'){
+                        window.top.showToastr(0,"已拒绝该简历");
+                        $('#stu-account').bootstrapTable('refresh');
+                    }else{
+                        window.top.showToastr(2,"未知错误");
+                    }
+                }).error(function () {
+                    window.top.showToastr(2,"未知错误");
+                });
+            });
+        },
+        columns:[{
+            field:"employTitle",
+            title:"招聘岗位",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span>"+v+"</span>"
+            }
+        },{
+            field:"realname",
+            title:"学生姓名",
+            align: "center"
+        },{
+            field:"studentId",
+            title:"学生id",
+            align: "center"
+        },{
+            field:"companyProfessionId",
+            title:"招聘链接",
+            align: "center",
+            formatter:function (v,r,i) {
+                return "<span><a href='/working/"+r.companyId+"/job/"+
+                    v+"/' target='_blank'><i class='icon icon-link'></i>跳转</a></span>"
+            }
+        },{
+            field:"edit",
+            title:"简历预览",
+            align: "center",
+            formatter: function(v,r,i){
+                return '<span><a href="/resume/preview/'+r.resumeId
+                    +'" target="_blank"><i class="icon icon-eye"></i>预览</a></span>';
+            }
+        },{
+            field:"operate",
+            title:"操作",
+            align: "center",
+            formatter:function (v,r,i) {
+                switch(r.status){
+                    case 0:return "<div class='btn-group'>"+
+                        "<span class='btn btn-xs btn-success agree' data-id='"+r.resumeId+"'>通过</span>"+
+                        "<span class='btn btn-xs btn-danger reject' data-id='"+r.resumeId+"'>拒绝</span>"+
+                        "</div>";
+                    case 1:return "<div class='btn-group'>"+
+                        "<span class='btn btn-xs btn-default' disabled='true'>已通过</span>"+
+                        "</div>";
+                    case 2:return "<div class='btn-group'>"+
+                        "<span class='btn btn-xs btn-default' disabled='true'>已拒绝</span>"+
+                        "</div>";
+                }
+                return '';
+            }
+        }]
+    });
+
+</script>
+</body>
+</html>

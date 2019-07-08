@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.constant.Const;
+import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.User;
@@ -74,7 +75,7 @@ public class UserController {
             user.setAccount(username);
             user.setPassword(password);
             user.setActivity(1);
-            user.setRole(3);
+            user.setRole(UserConst.STUDENT.ordinal());
             if(userService.userRegister(user))
                 map.put("errorCode","00");
             else
@@ -101,7 +102,7 @@ public class UserController {
         HashMap<String,String> map = new HashMap<>();
         if(userService.verify(username,password)){
             User user = userService.selectOne(new EntityWrapper<User>().eq("account",username));
-            if(user.getRole().equals(3) && user.getActivity().equals(1)){
+            if(user.getRole().equals(UserConst.STUDENT.ordinal()) && user.getActivity().equals(1)){
                 request.getSession().setAttribute("userId",user.getId());
                 map.put("errorCode","00");
             }else

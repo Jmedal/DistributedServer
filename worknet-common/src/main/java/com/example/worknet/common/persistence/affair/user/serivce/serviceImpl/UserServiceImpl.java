@@ -13,6 +13,7 @@ import com.example.worknet.common.persistence.affair.user.dao.UserMapper;
 import com.example.worknet.common.persistence.template.modal.*;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.example.worknet.core.utils.Date.DateUtil;
 import com.example.worknet.core.utils.file.FileToolsUtil;
 import com.example.worknet.core.utils.string.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,28 +119,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int role=user.getRole();
         if(role == 0)
             return false;
-        super.insert(user);
-        user = super.selectOne(new EntityWrapper<User>().eq("account",user.getAccount()));
-        switch (role){
-            case 3:
-                LearnerInfo learnerInfo = new LearnerInfo();
-                learnerInfo.setUserId(user.getId());
-                learnerInfo.setNickname(RandomString.getRandomString(6));
-                learnerInfoService.insert(learnerInfo);
-                return true;
-            case 2:
-                TeacherInfo teacherInfo = new TeacherInfo();
-                teacherInfo.setUserId(user.getId());
-                teacherInfoService.insert(teacherInfo);
-                return true;
-            case 1:
-                Company company = new Company();
-                company.setUserId(user.getId());
-                companyService.insert(company);
-                return true;
-            default:
-                return false;
+        if(super.insert(user)){
+            switch (role){
+                case 3:
+                    LearnerInfo learnerInfo = new LearnerInfo();
+                    learnerInfo.setUserId(user.getId());
+                    learnerInfo.setNickname(RandomString.getRandomString(6));
+                    learnerInfoService.insert(learnerInfo);
+                    return true;
+                case 2:
+                    TeacherInfo teacherInfo = new TeacherInfo();
+                    teacherInfo.setUserId(user.getId());
+                    teacherInfoService.insert(teacherInfo);
+                    return true;
+                case 1:
+                    Company company = new Company();
+                    company.setUserId(user.getId());
+                    company.setRegisterTime(DateUtil.getSqlNowDate());
+                    companyService.insert(company);
+                    return true;
+                default:
+                    return false;
+            }
         }
+        return false;
+    }
+
+    /**
+     *添加公司信息
+     * @param company
+     * @return
+     */
+    @Override
+    public boolean insertCompanyInfo(Company company) {
+        return companyService.insert(company);
     }
 
     /**
@@ -175,12 +188,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
+     * 更新公司信息
+     * @param company
+     * @return
+     */
+    @Override
+    public boolean updateCompanyInfo(Company company) {
+        if(company.getUserId()==null)
+            return false;
+        return companyService.updateById(company);
+    }
+
+    /**
      * 更新讲师信息
      * @param teacherInfo
      * @return
      */
     @Override
     public boolean updateTeacherInfo(TeacherInfo teacherInfo) {
+        if(teacherInfo.getUserId()==null)
+            return false;
         return teacherInfoService.updateById(teacherInfo);
     }
 
@@ -213,6 +240,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         FileToolsUtil.fileToUpload(strDirPath, filePath);
         return resourceLoader.getResource("file:" + strDirPath + Const.FILE_SEPARATOR + filePath.substring(filePath.lastIndexOf(Const.FILE_SEPARATOR) + 1));
     }
+
     /**
      * 获取公司头像
      * @param companyId
@@ -220,14 +248,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Resource getCompanyAvatar(long companyId, String strDirPath) {
-        User user = super.selectById(companyService.selectById(companyId).getUserId());
-        if(user==null)
-            throw new RuntimeException();
-        //绝对保存路径
-        String filePath = Const.FILE_PATH + user.getHeadPath();
-        strDirPath = strDirPath + "WEB-INF" + Const.FILE_SEPARATOR + "classes" + Const.FILE_SEPARATOR + "static" + Const.FILE_SEPARATOR + "upload";
-        FileToolsUtil.fileToUpload(strDirPath, filePath);
-        return resourceLoader.getResource("file:" + strDirPath + Const.FILE_SEPARATOR + filePath.substring(filePath.lastIndexOf(Const.FILE_SEPARATOR) + 1));
+        return getAvatar(companyService.selectById(companyId).getUserId(), strDirPath);
     }
 
     /**

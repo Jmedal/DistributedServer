@@ -13,26 +13,32 @@ public class HomeController {
     public String index(){
         return "index.html";
     }
+
     @RequestMapping(value = "/courses")
     public String courses(){
         return "courses.html";
     }
+
     @RequestMapping(value = "/exam")
     public String exam(){
         return "exam.html";
     }
+
     @RequestMapping(value = "/course/{cid}/")
     public String course(@PathVariable String cid){
         return "/course_detail.html";
     }
+
     @RequestMapping(value = "/course/{cid}/moreComment")
     public String moreComment(@PathVariable Integer cid){
         return "comment.html";
     }
+
     @RequestMapping(value = "/course/{cid}/video/")
     public String video(@PathVariable Integer cid){
         return "video.html";
     }
+
     @RequestMapping(value = "/contact")
     public String contact(){
         return "contact.html";
