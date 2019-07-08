@@ -28,12 +28,13 @@ public class CompanyContestServiceImpl extends ServiceImpl<CompanyContestMapper,
 
     /**
      * 获取筛选的课程列表信息
-     * @param page
+     * @param pager
      * @param type
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getContestPage(Page<HashMap<String, Object>> page, ContestConst type, String keyword){
+    public Page<HashMap<String,Object>> getContestPage(Page<HashMap<String, Object>> pager, ContestConst type, String keyword){
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         switch(type){
             case CONTEST_NEW:
                 return page.setRecords(companyContestMapper.getNewContestPage(page,keyword));

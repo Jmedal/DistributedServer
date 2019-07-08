@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -115,29 +116,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public boolean userRegister(User user) {
         int role=user.getRole();
         if(role == 0)
             return false;
         if(super.insert(user)){
-            switch (role){
+            switch (user.getRole()){
                 case 3:
                     LearnerInfo learnerInfo = new LearnerInfo();
                     learnerInfo.setUserId(user.getId());
                     learnerInfo.setNickname(RandomString.getRandomString(6));
-                    learnerInfoService.insert(learnerInfo);
-                    return true;
+                    return learnerInfoService.insert(learnerInfo);
                 case 2:
                     TeacherInfo teacherInfo = new TeacherInfo();
                     teacherInfo.setUserId(user.getId());
-                    teacherInfoService.insert(teacherInfo);
-                    return true;
+                    return teacherInfoService.insert(teacherInfo);
                 case 1:
                     Company company = new Company();
                     company.setUserId(user.getId());
-                    company.setRegisterTime(DateUtil.getSqlNowDate());
-                    companyService.insert(company);
-                    return true;
+                    company.setRegisterTime(DateUtil.getSqlNowDateTime());
+                    return companyService.insert(company);
                 default:
                     return false;
             }

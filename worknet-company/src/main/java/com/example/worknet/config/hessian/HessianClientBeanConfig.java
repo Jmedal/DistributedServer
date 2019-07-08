@@ -1,7 +1,7 @@
 package com.example.worknet.config.hessian;
 
 import com.example.worknet.common.constant.ServiceURL;
-import com.example.worknet.common.persistence.affair.api.user.serivce.UserService;
+import com.example.worknet.common.persistence.affair.api.user.UserService;
 import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

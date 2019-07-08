@@ -381,6 +381,7 @@
                 $('.mode-item span[class="edit"]').on('click',function (object) {
                     let resumeId = $(this).parent().find('input.resumeId').val();
                     createOrChange = resumeId;
+                    $("#avatar_file2").val('');
                     $.get('/resume-mode/get/'+resumeId,function (msg) {
                         msg = JSON.parse(msg);
                         if(msg.errorCode=='00'){
@@ -399,6 +400,7 @@
         $('#create-resume').on('click',function (object) {
             resumeMap = {};
             createOrChange = 0;
+            $("#avatar_file2").val('');
             fillResume(resumeMap);//清空
             $('#resume-detail img').attr('src','/user/default/avatar');
             if(resumeMax<=parseInt($('#resume-count').html())){
@@ -417,7 +419,7 @@
             }
         }
         $("#avatar_file2").change(function () {
-
+            console.log('图片改变');
             var file = $(this)[0].files[0];
             if(file.size>2048*1024){//2MB
                 window.top.showToastr(1,'头像图片太大！限制2MB以下');

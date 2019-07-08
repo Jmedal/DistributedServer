@@ -23,13 +23,14 @@ public class CompanyInvitationServiceImpl extends ServiceImpl<CompanyInvitationM
 
     /**
      * 获取公司招聘邀请列表
-     * @param page
+     * @param pager
      * @param userId
      * @param keyword
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> page, Long userId, String keyword){
+    public Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> pager, Long userId, String keyword){
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         return page.setRecords(companyInvitationMapper.getCompanyInvitationPage(page,userId,keyword));
     }
 

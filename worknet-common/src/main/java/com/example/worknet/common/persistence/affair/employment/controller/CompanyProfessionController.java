@@ -3,17 +3,13 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.example.worknet.common.constant.ProfessionConst;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 
 import static com.example.worknet.common.constant.ProfessionConst.PROFESSION_DEFAULT;
 import static com.example.worknet.common.constant.ProfessionConst.PROFESSION_NEW;
@@ -57,7 +53,7 @@ public class CompanyProfessionController {
         if(order == null) order = "";
         if(field == null || field.equals("null")) field = "";
         if(location == null || location.equals("null")) location = "";
-        Page<HashMap<String,Object>> pager = null;
+        Page<HashMap<String, Object>> pager = null;
         switch (order){
             case "new":
                 pager = companyProfessionService.getProfessionPage(new Page<>(page, 20), PROFESSION_NEW, professionId, location, field, keyword);
@@ -100,7 +96,7 @@ public class CompanyProfessionController {
     public String getEmployList(@PathVariable(value = "companyId") Long companyId,
                                 @RequestParam(value = "page") Integer page){
         HashMap<String, Object> map = new HashMap<>();
-        Page<HashMap<String,Object>> pager = companyProfessionService.getEmployeeList(new Page<>(page, 10),companyId);
+        Page<HashMap<String, Object>> pager = companyProfessionService.getEmployeeList(new Page<>(page, 10),companyId);
         map.put("returnObject",pager);
         map.put("errorCode","00");
         return JSON.toJSONString(map);

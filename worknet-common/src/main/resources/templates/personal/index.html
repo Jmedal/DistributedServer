@@ -237,7 +237,7 @@
                 toastr.success('修改成功');
             else if (code==='too_long') {
                 toastr.error('内容过长，超过255个字符！');
-			}
+            }
             else if (code==='confirm_error') {
                 toastr.error('两次输入的新密码不同！');
             }
@@ -246,7 +246,17 @@
             }
             else
                 toastr.error('未知错误，修改失败');
-		}
+        }
+        function showToastr(code,msg){
+            if(code===0)
+                toastr.success(msg);
+            else if (code===1) {
+                toastr.warning(msg);
+            }
+            else if (code===2) {
+                toastr.error(msg);
+            }
+        }
         $(document).ready(function () {
             var $li = $('#ace-nav li');
             $li.click(	function () {

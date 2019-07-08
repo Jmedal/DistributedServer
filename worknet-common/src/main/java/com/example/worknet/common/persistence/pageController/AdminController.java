@@ -67,7 +67,7 @@ public class AdminController {
     public String confirmLogin(@RequestParam(value = "password") String password,
                                HttpServletRequest request){
         if(administratorService.verify("admin",password)){
-            request.getSession().setAttribute("userId","administrator");
+            request.getSession().setAttribute("user","administrator");
             return "admin/index.html";
         }
         return "admin/login.html";

@@ -1,12 +1,10 @@
 package com.example.worknet.common.persistence.affair.company.serivce.serviceImpl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.example.worknet.common.persistence.affair.api.user.serivce.UserService;
 import com.example.worknet.common.persistence.affair.company.dao.CompanyMapper;
 import com.example.worknet.common.persistence.affair.company.serivce.CompanyService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

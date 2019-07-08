@@ -5,19 +5,23 @@ import com.example.worknet.common.constant.ServiceURL;
 import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestApplyService;
 import com.example.worknet.common.persistence.affair.course.controller.CourseStudiedController;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseService;
+import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseClickService;
 import com.example.worknet.common.persistence.affair.user.serivce.TeacherInfoService;
+import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.User;
 import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
+import com.example.worknet.core.utils.Date.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 测试API
@@ -34,10 +38,13 @@ public class CourseClickTest {
 //    @Autowired
 //    private CourseClickService courseClickService;
 //
-//    @Autowired
-//    private UserService userService;
     @Autowired
-    private LearnerCvService learnerCvService;
+    private UserService userService;
+//    @Autowired
+//    private LearnerCvService learnerCvService;
+
+    @Autowired
+    private CompanyService companyService;
 //
 //    @Autowired
 //    private AdministratorService administratorService;
@@ -56,8 +63,18 @@ public class CourseClickTest {
 
     @Test
     public void test() throws Exception {
+        User user = new User();
+        user.setAccount("baidu");
+        user.setPassword("baidu");
+        user.setActivity(1);
+        user.setRole(1);
+        System.out.println(userService.insert(user));
+        Company company = new Company();
+        company.setUserId(user.getId());
+        company.setRegisterTime(DateUtil.getSqlNowDate());
+        companyService.insert(company);
 
-        System.out.println(learnerCvService.getLearnerCvInfo((long)1,(long)3));
+        //System.out.println(learnerCvService.getLearnerCvInfo((long)1,(long)3));
 
 
 //        User user = new  User();

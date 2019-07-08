@@ -1,23 +1,13 @@
 package com.example.worknet;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.example.worknet.common.constant.ProfessionConst;
-import com.example.worknet.common.persistence.affair.api.user.modal.User;
-import com.example.worknet.common.persistence.affair.api.user.serivce.UserService;
+import com.example.worknet.common.persistence.template.modal.User;
+import com.example.worknet.common.persistence.affair.api.user.UserService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
-import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
-import javafx.geometry.Pos;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.text.DateFormat;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

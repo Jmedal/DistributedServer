@@ -26,12 +26,13 @@ public class CompanyContestApplyServiceImpl extends ServiceImpl<CompanyContestAp
 
     /**
      * 获取用户笔试报名记录
-     * @param page
+     * @param pager
      * @param uid
      * @return
      */
     @Override
-    public Page<HashMap<String, Object>> getUserContestPage(Page<HashMap<String, Object>> page, Long uid) {
+    public Page<HashMap<String, Object>> getUserContestPage(Page<HashMap<String, Object>> pager, Long uid) {
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         return page.setRecords(companyContestApplyMapper.getUserCompanyContestPage(page, uid));
     }
 

@@ -3,7 +3,7 @@ package com.example.worknet.common.persistence.affair.administrator.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.example.worknet.common.constant.UserConst;
-import com.example.worknet.common.persistence.affair.api.user.modal.LearnerInfo;
+import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.Administrator;
 import com.example.worknet.common.persistence.template.modal.Company;
 

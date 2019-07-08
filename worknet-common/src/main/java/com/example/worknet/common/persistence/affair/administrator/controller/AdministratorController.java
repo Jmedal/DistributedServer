@@ -35,18 +35,18 @@ public class AdministratorController {
      * 加载学生帐号列表
      * @param page
      * @param pageSize
-     * @param keyword
+     * @param keyword   关键字用于搜索 用户名|学生id
      * @param request
      * @return
      */
     @RequestMapping(value = "/admin/get/stu-account", method = RequestMethod.GET)
-    public String getStuAccount(@RequestParam("pageNumber") Integer page,
-                                @RequestParam("pageSize") Integer pageSize,
-                                @RequestParam("searchText") String keyword,    //关键字用于搜索用户名和学生id
+    public String getStuAccount(@RequestParam(value = "pageNumber") Integer page,
+                                @RequestParam(value = "pageSize") Integer pageSize,
+                                @RequestParam(value = "searchText", required = false) String keyword,
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String,Object>> pager = administratorService.getUserPage(new Page<>(page,pageSize), STUDENT, keyword);
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
@@ -55,34 +55,23 @@ public class AdministratorController {
             map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
-    //            map.put("total",145);//数据总条数
-//            ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-//            for(int i = 0; i < pageSize; i++){
-//                HashMap<String,Object> obj = new HashMap<>();
-//                obj.put("id",(i+page*pageSize+1));//学生id
-//                obj.put("account","student"+(i+page*pageSize+1));//用户名
-//                obj.put("password","123456");
-//                obj.put("activity",i%2);
-//                list.add(obj);
-//            }
-//            map.put("rows",list);//list集合
 
     /**
      * 加载公司帐号列表
      * @param page
      * @param pageSize
-     * @param keyword
+     * @param keyword 关键字用于搜索 用户名|公司id
      * @param request
      * @return
      */
     @RequestMapping(value = "/admin/get/com-account", method = RequestMethod.GET)
-    public String getComAccount(@RequestParam("pageNumber") Integer page,
-                                @RequestParam("pageSize") Integer pageSize,
-                                @RequestParam("searchText") String keyword,    //关键字用于搜索用户名和学生id
+    public String getComAccount(@RequestParam(value = "pageNumber") Integer page,
+                                @RequestParam(value = "pageSize") Integer pageSize,
+                                @RequestParam(value = "searchText", required = false) String keyword,    //关键字用于搜索用户名和学生id
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String,Object>> pager = administratorService.getUserPage(new Page<>(page,pageSize), COMPANY, keyword);
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
@@ -99,13 +88,15 @@ public class AdministratorController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/admin/create-com",method = RequestMethod.POST) //创建公司账号，username,password,registerTime3个参数
-    public String creatCompanyAccount(@RequestParam("username") String username,  //记得检查帐号是否存在，模仿UserController,记得在Company表中插入一条时间和其他信息
-                                      @RequestParam("password") String password,
+    @RequestMapping(value = "/admin/create-com",method = RequestMethod.POST)
+    public String creatCompanyAccount(@RequestParam(value = "username") String username,
+                                      @RequestParam(value = "password") String password,
                                       HttpServletRequest request){
+        System.out.println(username);
+        System.out.println(password);
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             if(administratorService.userRegister(username,password,COMPANY))
                 map.put("errorCode", "00");
             else
@@ -126,8 +117,8 @@ public class AdministratorController {
     public String resumeUser(@PathVariable(value = "userId") Long userId,
                              HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             if(administratorService.changeUserActivity(userId,1))
                 map.put("errorCode", "00");
             else
@@ -147,8 +138,8 @@ public class AdministratorController {
     public String banUser(@PathVariable(value = "userId") Long userId,
                           HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             if(administratorService.changeUserActivity(userId,0))
                 map.put("errorCode", "00");
             else
@@ -164,12 +155,12 @@ public class AdministratorController {
      * @return
      */
     @RequestMapping(value = "/admin/change-pass",method = RequestMethod.POST)
-    public String changeStuPass(@RequestParam("userId") Long userId,
-                                @RequestParam("password") String password,
+    public String changeStuPass(@RequestParam(value = "userId") Long userId,
+                                @RequestParam(value = "password") String password,
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             if(administratorService.changeUserPassword(userId,password))
                 map.put("errorCode", "00");
             else
@@ -179,28 +170,25 @@ public class AdministratorController {
         return JSON.toJSONString(map);
     }
 
-
-    //关键字用于搜索姓名/id/昵称/手机号
-    //id userId nickname realname sex age signature vacation github email phone hobby professional
     /**
      * 加载学习者账户信息列表
      * @param page
      * @param pageSize
-     * @param keyword
+     * @param keyword   关键字用于搜索 姓名|id|昵称|手机号
      * @param request
      * @return
      */
     @RequestMapping(value = "/admin/get/stu-info", method = RequestMethod.GET)
-    public String getStuInfo(@RequestParam("pageNumber") Integer page,
-                             @RequestParam("pageSize") Integer pageSize,
-                             @RequestParam("searchText") String keyword,    //关键字用于搜索姓名/id/昵称/手机号
+    public String getStuInfo(@RequestParam(value = "pageNumber") Integer page,
+                             @RequestParam(value = "pageSize") Integer pageSize,
+                             @RequestParam(value = "searchText", required = false) String keyword,
                              HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getUserInfoPage(new Page<>(page, pageSize), STUDENT, keyword);
-            map.put("total",pager.getTotal());//数据总条数
-            map.put("rows",pager.getRecords());
+            map.put("total", pager.getTotal());
+            map.put("rows", pager.getRecords());
             map.put("errorCode", "00");
         } else
             map.put("errorCode", "error");
@@ -214,18 +202,18 @@ public class AdministratorController {
      * 加载公司账户信息列表
      * @param page
      * @param pageSize
-     * @param keyword
+     * @param keyword   关键字用于搜索 公司名称|公司id
      * @param request
      * @return
      */
     @RequestMapping(value = "/admin/get/com-info", method = RequestMethod.GET)
-    public String getComInfo(@RequestParam("pageNumber") Integer page,
-                             @RequestParam("pageSize") Integer pageSize,
-                             @RequestParam("searchText") String keyword,   //关键字用于搜索公司名称/id
+    public String getComInfo(@RequestParam(value = "pageNumber") Integer page,
+                             @RequestParam(value = "pageSize") Integer pageSize,
+                             @RequestParam(value = "searchText", required = false) String keyword,
                              HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getUserInfoPage(new Page<>(page, pageSize), COMPANY, keyword);
             map.put("total",pager.getTotal());//数据总条数
             map.put("rows",pager.getRecords());
@@ -240,17 +228,17 @@ public class AdministratorController {
     // website communication address introduction name field
     //其中id是信息的id,userId是公司账号的id
     @RequestMapping(value = "/admin/com/change-info",method = RequestMethod.POST)
-    public String changeComInfo(@RequestParam("id") Long id,
-                                @RequestParam("field") String field,
-                                @RequestParam("name") String name,
-                                @RequestParam("introduction") String introduction,
-                                @RequestParam("address") String address,
-                                @RequestParam("communication") String communication,
-                                @RequestParam("website") String website,
+    public String changeComInfo(@RequestParam(value = "id") Long id,
+                                @RequestParam(value = "field", required = false) String field,
+                                @RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "introduction", required = false) String introduction,
+                                @RequestParam(value = "address", required = false) String address,
+                                @RequestParam(value = "communication", required = false) String communication,
+                                @RequestParam(value = "website", required = false) String website,
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Company company = new Company();
             company.setId(id);
             company.setField(field);
@@ -272,22 +260,22 @@ public class AdministratorController {
     // nickname realname sex age signature vacation github email phone hobby professional
     //参数和数据库中一一对应
     @RequestMapping(value = "/admin/change-info", method = RequestMethod.POST)
-    public String changeStuInfo(@RequestParam("id") Long id,
-                                @RequestParam("nickname") String nickname,
-                                @RequestParam("realname") String realname,
-                                @RequestParam("sex") String sex,
-                                @RequestParam("age") Integer age,
-                                @RequestParam("signature") String signature,
-                                @RequestParam("vacation") String vacation,
-                                @RequestParam("github") String github,
-                                @RequestParam("email") String email,
-                                @RequestParam("phone") String phone,
-                                @RequestParam("hobby") String hobby,
-                                @RequestParam("professional") String professional,
+    public String changeStuInfo(@RequestParam(value = "id") Long id,
+                                @RequestParam(value = "nickname", required = false) String nickname,
+                                @RequestParam(value = "realname", required = false) String realname,
+                                @RequestParam(value = "sex", required = false) String sex,
+                                @RequestParam(value = "age", required = false) Integer age,
+                                @RequestParam(value = "signature", required = false) String signature,
+                                @RequestParam(value = "vacation", required = false) String vacation,
+                                @RequestParam(value = "github", required = false) String github,
+                                @RequestParam(value = "email", required = false) String email,
+                                @RequestParam(value = "phone", required = false) String phone,
+                                @RequestParam(value = "hobby", required = false) String hobby,
+                                @RequestParam(value = "professional", required = false) String professional,
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             LearnerInfo learnerInfo = new LearnerInfo();
             learnerInfo.setId(id);
             learnerInfo.setNickname(nickname);
@@ -318,13 +306,13 @@ public class AdministratorController {
      * @return
      */
     @RequestMapping(value = "/admin/get/stu-employ", method = RequestMethod.GET)
-    public String getStuEmploy(@RequestParam("pageNumber") Integer page,
-                               @RequestParam("pageSize") Integer pageSize,
-                               @RequestParam("searchText") String keyword, //关键字：学生id，学生真实姓名，公司id，公司名称，招聘信息title
+    public String getStuEmploy(@RequestParam(value = "pageNumber") Integer page,
+                               @RequestParam(value = "pageSize") Integer pageSize,
+                               @RequestParam(value = "searchText", required = false) String keyword, //关键字：学生id，学生真实姓名，公司id，公司名称，招聘信息title
                                HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getCompanyCvPage(new Page<>(page, pageSize), keyword);
             map.put("total",pager.getTotal());//数据总条数
             map.put("rows",pager.getRecords());
@@ -344,13 +332,13 @@ public class AdministratorController {
      * @return
      */
     @RequestMapping(value = "/admin/get/stu-welcome", method = RequestMethod.GET)
-    public String getStuWelcome(@RequestParam("pageNumber") Integer page,
-                                @RequestParam("pageSize") Integer pageSize,
-                                @RequestParam("searchText") String keyword, //关键字：学生id，学生真实姓名，公司id，公司名称，招聘信息title
+    public String getStuWelcome(@RequestParam(value = "pageNumber") Integer page,
+                                @RequestParam(value = "pageSize") Integer pageSize,
+                                @RequestParam(value = "searchText", required = false) String keyword, //关键字：学生id，学生真实姓名，公司id，公司名称，招聘信息title
                                 HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null
-                && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getCompanyInvitationPage(new Page<>(page, pageSize), keyword);
             map.put("total",pager.getTotal());//数据总条数
             map.put("rows",pager.getRecords());

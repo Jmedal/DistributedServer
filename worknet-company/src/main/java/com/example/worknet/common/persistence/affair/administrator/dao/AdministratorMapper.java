@@ -36,10 +36,10 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "ORDER BY\n" +
             "\tsys_user.id DESC"})
     @Results(id = "defaultCoursesInfoResultMap",value = {
-            @Result(property = "id",column = "id"),
-            @Result(property = "account",column = "account"),
-            @Result(property = "password",column = "password"),
-            @Result(property = "activity",column = "activity"),
+            @Result(property = "id", column = "id"),
+            @Result(property = "account", column = "account"),
+            @Result(property = "password", column = "password"),
+            @Result(property = "activity", column = "activity"),
     })
     List<HashMap<String,Object>> getUserPage(Pagination pagination, @Param("role") Integer role, @Param("keyword") String keyword);
 
@@ -66,20 +66,20 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_learner_info.phone REGEXP #{keyword}\n" +
             "ORDER BY\n" +
             "\tsys_learner_info.id DESC"})
-    @Results(id = "learnerInfoResultMap",value = {
-            @Result(property = "id",column = "id"),
-            @Result(property = "userId",column = "user_id"),
-            @Result(property = "nickname",column = "nickname"),
-            @Result(property = "realname",column = "realname"),
-            @Result(property = "sex",column = "sex"),
-            @Result(property = "age",column = "age"),
-            @Result(property = "signature",column = "signature"),
-            @Result(property = "vacation",column = "vacation"),
-            @Result(property = "github",column = "github"),
-            @Result(property = "email",column = "email"),
-            @Result(property = "phone",column = "phone"),
-            @Result(property = "hobby",column = "hobby"),
-            @Result(property = "professional",column = "professional"),
+    @Results(id = "learnerInfoResultMap", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "nickname", column = "nickname"),
+            @Result(property = "realname", column = "realname"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "age", column = "age"),
+            @Result(property = "signature", column = "signature"),
+            @Result(property = "vacation", column = "vacation"),
+            @Result(property = "github", column = "github"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "phone", column = "phone"),
+            @Result(property = "hobby", column = "hobby"),
+            @Result(property = "professional", column = "professional"),
     })
     List<HashMap<String,Object>> getLearnerInfoPage(Pagination pagination, @Param("keyword") String keyword);
 
@@ -103,16 +103,16 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company.`name` REGEXP #{keyword}\n" +
             "ORDER BY\n" +
             "\tsys_company.id DESC"})
-    @Results(id = "companyInfoResultMap",value = {
-            @Result(property = "id",column = "id"),
-            @Result(property = "userId",column = "user_id"),
-            @Result(property = "field",column = "field"),
-            @Result(property = "name",column = "name"),
-            @Result(property = "introduction",column = "introduction"),
-            @Result(property = "address",column = "address"),
-            @Result(property = "communication",column = "communication"),
-            @Result(property = "website",column = "website"),
-            @Result(property = "registerTime",column = "register_time"),
+    @Results(id = "companyInfoResultMap", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "field", column = "field"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "introduction", column = "introduction"),
+            @Result(property = "address", column = "address"),
+            @Result(property = "communication", column = "communication"),
+            @Result(property = "website", column = "website"),
+            @Result(property = "registerTime", column = "register_time", javaType = String.class),
     })
     List<HashMap<String,Object>> getCompanyInfoPage(Pagination pagination, @Param("keyword") String keyword);
 
@@ -139,15 +139,15 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company_profession.title REGEXP #{keyword} \n" +
             "ORDER BY\n" +
             "\tsys_company_cv.id DESC"})
-    @Results(id = "companyCvResultMap",value = {
-            @Result(property = "resumeId",column = "id"),
-            @Result(property = "companyProfessionId",column = "company_profession_id"),
-            @Result(property = "userId",column = "user_id"),
-            @Result(property = "realname",column = "realname"),
-            @Result(property = "companyName",column = "name"),
-            @Result(property = "employTitle",column = "title"),
-            @Result(property = "companyId",column = "company_id"),
-            @Result(property = "status",column = "status"),
+    @Results(id = "companyCvResultMap", value = {
+            @Result(property = "resumeId", column = "id"),
+            @Result(property = "companyProfessionId", column = "company_profession_id"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "realname", column = "realname"),
+            @Result(property = "companyName", column = "name"),
+            @Result(property = "employTitle", column = "title"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "status", column = "status"),
     })
     List<HashMap<String,Object>> getCompanyCvPage(Pagination pagination, @Param("keyword") String keyword);
 
@@ -172,14 +172,14 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company_profession.title REGEXP #{keyword} \n" +
             "ORDER BY\n" +
             "\tsys_company_invitation.id DESC"})
-    @Results(id = "companyInvitationResultMap",value = {
-            @Result(property = "companyProfessionId",column = "company_profession_id"),
-            @Result(property = "userId",column = "user_id"),
-            @Result(property = "realname",column = "realname"),
-            @Result(property = "companyName",column = "name"),
-            @Result(property = "employTitle",column = "title"),
-            @Result(property = "companyId",column = "company_id"),
-            @Result(property = "status",column = "status"),
+    @Results(id = "companyInvitationResultMap", value = {
+            @Result(property = "companyProfessionId", column = "company_profession_id"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "realname", column = "realname"),
+            @Result(property = "companyName", column = "name"),
+            @Result(property = "employTitle", column = "title"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "status", column = "status"),
     })
     List<HashMap<String,Object>> getCompanyInvitationPage(Pagination pagination, @Param("keyword") String keyword);
 }
