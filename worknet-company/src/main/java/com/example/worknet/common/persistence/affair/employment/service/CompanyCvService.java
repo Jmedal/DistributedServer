@@ -33,11 +33,13 @@ public interface CompanyCvService extends IService<CompanyCv> {
                        String introduction,
                        String diploma,
                        String currentLocation,
-                       String inJobTime,
-                       Integer status);
+                       String inJobTime
+                       );
 
     HashMap<String, Object> getCvInfo(Long resumeId);
 
     Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
                                                  String userId, String searchText);
+
+    boolean changeResumeStatus(Long resumeId, int status);
 }

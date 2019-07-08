@@ -1,10 +1,12 @@
 package com.example.worknet.common.persistence.affair.company.serivce;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import org.springframework.core.io.Resource;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +19,8 @@ import java.util.HashMap;
 public interface CompanyService extends IService<Company> {
 
     HashMap<String,Object> getCompanyInfo(long companyId);
+    Page<HashMap<String,Object>> getResumeList(Page<HashMap<String, Object>> page,String companyId,String searchText);
+    boolean updateComInfo(Company company,Long userId);
+    List<HashMap<String,Object>> getComEmployList(long companyId);
+    Page<HashMap<String,Object>> getEmployList(Page<HashMap<String, Object>> page,String companyId,String searchText);
 }

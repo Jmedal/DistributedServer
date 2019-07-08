@@ -81,24 +81,20 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
 
 
     /**
-     * 获取用户投递简历
-     * @param pager
-     * @param userId
-     * @param searchText
-     * @return
+     * 获取用户投放的简历
      */
     @Override
-    public Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> pager, String userId,String searchText){
+    public Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
+                                                        String userId,String searchText){
         if(userId == null || userId.equals("null") || userId.equals(""))
             userId = "[digit]*";
         if(searchText == null || searchText.equals("null") || searchText.equals(""))
             searchText = "[\\w]*";
         else
             searchText = searchText.trim().replaceAll("\\s+"," ").replace(" ","|");
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         return page.setRecords(companyCvMapper.getMyResume(page,userId,searchText));
-    }
 
+    }
     @Autowired
     CompanyCvMapper companyCvMapper;
 }
