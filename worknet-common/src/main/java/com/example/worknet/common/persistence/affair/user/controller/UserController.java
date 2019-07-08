@@ -75,7 +75,7 @@ public class UserController {
             user.setAccount(username);
             user.setPassword(password);
             user.setActivity(1);
-            user.setRole(UserConst.STUDENT.ordinal());
+            user.setRole(UserConst.STUDENT.getState());
             if(userService.userRegister(user))
                 map.put("errorCode","00");
             else
@@ -102,7 +102,7 @@ public class UserController {
         HashMap<String,String> map = new HashMap<>();
         if(userService.verify(username,password)){
             User user = userService.selectOne(new EntityWrapper<User>().eq("account",username));
-            if(user.getRole().equals(UserConst.STUDENT.ordinal()) && user.getActivity().equals(1)){
+            if(user.getRole().equals(UserConst.STUDENT.getState()) && user.getActivity().equals(1)){
                 request.getSession().setAttribute("userId",user.getId());
                 map.put("errorCode","00");
             }else

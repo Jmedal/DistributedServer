@@ -19,7 +19,7 @@ import java.util.HashMap;
  * @author YunJieJiang123
  * @since 2019-04-27
  */
-public interface UserService extends IService<User>{
+public interface UserService extends IService<User> {
 
     boolean verify(String account, String password);
 

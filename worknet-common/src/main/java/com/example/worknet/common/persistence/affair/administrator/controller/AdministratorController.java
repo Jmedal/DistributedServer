@@ -48,7 +48,6 @@ public class AdministratorController {
         if(request.getSession(true).getAttribute("userId") != null
                 && (request.getSession(true).getAttribute("userId")).equals("administrator")) {
             Page<HashMap<String,Object>> pager = administratorService.getUserPage(new Page<>(page,pageSize), STUDENT, keyword);
-            System.out.println(STUDENT.ordinal());
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
             map.put("errorCode", "00");
@@ -144,7 +143,7 @@ public class AdministratorController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/admin/ban/{uid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/ban/{userId}", method = RequestMethod.GET)
     public String banUser(@PathVariable(value = "userId") Long userId,
                           HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();

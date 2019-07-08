@@ -53,7 +53,7 @@ public class LearnerCvController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             User user = userService.selectById(userId);
-            if(user.getRole().equals(UserConst.STUDENT.ordinal())){
+            if(user.getRole().equals(UserConst.STUDENT.getState())){
                 map.put("returnObject", learnerCvService.getLearnerCvInfo(userId));
                 map.put("errorCode", "00");
             }
@@ -144,7 +144,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 LearnerCv learnerCv = new LearnerCv();
                 learnerCv.setResumeName(resumeName);
                 learnerCv.setName(name);
@@ -187,7 +187,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 map.put("returnObject", learnerCvService.getLearnerCvList(userId));
                 map.put("errorCode", "00");
             }
@@ -210,7 +210,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 if(learnerCvService.deleteLearnerCv(resumeId,userId))
                     map.put("errorCode", "00");
                 else
@@ -234,7 +234,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 LearnerCv learnerCv = learnerCvService.getLearnerCvInfo(resumeId,userId);
                 if(learnerCv !=null){
                     map.put("returnObject",learnerCv);
@@ -292,7 +292,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 LearnerCv learnerCv = new LearnerCv();
                 learnerCv.setId(resumeId);
                 learnerCv.setLearnerId(userId);
@@ -336,7 +336,7 @@ public class LearnerCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
-            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.ordinal())) {
+            if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
                 if(learnerCvService.insertOrUpdateCvAvatar(resumeId,request))
                     map.put("errorCode", "00");
                 else

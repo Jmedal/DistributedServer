@@ -67,7 +67,6 @@ public interface CompanyCvMapper extends BaseMapper<CompanyCv> {
             "\tSYSDATE() \n" +
             "\t)")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-
     long deliverResume(CompanyCv companyCv);
 
 

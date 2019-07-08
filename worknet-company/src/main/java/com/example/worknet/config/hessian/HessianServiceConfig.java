@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  * 2. @Bean(name = "/helloHessian.do")加斜杠方式会被spring暴露服务路径,发布服务。
  */
 @Configuration
-public class HessionServiceConfig {
+public class HessianServiceConfig {
 
     @Bean("/administratorService")
     public HessianServiceExporter exportAdministratorHessian()

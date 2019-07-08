@@ -66,7 +66,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_learner_info.phone REGEXP #{keyword}\n" +
             "ORDER BY\n" +
             "\tsys_learner_info.id DESC"})
-    @Results(id = "defaultCoursesInfoResultMap",value = {
+    @Results(id = "learnerInfoResultMap",value = {
             @Result(property = "id",column = "id"),
             @Result(property = "userId",column = "user_id"),
             @Result(property = "nickname",column = "nickname"),
@@ -103,7 +103,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company.`name` REGEXP #{keyword}\n" +
             "ORDER BY\n" +
             "\tsys_company.id DESC"})
-    @Results(id = "defaultCoursesInfoResultMap",value = {
+    @Results(id = "companyInfoResultMap",value = {
             @Result(property = "id",column = "id"),
             @Result(property = "userId",column = "user_id"),
             @Result(property = "field",column = "field"),
@@ -139,7 +139,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company_profession.title REGEXP #{keyword} \n" +
             "ORDER BY\n" +
             "\tsys_company_cv.id DESC"})
-    @Results(id = "defaultCoursesInfoResultMap",value = {
+    @Results(id = "companyCvResultMap",value = {
             @Result(property = "resumeId",column = "id"),
             @Result(property = "companyProfessionId",column = "company_profession_id"),
             @Result(property = "userId",column = "user_id"),
@@ -172,7 +172,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tOR sys_company_profession.title REGEXP #{keyword} \n" +
             "ORDER BY\n" +
             "\tsys_company_invitation.id DESC"})
-    @Results(id = "defaultCoursesInfoResultMap",value = {
+    @Results(id = "companyInvitationResultMap",value = {
             @Result(property = "companyProfessionId",column = "company_profession_id"),
             @Result(property = "userId",column = "user_id"),
             @Result(property = "realname",column = "realname"),

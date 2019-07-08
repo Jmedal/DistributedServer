@@ -2,6 +2,8 @@ package com.example.worknet;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.constant.ProfessionConst;
+import com.example.worknet.common.persistence.affair.api.user.modal.User;
+import com.example.worknet.common.persistence.affair.api.user.serivce.UserService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import javafx.geometry.Pos;
@@ -15,6 +17,7 @@ import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +26,9 @@ public class worknetTests {
 
     @Autowired
     private CompanyCvService companyCvService;
+
+    @Autowired
+    private UserService userService;
 	@Test
 	public void contextLoads() {
 //        String date="1997-05-07 00:00:00.000000";
@@ -30,7 +36,9 @@ public class worknetTests {
 //        ParsePosition pos=new ParsePosition(0);
 //        Date d=formatter.parse(date,pos);
 //        System.out.println(companyCvService.deliverResume((long)1,(long)1,"张萨姆",1,d,"上海","111","本科","计算机"	,"海大学","1111111111","1111-1111 哈哈哈哈","8888@qq.com",	"我是XXXXX	","2222年 XXX奖",	"上海",	"三周内",0));
-        System.out.println(companyCvService.getMyResumePage(new Page<>(),"1","腾讯").getRecords());
+//        System.out.println(companyCvService.getMyResumePage(new Page<>(),"1","腾讯").getRecords());
 
+        System.out.println(userService.selectById(3));
+        User user = userService.selectById(3);
 	}
 }

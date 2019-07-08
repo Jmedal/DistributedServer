@@ -18,10 +18,18 @@ public enum UserConst {
      */
     STUDENT(3);
 
-    UserConst(int i) {
+    private int value = 0;
+
+    UserConst(int value) {
+        this.value = value;
     }
 
-    public static UserConst valueOf(int value){
+    public int getState()
+    {
+        return value;
+    }
+
+    public  UserConst valueOf(int value){
         switch (value){
             case 1:
                 return COMPANY;

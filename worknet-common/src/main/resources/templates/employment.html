@@ -854,6 +854,7 @@
                 resumeMap.currentLocation = $('#currentLocation').selectpicker('val');
                 let currentTime = new Date();
                 resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
+                resumeMap.employId = employId;
                 console.log(resumeMap);
                 $.post('/resume/deliver/',resumeMap,function (data) {
                     data = JSON.parse(data);

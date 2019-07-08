@@ -6,6 +6,6 @@ package com.example.worknet.common.constant;
  */
 public interface ServiceURL {
 
-    String UserService = Const.SERVER_URL_COMMON + "/UserService";
+    String UserService = Const.SERVER_URL_COMMON + "/userService";
 
 }

@@ -57,7 +57,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
             user.setAccount(account);
             user.setPassword(password);
             user.setActivity(1);
-            user.setRole(role.ordinal());
+            user.setRole(role.getState());
             if(userService.userRegister(user))
                 return true;
             else
@@ -103,7 +103,7 @@ public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, A
     public Page<HashMap<String, Object>> getUserPage(Page<HashMap<String, Object>> page, UserConst role, String keyword) {
         if(keyword == null || keyword.equals(""))
             keyword = "[digit]*";
-        return page.setRecords(administratorMapper.getUserPage(page, role.ordinal(), keyword));
+        return page.setRecords(administratorMapper.getUserPage(page, role.getState(), keyword));
     }
 
     /**
