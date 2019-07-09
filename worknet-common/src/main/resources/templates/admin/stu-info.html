@@ -115,12 +115,19 @@
     $('.main').height($(window).height());
     var stuInfo;
     $('#myModal').on('show.bs.modal',function (object) {
-        $.each(stuInfo,function (k) {
-            let key = k;
+        $.each($('input'),function (k) {
+            let key = $(this).attr('id');
             let val = stuInfo[key];
-            let $t = $('#'+key);
-            $t.val(val);
-            $t.on('change',function (object1) {
+            $(this).val(val);
+            $(this).on('change',function (object1) {
+                stuInfo[key] = $(this).val();
+            });
+        });
+        $.each($('textarea'),function (k) {
+            let key = $(this).attr('id');
+            let val = stuInfo[key];
+            $(this).val(val);
+            $(this).on('change',function (object1) {
                 stuInfo[key] = $(this).val();
             });
         });
@@ -167,6 +174,8 @@
         onLoadSuccess:function(data){
             $('span.edit-info').on('click',function (object) {
                 stuInfo = JSON.parse($(this).attr('data-json'));
+                $('input').val('');
+                $('textarea').val('');
                 $('#myModal').modal('show');
             });
             $('.search-input').attr('placeholder',"搜索姓名/id/昵称/手机号");

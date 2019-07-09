@@ -100,6 +100,7 @@
         onLoadSuccess:function(data){
             $('span.password').on('click',function (object) {
                 userId = parseInt($(this).attr('data-id'));
+                $('input').val('');
                 $('#password').val($(this).html());
                 $('#myModal').modal('show');
             });

@@ -101,6 +101,8 @@
         height:$(window).height()*0.85,
         onLoadSuccess:function(data){
             $('span.edit-info').on('click',function (object) {
+                $('input').val('');
+                $('textarea').val('');
                 welcomeInfo.studentId = $(this).attr('data-id');
                 $('#name').val($(this).attr('data-name'));
                 $('#myModal').modal('show');

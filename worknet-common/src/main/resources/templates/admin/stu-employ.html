@@ -48,6 +48,8 @@
         height:$(window).height()*0.85,
         onLoadSuccess:function(data){
             $('span.edit-info').on('click',function (object) {
+                $('input').val('');
+                $('textarea').val('');
                 stuInfo = JSON.parse($(this).attr('data-json'));
                 $('#myModal').modal('show');
             });

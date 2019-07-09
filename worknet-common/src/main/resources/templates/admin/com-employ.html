@@ -81,6 +81,8 @@
                 });
             });
             $('a.edit-employ').on('click',function (object) {
+                $('input').val('');
+                $('textarea').val('');
                 employInfo = JSON.parse($(this).attr('data-json'));
                 if(employInfo.isPractice==1)
                     $('#isPractice').attr('checked','true');
@@ -154,8 +156,8 @@
             align: "center",
             formatter:function (v,r,i) {
                 switch(v){
-                    case 0:return "<span>否</span>";
-                    case 1:return "<span>是</span>";
+                    case false:return "<span>否</span>";
+                    case true:return "<span>是</span>";
                 }
                 return '';
             }
@@ -165,8 +167,8 @@
             align: "center",
             formatter:function (v,r,i) {
                 switch(r.isPractice){
-                    case 0:return "<span>-</span>";
-                    case 1:return "<span title='"+v+"'>"+v+"</span>";
+                    case false:return "<span>-</span>";
+                    case true:return "<span title='"+v+"'>"+v+"</span>";
                 }
                 return '';
             }
@@ -175,11 +177,10 @@
             title:"转正机会",
             align: "center",
             formatter:function (v,r,i) {
-                switch(r.isPractice){
-                    case 0:return "<span>-</span>";
-                    case 1:return "<span>"+v+"</span>";
+                if(!r.isPractice){
+                    return "<span>-</span>";
                 }
-                return '';
+                return "<span>"+v+"</span>"
             }
         },{
             field:"state",
