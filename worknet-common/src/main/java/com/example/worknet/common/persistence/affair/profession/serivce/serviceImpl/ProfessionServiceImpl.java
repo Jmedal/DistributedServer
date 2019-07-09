@@ -5,8 +5,8 @@ import com.example.worknet.common.persistence.affair.profession.dao.ProfessionMa
 import com.example.worknet.common.persistence.affair.profession.serivce.ProfessionService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
  * @since 2019-05-25
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class ProfessionServiceImpl extends ServiceImpl<ProfessionMapper, Profession> implements ProfessionService {
 
 }

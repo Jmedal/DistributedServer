@@ -5,8 +5,8 @@ import com.example.worknet.common.persistence.affair.administrator.dao.AdminChec
 import com.example.worknet.common.persistence.affair.administrator.service.AdminCheckCompanyService;
 import com.example.worknet.common.persistence.template.modal.AdminCheckCompany;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
  * @since 2019-07-02
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AdminCheckCompanyServiceImpl extends ServiceImpl<AdminCheckCompanyMapper, AdminCheckCompany> implements AdminCheckCompanyService {
 
 }

@@ -5,8 +5,9 @@ import com.example.worknet.common.persistence.affair.user.dao.TeacherInfoMapper;
 import com.example.worknet.common.persistence.template.modal.TeacherInfo;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import javax.transaction.Transactional;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class TeacherInfoServiceImpl extends ServiceImpl<TeacherInfoMapper, TeacherInfo> implements TeacherInfoService {
 
 }

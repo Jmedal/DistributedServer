@@ -20,47 +20,6 @@ import java.util.HashMap;
 
 @Controller
 public class HomeControllerNew5 {
-    //公司的页面
-    @RequestMapping(value = "/company/login")
-    public String login(){
-        return "company/login.html";
-    }
-    @RequestMapping(value = "/company/")
-    public String home(){
-        return "company/home.html";
-    }
-    @RequestMapping(value = "/company/resume")
-    public String cr(){
-        return "company/resume.html";
-    }
-    @RequestMapping(value = "/company/account")
-    public String sa(){
-        return "company/stu-account.html";
-    }
-    @RequestMapping(value = "/company/info")
-    public String si(){
-        return "company/stu-info.html";
-    }
-    @RequestMapping(value = "/company/employ")
-    public String se(){
-        return "company/stu-employ.html";
-    }
-    @RequestMapping(value = "/company/welcome")
-    public String sw(){
-        return "company/stu-welcome.html";
-    }
-    @RequestMapping(value = "/company/welcome-info")
-    public String swi(){
-        return "company/welcome-info.html";
-    }
-    @RequestMapping(value = "/company/login-confirm")
-    public String comfirm(HttpServletRequest request){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        if(password.equals("123456"))//通过
-            return "company/index.html";
-        return "company/login.html";
-    }
     //修改密码
     @ResponseBody
     @RequestMapping(value = "/company/change/password",method = RequestMethod.POST)

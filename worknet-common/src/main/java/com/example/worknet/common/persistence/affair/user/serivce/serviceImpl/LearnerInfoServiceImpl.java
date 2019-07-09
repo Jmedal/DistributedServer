@@ -9,8 +9,9 @@ import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ import java.util.List;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, LearnerInfo> implements LearnerInfoService {
 
     /**
@@ -33,7 +34,7 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
     @Override
     public Long getLearnerDefaultCvId(Long userId) {
         List<LearnerInfo> learnerInfos = super.selectList(new EntityWrapper<LearnerInfo>().eq("user_id",userId));
-        if(learnerInfos!=null && learnerInfos.size() > 0 ){
+        if(learnerInfos != null && learnerInfos.size() > 0 ){
             return learnerInfos.get(0).getLearnerCvId();
         }
         return null;
@@ -47,6 +48,11 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
      */
     @Override
     public boolean updateDefaultCvId(Long userId, Long cvId) {
+        if (cvId == null || cvId.equals((long)0)){
+            LearnerInfo learnerInfo = getLearnerInfoByUserId(userId);
+            learnerInfo.setLearnerCvId((long)0);
+            return super.updateById(learnerInfo);
+        }
         LearnerCv learnerCv = learnerCvService.selectById(cvId);
         if(learnerCv != null && learnerCv.getLearnerId().equals(userId)){
             LearnerInfo learnerInfo = getLearnerInfoByUserId(userId);
@@ -57,7 +63,7 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
     }
 
     /**
-     * 根据用户id获取学习者信息
+     * 根据userId获取学习者信息
      * @param userId
      * @return
      */

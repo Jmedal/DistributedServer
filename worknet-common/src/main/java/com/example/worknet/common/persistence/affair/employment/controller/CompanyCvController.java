@@ -137,9 +137,9 @@ public class CompanyCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long) request.getSession(true).getAttribute("userId");
-            HashMap<String,Object> learnerCv = companyCvService.getCompanyCvInfo(companyCvId, userId);
-            if(learnerCv != null){
-                map.put("returnObject",learnerCv);
+            HashMap<String,Object> companyCv = companyCvService.getCompanyCvInfo(companyCvId, userId);
+            if(companyCv != null){
+                map.put("returnObject",companyCv);
                 map.put("errorCode", "00");
             }else
                 map.put("errorCode", "error");
@@ -152,19 +152,20 @@ public class CompanyCvController {
      * 加载用户投递的简历
      * @param page
      * @param pageSize
-     * @param searchText
+     * @param keyword
      * @param request
      * @return
      */
     @RequestMapping(value = "/get/my-resume", method = RequestMethod.GET)
     public String getMyResume(@RequestParam(value = "pageNumber") Integer page,
                               @RequestParam(value = "pageSize") Integer pageSize,
-                              @RequestParam(value = "searchText", required = false) String searchText,
+                              @RequestParam(value = "searchText", required = false) String keyword,
                               HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null){
             Long userId = (long) request.getSession(true).getAttribute("userId");
-            Page<HashMap<String,Object>> pager = companyCvService.getCompanyCvPage(new Page<>(page,pageSize), userId.toString(), searchText);
+            System.out.println(keyword);
+            Page<HashMap<String,Object>> pager = companyCvService.getCompanyCvPage(new Page<>(page,pageSize), userId, keyword);
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
             map.put("errorCode", "00");

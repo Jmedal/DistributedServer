@@ -514,7 +514,7 @@
             if(available){
                 let currentTime = new Date();
                 resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
-                resumeMap.resumeName = $('#myModalLabel2').html();
+                resumeMap.resumeName = $('#myModalLabel2').val();
                 if(createOrChange==0){//create创建新的模板
                     $.post('/create-resume-mode',resumeMap,function (data) {
                         data = JSON.parse(data);

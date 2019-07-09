@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -38,7 +39,7 @@ import java.util.List;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     /**
@@ -263,9 +264,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public boolean insertOrUpdateAvatar(long userId,MultipartHttpServletRequest request) {
         User user = super.selectById(userId);
-        if(user==null)
+        if(user == null)
             return false;
-        if(user.getHeadPath()!=null&&!user.getHeadPath().equals("")&&!user.getHeadPath().equals(super.selectById(1).getHeadPath()))
+        if(request.getFile("avatar") == null || request.getFile("avatar").getSize() == 0)
+            return true;
+        if(user.getHeadPath() != null && !user.getHeadPath().equals("") && !user.getHeadPath().equals(super.selectById(1).getHeadPath()))
             FileToolsUtil.deleteFile(Const.FILE_PATH + user.getHeadPath());//删除旧图片
         //相对保存路径
         String file_path = Const.FILE_SEPARATOR + Const.HEAD_PATH + Const.FILE_SEPARATOR + Calendar.getInstance().get(Calendar.YEAR);

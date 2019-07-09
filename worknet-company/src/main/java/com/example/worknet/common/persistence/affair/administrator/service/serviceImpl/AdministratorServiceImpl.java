@@ -11,8 +11,9 @@ import com.example.worknet.common.persistence.template.modal.*;
 import com.example.worknet.common.persistence.affair.api.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AdministratorServiceImpl extends ServiceImpl<AdministratorMapper, Administrator> implements AdministratorService {
 
     /**

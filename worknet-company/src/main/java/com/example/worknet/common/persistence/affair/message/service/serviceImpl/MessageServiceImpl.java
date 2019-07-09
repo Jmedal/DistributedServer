@@ -5,8 +5,8 @@ import com.example.worknet.common.persistence.template.modal.Message;
 import com.example.worknet.common.persistence.affair.message.dao.MessageMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> implements MessageService {
 
 }

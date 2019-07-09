@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -29,7 +31,7 @@ import java.util.*;
  * @since 2019-07-02
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv> implements LearnerCvService {
 
     /**
@@ -40,7 +42,7 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
     @Override
     public LearnerCv getLearnerCvInfo(Long userId) {
         Long learnerDefaultCvId = learnerInfoService.getLearnerDefaultCvId(userId);
-        if(learnerDefaultCvId!=null)
+        if(learnerDefaultCvId != null)
             return super.selectById(learnerDefaultCvId);
         return null;
     }
@@ -85,13 +87,12 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
      */
     @Override
     public Long createLearnerCv(LearnerCv learnerCv, Long userId) {
-        if (super.selectList(new EntityWrapper<LearnerCv>().eq("user_id",userId)).size() < 4){
+        if (super.selectList(new EntityWrapper<LearnerCv>().eq("user_id", userId)).size() < 4){
             if(super.insert(learnerCv)){
                 LearnerInfo learnerInfo = learnerInfoService.getLearnerInfoByUserId(userId);
-                if(learnerInfo.getLearnerCvId() == null){
-                    learnerInfoService.updateDefaultCvId(userId,learnerCv.getId());
-                    return learnerCv.getId();
-                }
+                if(learnerInfo.getLearnerCvId() == null || learnerInfo.getLearnerCvId() == (long)0)
+                    learnerInfoService.updateDefaultCvId(userId, learnerCv.getId());
+                return learnerCv.getId();
             }
         }
         return null;
@@ -150,19 +151,19 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
      * @return
      */
     @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public boolean deleteLearnerCv(Long cvId, Long userId) {
-        LearnerInfo learnerInfo = learnerInfoService.getLearnerInfoByUserId(userId);
-        if(learnerInfo.getLearnerCvId().equals(cvId)){
-            learnerInfo.setLearnerCvId(null);
-            learnerInfoService.updateById(learnerInfo);
-        }
         LearnerCv learnerCv = super.selectById(cvId);
         if (learnerCv.getLearnerId().equals(userId)){
+            if(learnerCv.getHeadPath() != null && !learnerCv.getHeadPath().equals("") && !learnerCv.getHeadPath().equals("\\avatar\\default\\avatar.jpg"))
+                FileToolsUtil.deleteFile(Const.FILE_PATH + learnerCv.getHeadPath());    //删图片
             super.deleteById(cvId);
             List<HashMap<String, Object>> list = getLearnerCvList(userId);
-            if(list.size() > 0){
-                learnerInfo.setLearnerCvId(Long.valueOf(list.get(0).get("resumeId").toString()));
-                return learnerInfoService.updateById(learnerInfo);
+            if(learnerInfoService.getLearnerDefaultCvId(userId).equals(cvId)){      //更新学习者默认简历模版
+                if(list.size() > 0)
+                    learnerInfoService.updateDefaultCvId(userId, Long.valueOf(list.get(0).get("resumeId").toString()));
+                else
+                    learnerInfoService.updateDefaultCvId(userId, null);
             }
             return true;
         }
@@ -178,8 +179,10 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
     @Override
     public boolean insertOrUpdateCvAvatar(Long cvId, MultipartHttpServletRequest request) {
         LearnerCv learnerCv = super.selectById(cvId);
-        if(learnerCv==null)
+        if(learnerCv == null)
             return false;
+        if(request.getFile("avatar") == null || request.getFile("avatar").getSize() == 0)
+            return true;
         if(learnerCv.getHeadPath() != null && !learnerCv.getHeadPath().equals("") && !learnerCv.getHeadPath().equals("\\avatar\\default\\avatar.jpg"))
             FileToolsUtil.deleteFile(Const.FILE_PATH + learnerCv.getHeadPath());//删除旧图片
         //相对保存路径

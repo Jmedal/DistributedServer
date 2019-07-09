@@ -8,8 +8,9 @@ import com.example.worknet.common.persistence.affair.companyContest.service.Comp
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +25,7 @@ import java.util.HashMap;
  * @since 2019-05-25
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CompanyContestServiceImpl extends ServiceImpl<CompanyContestMapper, CompanyContest> implements CompanyContestService {
 
 

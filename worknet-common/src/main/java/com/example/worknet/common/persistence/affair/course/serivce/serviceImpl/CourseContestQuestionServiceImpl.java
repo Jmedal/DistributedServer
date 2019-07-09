@@ -5,8 +5,9 @@ import com.example.worknet.common.persistence.affair.course.dao.CourseContestQue
 import com.example.worknet.common.persistence.affair.course.serivce.CourseContestQuestionService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import javax.transaction.Transactional;
  * @since 2019-05-02
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CourseContestQuestionServiceImpl extends ServiceImpl<CourseContestQuestionMapper, CourseContestQuestion> implements CourseContestQuestionService {
 
 }

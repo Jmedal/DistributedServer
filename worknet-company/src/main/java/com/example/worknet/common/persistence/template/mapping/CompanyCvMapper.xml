@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.example.worknet.common.persistence.template.modal.CompanyCv">
         <id column="id" property="id" />
         <result column="company_profession_id" property="companyProfessionId" />
-        <result column="user_id" property="learnerId" />
+        <result column="user_id" property="userId" />
         <result column="name" property="name" />
         <result column="sex" property="sex" />
         <result column="birth" property="birth" />

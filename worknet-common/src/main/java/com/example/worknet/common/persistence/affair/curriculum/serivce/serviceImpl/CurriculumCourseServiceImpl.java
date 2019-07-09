@@ -5,8 +5,8 @@ import com.example.worknet.common.persistence.affair.curriculum.dao.CurriculumCo
 import com.example.worknet.common.persistence.affair.curriculum.serivce.CurriculumCourseService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CurriculumCourseServiceImpl extends ServiceImpl<CurriculumCourseMapper, CurriculumCourse> implements CurriculumCourseService {
 
 }

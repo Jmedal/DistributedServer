@@ -7,8 +7,9 @@ import com.example.worknet.common.persistence.affair.curriculum.serivce.Curricul
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Map;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Map;
  * @since 2019-04-27
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CurriculumTreeServiceImpl extends ServiceImpl<CurriculumTreeMapper, CurriculumTree> implements CurriculumTreeService {
 
     /**

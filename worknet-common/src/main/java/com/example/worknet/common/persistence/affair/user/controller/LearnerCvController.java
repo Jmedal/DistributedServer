@@ -31,9 +31,6 @@ import java.util.HashMap;
 @ResponseBody
 public class LearnerCvController {
 
-    private final static Logger logger = LoggerFactory.getLogger(LearnerCvController.class);
-
-
     @Autowired
     private UserService userService;
 
@@ -41,7 +38,7 @@ public class LearnerCvController {
     private LearnerCvService learnerCvService;
 
     /**
-     * 显示默认的简历模板(未结束)
+     * 显示默认的简历模板
      * @param request
      * @return
      */
@@ -52,41 +49,21 @@ public class LearnerCvController {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             User user = userService.selectById(userId);
             if(user.getRole().equals(UserConst.STUDENT.getState())){
-                map.put("returnObject", learnerCvService.getLearnerCvInfo(userId));
-                map.put("errorCode", "00");
-            }
-            else
+                LearnerCv learnerCv = learnerCvService.getLearnerCvInfo(userId);
+                if(learnerCv != null){
+                    map.put("returnObject", learnerCv);
+                    map.put("errorCode", "00");
+                } else
+                    map.put("errorCode", "error");
+            } else
                 map.put("errorCode", "error");
         } else
             map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
-    //如果没有默认的简历模板，则返回空
-//    HashMap<String, Object> map = new HashMap<>();
-//        map.put("errorCode","00");
-//    HashMap<String,Object> obj = new HashMap<>();
-//        obj.put("id",55);//简历模板的id！！！
-//        obj.put("resumeName","简历名称");//简历的名字
-//        obj.put("learnerId",131);
-//        obj.put("name","张萨姆");
-//        obj.put("sex",1);
-//        obj.put("birth","1997-05");
-//        obj.put("nativePlace","上海市");
-//        obj.put("identity","124124124");
-//        obj.put("qualification",3);//存0-7的数字
-//        obj.put("speciality","计算机");
-//        obj.put("university","上海大学");
-//        obj.put("tel","18888888888");
-//        obj.put("experience","2008-2011 白宫洗碗三年");//格式为字符串，存入格式为时间+内容
-//        obj.put("mailbox","88888888@qq.com");
-//        obj.put("introduction","我是一个xxxxxx\n\n哈哈哈");
-//        obj.put("diploma","2018-03-21 洗碗全国大奖");
-//        obj.put("headPath","http://www.baidu.com");
-//        map.put("returnObject",obj);
-
 
     /**
-     * 根据简历模板id,加载学习者简历的头像
+     * 学习者加载简历模版头像
      * @param resumeId
      * @param request
      * @return
@@ -103,7 +80,7 @@ public class LearnerCvController {
     }
 
     /**
-     * 学习者创建简历模版(未结束)
+     * 学习者创建简历模版
      * @param resumeName
      * @param name
      * @param sex
@@ -160,7 +137,7 @@ public class LearnerCvController {
                 learnerCv.setIntroduction(introduction);
                 learnerCv.setDiploma(diploma);
                 learnerCv.setLastEditTime(DateUtil.getSqlDateTime(lastEditTime,DateUtil.YMDHMS_TIME));
-                Long learnerCvId = learnerCvService.createLearnerCv(learnerCv,userId);
+                Long learnerCvId = learnerCvService.createLearnerCv(learnerCv, userId);
                 if (learnerCvId != null) {
                     map.put("returnObject", learnerCvId);
                     map.put("errorCode", "00");
@@ -198,7 +175,7 @@ public class LearnerCvController {
 
 
     /**
-     * 删除简历模版(未结束)
+     * 删除简历模版
      * @param resumeId
      * @return
      */
@@ -222,7 +199,7 @@ public class LearnerCvController {
     }
 
     /**
-     * 根据模板id,加载简历模板
+     * 加载简历模板预览
      * @param resumeId
      * @return
      */
@@ -249,7 +226,7 @@ public class LearnerCvController {
     }
 
     /**
-     * 修改简历模版(未结束)
+     * 修改简历模版
      * @param resumeId
      * @param resumeName
      * @param name
@@ -323,7 +300,7 @@ public class LearnerCvController {
     }
 
     /**
-     * 上传或更新简历模板的头像(未结束)
+     * 上传或更新简历模板的头像
      * @param resumeId
      * @param request
      * @return

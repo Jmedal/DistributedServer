@@ -9,6 +9,7 @@ import com.example.worknet.common.persistence.template.modal.CompanyCv;
 import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.OverridesAttribute;
@@ -24,11 +25,11 @@ import java.util.HashMap;
  * @since 2019-07-02
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv> implements CompanyCvService {
 
     /**
-     * 添加公司简历
+     * 添加投递简历
      * @param companyCv
      * @return
      */
@@ -40,33 +41,31 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
     }
 
     /**
-     * 获取公司简历信息
+     * 获取投递简历信息
      * @param companyCvId
      * @param userId
      * @return
      */
     @Override
     public HashMap<String, Object> getCompanyCvInfo(Long companyCvId, Long userId) {
-        HashMap<String, Object> companyCv = (HashMap<String, Object>) super.selectMap(new EntityWrapper<CompanyCv>().eq("id", companyCvId));
-        if(Long.valueOf(companyCv.get("userId").toString()).equals(userId))
-            return companyCv;
-        return null;
+        return companyCvMapper.getCompanyCvInfo(companyCvId, userId);
     }
 
-
     /**
-     * 获取用户投放的简历
+     * 获取投递简历列表
+     * @param pager
+     * @param userId
+     * @param keyword
+     * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, String userId, String searchText){
-        if(userId == null || userId.equals("null") || userId.equals(""))
-            userId = "[digit]*";
-        if(searchText == null || searchText.equals("null") || searchText.equals(""))
-            searchText = "[\\w]*";
+    public Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, Long userId, String keyword){
+        if(keyword == null || keyword.equals("null") || keyword.equals(""))
+            keyword = "[\\w]*";
         else
-            searchText = searchText.trim().replaceAll("\\s+"," ").replace(" ","|");
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
-        return page.setRecords(companyCvMapper.getMyResume(page,userId,searchText));
+            keyword = keyword.trim().replaceAll("\\s+"," ").replace(" ","|");
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
+        return page.setRecords(companyCvMapper.getCompanyCvPage(page, userId, keyword));
     }
 
     @Autowired

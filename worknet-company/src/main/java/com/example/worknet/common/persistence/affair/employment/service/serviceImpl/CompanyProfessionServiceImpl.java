@@ -8,9 +8,9 @@ import com.example.worknet.common.persistence.affair.employment.service.CompanyP
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +23,7 @@ import java.util.HashMap;
  * @since 2019-07-02
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionMapper, CompanyProfession> implements CompanyProfessionService {
 
     /**

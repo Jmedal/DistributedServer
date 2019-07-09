@@ -15,8 +15,10 @@ import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +34,7 @@ import java.util.List;
  * @since 2019-05-06
  */
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> implements CompanyService {
 
     /**

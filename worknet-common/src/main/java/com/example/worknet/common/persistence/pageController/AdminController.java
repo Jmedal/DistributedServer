@@ -1,6 +1,5 @@
 package com.example.worknet.common.persistence.pageController;
 
-
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
 public class AdminController {
+
     @RequestMapping(value = {"/admin/login","/admin"})
     public String adminLogin(){
         return "admin/login.html";
@@ -58,6 +57,7 @@ public class AdminController {
     public String ace(){
         return "admin/com-employ.html";
     }
+
     @RequestMapping(value = "/admin/profession")
     public String pf(){
         return "admin/profession.html";
