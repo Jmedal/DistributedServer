@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.example.worknet.common.persistence.affair.employment.dao.CompanyCvMapper;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
 import com.example.worknet.common.persistence.template.modal.CompanyCv;
+import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,7 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
                               String introduction,
                               String diploma,
                               String currentLocation,
-                              String inJobTime,
-                              Integer status){
+                              String inJobTime){
         CompanyCv companyCv=new CompanyCv();
 
         companyCv.setCompanyProfessionId(companyProfessionId);
@@ -84,7 +84,7 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
      * 获取用户投放的简历
      */
     @Override
-    public Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
+    public Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> pager,
                                                         String userId,String searchText){
         if(userId == null || userId.equals("null") || userId.equals(""))
             userId = "[digit]*";
@@ -92,9 +92,22 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
             searchText = "[\\w]*";
         else
             searchText = searchText.trim().replaceAll("\\s+"," ").replace(" ","|");
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         return page.setRecords(companyCvMapper.getMyResume(page,userId,searchText));
 
     }
+
+    @Override
+    public boolean changeResumeStatus(Long resumeId, int status,Long userId) {
+        CompanyCv companyCv=super.selectById(resumeId);
+        if(companyCv != null && companyCv.getUserId().equals(userId)
+                && companyCv.getStatus().equals(0)) {
+            companyCv.setStatus(status);
+            return super.updateAllColumnById(companyCv);
+        }
+        return false;
+    }
+
     @Autowired
     CompanyCvMapper companyCvMapper;
 }

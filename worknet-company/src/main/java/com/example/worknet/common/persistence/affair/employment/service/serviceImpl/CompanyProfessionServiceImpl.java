@@ -25,7 +25,7 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
 
     /**
      * 筛选分页获取公司招聘列表
-     * @param page
+     * @param pager
      * @param type
      * @param professionId
      * @param location
@@ -34,15 +34,15 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> page, ProfessionConst type,
+    public Page<HashMap<String,Object>> getProfessionPage(Page<HashMap<String, Object>> pager, ProfessionConst type,
                                                           String professionId, String location, String field, String keyword){
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         if(professionId == null || professionId.equals("null") || professionId.equals(""))
             professionId = "[digit]*";
         if(keyword == null || keyword.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
         else
             keyword = keyword.trim().replaceAll("\\s+","|");
-
         switch(type){
             case PROFESSION_NEW:
                 return page.setRecords(companyProfessionMapper.getNewProfessionPage(page, professionId, location, field, keyword));
@@ -57,13 +57,14 @@ public class CompanyProfessionServiceImpl extends ServiceImpl<CompanyProfessionM
 
     /**
      * 根据公司id,分页获取该公司招聘列表
-     * @param page
+     * @param pager
      * @param companyId
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> page, Long companyId){
-            return page.setRecords(companyProfessionMapper.getEmployList(page,companyId));
+    public Page<HashMap<String,Object>> getEmployeeList(Page<HashMap<String, Object>> pager, Long companyId){
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        return page.setRecords(companyProfessionMapper.getEmployList(page,companyId));
     }
 
     /**

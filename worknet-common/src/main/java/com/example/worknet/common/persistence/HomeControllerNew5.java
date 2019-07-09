@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.common.persistence.template.modal.Company;
+import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -264,55 +265,100 @@ public class HomeControllerNew5 {
     //关键字：招聘标题，内容，要求
     //id companyId professionTypeId title introduction
     // requirement salary state location isPractice duration chanceToFormal
-    @RequestMapping(value = "/company/get/employ-info")
-    @ResponseBody
-    public String getEmployInfo(HttpServletRequest request){
-        HashMap<String,Object> map = new HashMap<>();
-        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
-        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
-        String searchText = request.getParameter("searchText");//关键字：招聘标题，内容，要求
-        if (request.getSession(true).getAttribute("userId") != null) {
-            Long userId = (long) request.getSession(true).getAttribute("userId");
-            if (userService.selectById(userId).getRole().equals(1)) {
-                Page<HashMap<String, Object>> pager = companyService.getCompanyEmployPage(new Page<>(page,pageSize), userId, searchText);
-                map.put("total",pager.getTotal());//数据总条数
-                map.put("rows",pager.getRecords());//数据列表
-                map.put("errorCode","00");
-            }else
-                map.put("errorCode","error");
-        }else
-            map.put("errorCode","error");
-        return JSON.toJSONString(map);
-    }
+//    @RequestMapping(value = "/company/get/employ-info")
+//    @ResponseBody
+//    public String getEmployInfo(HttpServletRequest request){
+//        HashMap<String,Object> map = new HashMap<>();
+//        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
+//        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
+//        String searchText = request.getParameter("searchText");//关键字：招聘标题，内容，要求
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)) {
+//                Page<HashMap<String, Object>> pager = companyService.getCompanyEmployPage(new Page<>(page,pageSize), userId, searchText);
+//                map.put("total",pager.getTotal());//数据总条数
+//                map.put("rows",pager.getRecords());//数据列表
+//                map.put("errorCode","00");
+//            }else
+//                map.put("errorCode","error");
+//        }else
+//            map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//    }
     //id即招聘信息的id
-    @RequestMapping(value = "/company/end/employ/{id}")
-    @ResponseBody
-    public String endEmploy(@PathVariable int id){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
+//    @RequestMapping(value = "/company/end/employ/{id}")
+//    @ResponseBody
+//    public String endEmploy(@PathVariable int id){
+//        HashMap<String,Object> map = new HashMap<>();
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)&&companyService.endEmploy(id)) {
+//                map.put("errorCode","00");
+//            }else
+//                map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//    }
     //修改公司招聘信息，包括下列参数：
     //id companyId professionTypeId title introduction professionType(这个可以无视)
     // requirement salary location isPractice duration chanceToFormal
-    @RequestMapping(value = "/company/employ/change-info",method = RequestMethod.POST)
-    @ResponseBody
-    public String changeEmployInfo(){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
+//    @RequestMapping(value = "/company/employ/change-info",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String changeEmployInfo(long id , long companyId , long professionTypeId ,String title,
+//                                   String introduction , String requirement , String salary ,
+//                                   String location ,int isPractice , String duration,
+//                                   String chanceToFormal){
+//        HashMap<String,Object> map = new HashMap<>();
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)){
+//                CompanyProfession companyProfession=new CompanyProfession();
+//                companyProfession.setId(id);
+//                companyProfession.setCompanyId(companyId);
+//                companyProfession.setProfessionTypeId(professionTypeId);
+//                companyProfession.setTitle(title);
+//                companyProfession.setIntroduction(introduction);
+//                companyProfession.setRequirement(requirement);
+//                companyProfession.setSalary(salary);
+//                companyProfession.setLocation(location);
+//                companyProfession.setIsPractice(isPractice);
+//                companyProfession.setDuration(duration);
+//                companyProfession.setChanceToFormal(chanceToFormal);
+//                companyService.changeEmployInfo(companyProfession,userId);
+//                map.put("errorCode","00");
+//            }
+//            map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//    }
     //创建公司招聘信息，包括下列参数：
     //professionTypeId title introduction professionType(这个可以无视)
     // requirement salary location isPractice duration chanceToFormal
     //companyId即为登录公司的id
-    @RequestMapping(value = "/company/employ/create-info",method = RequestMethod.POST)
-    @ResponseBody
-    public String createEmployInfo(){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
+//    @RequestMapping(value = "/company/employ/create-info",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String createEmployInfo(  long professionTypeId ,String title,
+//                                   String introduction , String requirement , String salary ,
+//                                   String location ,int isPractice , String duration,
+//                                   String chanceToFormal){
+//        HashMap<String,Object> map = new HashMap<>();
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)){
+//                CompanyProfession companyProfession=new CompanyProfession();
+//                companyProfession.setProfessionTypeId(professionTypeId);
+//                companyProfession.setTitle(title);
+//                companyProfession.setIntroduction(introduction);
+//                companyProfession.setRequirement(requirement);
+//                companyProfession.setSalary(salary);
+//                companyProfession.setLocation(location);
+//                companyProfession.setIsPractice(isPractice);
+//                companyProfession.setDuration(duration);
+//                companyProfession.setChanceToFormal(chanceToFormal);
+//                companyService.createEmployInfo(companyProfession);
+//                map.put("errorCode","00");
+//            }
+//            map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//    }
     //修改公司头像(这段代码的作用是接收文件并存储在指定的位置，fileName是文件名，可以用.截取后缀随机生成文件名)
     @RequestMapping(value = "/company/change/myAvatar",method = RequestMethod.POST)
     public String changeAvatar(@RequestParam MultipartFile avatar, HttpServletRequest request){

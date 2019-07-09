@@ -95,4 +95,50 @@ public interface CompanyMapper extends BaseMapper<Company> {
     )
 
     public List<HashMap<String,Object>> getProfessionList(@Param("userId") Long userId);
+
+
+    @Select("SELECT\n" +
+            "\tsys_company_profession.id,\n" +
+            "\tsys_company_profession.company_id,\n" +
+            "\tsys_company_profession.profession_type_id,\n" +
+            "\tsys_company_profession.state,\n" +
+            "\tsys_profession_type.type_name,\n" +
+            "\tsys_company_profession.location,\n" +
+            "\tsys_company_profession.title,\n" +
+            "\tsys_company_profession.salary,\n" +
+            "\tsys_company_profession.introduction,\n" +
+            "\tsys_company_profession.requirement,\n" +
+            "\tsys_company_profession.is_practice,\n" +
+            "\tsys_company_profession.duration,\n" +
+            "\tsys_company_profession.chance_to_formal\n" +
+            "FROM\n" +
+            "\tsys_company\n" +
+            "\tJOIN sys_company_profession ON sys_company.id = sys_company_profession.company_id\n" +
+            "\tJOIN sys_user ON sys_company.user_id = sys_user.id \n" +
+            "\tJOIN sys_profession_type ON sys_profession_type.id = sys_company_profession.profession_type_id " +
+            "WHERE\n" +
+            "\tsys_user.id = #{userId} \n" +
+            "\tAND ( sys_company_profession.title REGEXP #{searchText} \n" +
+            "\tOR sys_company_profession.introduction REGEXP #{searchText} \n" +
+            "\tOR sys_company_profession.requirement REGEXP #{searchText} )")
+    @Results(id = "EmployListResultMap",value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "professionTypeId", column = "profession_type_id"),
+            @Result(property = "state", column = "state"),
+            @Result(property = "professionType", column = "type_name"),
+            @Result(property = "location", column = "location"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "salary", column = "salary"),
+            @Result(property = "introduction", column = "introduction"),
+            @Result(property = "requirement", column = "requirement"),
+            @Result(property = "isPractice", column = "is_practice"),
+            @Result(property = "duration", column = "duration"),
+            @Result(property = "chanceToFormal", column = "chance_to_formal"),
+    }
+    )
+
+    public List<HashMap<String,Object>> getEmployList(Pagination pagination,
+                                                      @Param("userId") String userId,
+                                                      @Param("searchText") String searchText);
 }
