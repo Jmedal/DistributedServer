@@ -2,6 +2,7 @@ package com.example.worknet.common.persistence.affair.company.serivce;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
+import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import org.springframework.core.io.Resource;
@@ -27,4 +28,8 @@ public interface CompanyService extends IService<Company> {
     boolean endEmploy(long id);
     boolean changeEmployInfo(CompanyProfession companyProfession,long userId);
     boolean createEmployInfo(CompanyProfession companyProfession,long userId);
+    Page<HashMap<String,Object>> getWelcomePage(Page<HashMap<String, Object>> page,long userId,String searchText);
+    boolean changeResumeStatus(Long resumeId, int status, Long userId);
+    boolean welcomeStudent(long userId, long studentId, long companyProfessionId);
+    Page<HashMap<String,Object>> getLearnerInfoPage(Page<HashMap<String, Object>> pager,  String keyword);
 }

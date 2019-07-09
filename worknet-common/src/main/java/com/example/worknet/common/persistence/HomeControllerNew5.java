@@ -151,7 +151,7 @@ public class HomeControllerNew5 {
 //        if(request.getSession(true).getAttribute("userId") != null) {
 //            Long userId = (long)request.getSession(true).getAttribute("userId");
 //            if(userService.selectById(userId).getRole().equals(1)
-//                    && companyCvService.changeResumeStatus(resumeId, 1))
+//                    && companyService.changeResumeStatus(resumeId, 1))
 //                map.put("errorCode","00");
 //            else
 //                map.put("errorCode", "error");
@@ -167,7 +167,7 @@ public class HomeControllerNew5 {
 //        if(request.getSession(true).getAttribute("userId") != null) {
 //            Long userId = (long)request.getSession(true).getAttribute("userId");
 //            if(userService.selectById(userId).getRole().equals(1)
-//                    && companyCvService.changeResumeStatus(resumeId, 2))
+//                    && companyService.changeResumeStatus(resumeId, 2))
 //                map.put("errorCode","00");
 //            else
 //                map.put("errorCode", "error");
@@ -179,36 +179,28 @@ public class HomeControllerNew5 {
     //和管理员应该有所区别，因为公司获取的信息可能需要通过学生的设置同意
     //也可以一样，反正懒
     //id userId nickname realname sex age signature vacation github email phone hobby professional
-    @ResponseBody
-    @RequestMapping(value = "/company/get/stu-info")
-    public String getStuInfo(HttpServletRequest request){
-        HashMap<String,Object> map = new HashMap<>();
-        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
-        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
-        String searchText = request.getParameter("searchText");//关键字用于搜索姓名/id/昵称/手机号
-
-        map.put("total",145);//数据总条数
-        ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-        for(int i = 0; i < pageSize; i++){
-            HashMap<String,Object> obj = new HashMap<>();
-            obj.put("id",(i+page*pageSize+1));//信息id
-            obj.put("studentId",(i+page*pageSize+1));//学生id
-            obj.put("nickname","昵称"+(i+page*pageSize+1));
-            obj.put("realname","张三"+i);
-            obj.put("sex","男");
-            obj.put("age",24);
-            obj.put("signature",(i+page*pageSize+1));
-            obj.put("vacation",(i+page*pageSize+1));
-            obj.put("github","github.com/"+(i+page*pageSize+1));
-            obj.put("email",(i+page*pageSize+1)+"asdasdasdsa@qq.com");
-            obj.put("phone","142141241");
-            obj.put("hobby","唱歌");
-            obj.put("professional","java");
-            list.add(obj);
-        }
-        map.put("rows",list);//list集合
-        return JSON.toJSONString(map);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/company/get/stu-info")
+//    public String getStuInfo(HttpServletRequest request){
+//        HashMap<String,Object> map = new HashMap<>();
+//        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
+//        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
+//        String searchText = request.getParameter("searchText");//关键字用于搜索姓名/id/昵称/手机号
+//        if(request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long)request.getSession(true).getAttribute("userId");
+//            if(userService.selectById(userId).getRole().equals(1)){
+//                Page<HashMap<String, Object>> pager = companyService.getLearnerInfoPage(new Page<>(page, pageSize), searchText);
+//                map.put("returnObject", pager);
+//                map.put("total", pager.getTotal());//数据总条数
+//                map.put("rows", pager.getRecords());//数据列表
+//                map.put("errorCode", "00");
+//            }else
+//                map.put("errorCode", "error");
+//        }else
+//            map.put("errorCode", "error");
+//
+//        return JSON.toJSONString(map);
+//    }
 
 //    //获取该登录公司的招聘信息列表
 //    //不分页了，直接获取全部
@@ -228,39 +220,47 @@ public class HomeControllerNew5 {
 //    }
 
     //公司邀请某个学生来某个招聘信息
-    @RequestMapping(value = "/company/welcome",method = RequestMethod.POST)
-    @ResponseBody
-    public String welcomeStudent(HttpServletRequest request){
-        //有companyProfessionId和studentId两个参数，代表招聘信息id和学生id
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
+//    @RequestMapping(value = "/company/welcome",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String welcomeStudent(HttpServletRequest request){
+//        //有companyProfessionId和studentId两个参数，代表招聘信息id和学生id
+//        HashMap<String,Object> map = new HashMap<>();
+//        long companyProfessionId = Long.parseLong(request.getParameter("companyProfessionId"));
+//        long studentId = Long.parseLong(request.getParameter("studentId"));
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)) {
+//                companyService.welcomeStudent(userId, studentId, companyProfessionId);
+//                map.put("errorCode", "00");
+//            } else
+//                map.put("errorCode", "error");
+//        }else
+//            map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//    }
     //获取公司的所有邀请信息
     //类似管理员的功能，除了需要设定邀请公司为当前登录公司
-    @ResponseBody
-    @RequestMapping(value = "/company/get/welcome-info")
-    public String getWelcomeInfo(HttpServletRequest request){
-        HashMap<String,Object> map = new HashMap<>();
-        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
-        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
-        String searchText = request.getParameter("searchText");//关键字：学生id，学生真实姓名，公司id，公司名称
-
-        map.put("total",145);//数据总条数
-        ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-        for(int i = 0; i < pageSize; i++){
-            HashMap<String,Object> obj = new HashMap<>();
-            obj.put("companyProfessionId",(i+page*pageSize+1));//招聘id
-            obj.put("studentId",(i+page*pageSize+1));
-            obj.put("realname","张三"+i);
-            obj.put("employTitle","【2019】暑期实习生");//应聘的标题
-            obj.put("companyId",24);
-            obj.put("status",i%3);//3种邀请状态，未读，同意，拒绝
-            list.add(obj);
-        }
-        map.put("rows",list);//list集合
-        return JSON.toJSONString(map);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/company/get/welcome-info")
+//    public String getWelcomeInfo(HttpServletRequest request){
+//        HashMap<String,Object> map = new HashMap<>();
+//        int pageSize = Integer.parseInt(request.getParameter("pageSize"));//每页条数
+//        int page = Integer.parseInt(request.getParameter("pageNumber"));//当前页
+//        String searchText = request.getParameter("searchText");//关键字：学生id，学生真实姓名，公司id，公司名称
+//        if (request.getSession(true).getAttribute("userId") != null) {
+//            Long userId = (long) request.getSession(true).getAttribute("userId");
+//            if (userService.selectById(userId).getRole().equals(1)) {
+//                Page<HashMap<String, Object>> pager = companyService.getWelcomePage(new Page<>(page,pageSize), userId, searchText);
+//                map.put("total",pager.getTotal());//数据总条数
+//                map.put("rows",pager.getRecords());//数据列表
+//                map.put("errorCode","00");
+//            }else
+//                map.put("errorCode","error");
+//        }else
+//            map.put("errorCode","error");
+//        return JSON.toJSONString(map);
+//
+//    }
     //获取登录公司的招聘信息
     //关键字：招聘标题，内容，要求
     //id companyId professionTypeId title introduction

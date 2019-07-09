@@ -6,6 +6,8 @@ import com.example.worknet.common.persistence.affair.profession.serivce.UserProf
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * <p>
  * 用户选择职业表 服务实现类
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-06-04
  */
 @Service
+@Transactional
 public class UserProfessionServiceImpl extends ServiceImpl<UserProfessionMapper, UserProfession> implements UserProfessionService {
 
 }

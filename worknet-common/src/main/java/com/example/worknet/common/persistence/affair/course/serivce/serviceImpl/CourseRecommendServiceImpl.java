@@ -7,6 +7,7 @@ import com.example.worknet.common.persistence.template.modal.CourseRecommend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2019-06-04
  */
 @Service
+@Transactional
 public class CourseRecommendServiceImpl extends ServiceImpl<CourseRecommendMapper, CourseRecommend> implements CourseRecommendService {
 
     /**

@@ -6,6 +6,8 @@ import com.example.worknet.common.persistence.affair.companyContest.service.Comp
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * <p>
  * 公司笔试选项表 服务实现类
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-05-02
  */
 @Service
+@Transactional
 public class CompanyContestChoiceOptionServiceImpl extends ServiceImpl<CompanyContestChoiceOptionMapper, CompanyContestChoiceOption> implements CompanyContestChoiceOptionService {
 
 }

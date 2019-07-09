@@ -3,14 +3,23 @@ package com.example.worknet.common.persistence.affair.company.serivce.serviceImp
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.company.dao.CompanyMapper;
 import com.example.worknet.common.persistence.affair.company.serivce.CompanyService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
+import com.example.worknet.common.persistence.affair.employment.service.CompanyInvitationService;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyProfessionService;
 import com.example.worknet.common.persistence.template.modal.Company;
+import com.example.worknet.common.persistence.template.modal.CompanyCv;
+import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +32,7 @@ import java.util.List;
  * @since 2019-05-06
  */
 @Service
+@Transactional
 public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> implements CompanyService {
 
     /**
@@ -104,8 +114,68 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
             return false;
     }
 
+
+    @Override
+    public Page<HashMap<String, Object>> getWelcomePage(Page<HashMap<String, Object>> pager, long userId, String searchText) {
+        long companyId = super.selectOne(new EntityWrapper<Company>().eq("user_id",userId)).getId();
+        if(searchText == null || searchText.equals("null") || searchText.equals(""))
+            searchText = "[\\w]*";
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        return page.setRecords(companyMapper.getWelcomePage(page,companyId,searchText));
+
+    }
+
+    @Override
+    public boolean changeResumeStatus(Long resumeId, int status,Long userId) {
+        CompanyCv companyCv=companyCvService.selectById(resumeId);
+        if(companyCv != null && companyCv.getUserId().equals(userId)
+                && companyCv.getStatus().equals(0)) {
+            companyCv.setStatus(status);
+            SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+            Date date =new Date();
+            String time=formatter.format(date);
+            ParsePosition pos=new ParsePosition(0);
+            Date d=formatter.parse(time,pos);
+            companyCv.setLastEditTime(d);
+            return companyCvService.updateAllColumnById(companyCv);
+        }
+        return false;
+    }
+
+    public boolean welcomeStudent(long userId, long studentId, long companyProfessionId){
+        long companyId = super.selectOne(new EntityWrapper<Company>().eq("user_id",userId)).getId();
+        CompanyInvitation companyInvitation=new CompanyInvitation();
+        companyInvitation.setCompanyId(companyId);
+        companyInvitation.setUserId(studentId);
+        companyInvitation.setCompanyProfessionId(companyProfessionId);
+        companyInvitation.setStatus(0);
+        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+        Date date =new Date();
+        String time=formatter.format(date);
+        ParsePosition pos=new ParsePosition(0);
+        Date d=formatter.parse(time,pos);
+        companyInvitation.setInviteTime(d);
+        companyInvitationService.insert(companyInvitation);
+        return true;
+    }
+
+    @Override
+    public Page<HashMap<String, Object>> getLearnerInfoPage(Page<HashMap<String, Object>> pager, String keyword) {
+        if(keyword == null || keyword.equals("null") || keyword.equals(""))
+            keyword = "[digit]*";
+        else
+            keyword = keyword.trim().replaceAll("\\s+","|");
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
+        return page.setRecords(companyMapper.getLearnerInfoPage(page, keyword));
+
+    }
+
     @Autowired
     private CompanyMapper companyMapper;
     @Autowired
     private CompanyProfessionService companyProfessionService;
+    @Autowired
+    private CompanyCvService companyCvService;
+    @Autowired
+    private CompanyInvitationService companyInvitationService;
 }

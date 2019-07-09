@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +24,7 @@ import java.util.HashMap;
  * @since 2019-05-25
  */
 @Service
+@Transactional
 public class CompanyContestServiceImpl extends ServiceImpl<CompanyContestMapper, CompanyContest> implements CompanyContestService {
 
 

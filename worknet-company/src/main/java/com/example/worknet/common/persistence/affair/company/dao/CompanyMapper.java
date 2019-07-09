@@ -141,4 +141,75 @@ public interface CompanyMapper extends BaseMapper<Company> {
     public List<HashMap<String,Object>> getEmployList(Pagination pagination,
                                                       @Param("userId") String userId,
                                                       @Param("searchText") String searchText);
+
+
+    @Select("SELECT\n" +
+            "\tsys_company_invitation.company_id,\n" +
+            "\tsys_company_invitation.user_id,\n" +
+            "\tsys_company_invitation.company_profession_id,\n" +
+            "\tsys_company_invitation.`status`,\n" +
+            "\tsys_learner_info.realname,\n" +
+            "\tsys_company.NAME,\n" +
+            "\tsys_company_profession.title\n" +
+            "\t\n" +
+            "FROM\n" +
+            "\tsys_company_invitation\n" +
+            "\tJOIN sys_learner_info ON sys_learner_info.user_id = sys_company_invitation.user_id\n" +
+            "\tJOIN sys_company ON sys_company.id = sys_company_invitation.company_id\n" +
+            "\tJOIN sys_company_profession ON sys_company_profession.id = sys_company_invitation.company_profession_id \n" +
+            "where sys_company_invitation.company_id = #{companyId}\n" +
+            "and (sys_learner_info.realname REGEXP #{searchText} or sys_company_profession.title REGEXP #{searchText} or company_profession_id REGEXP #{searchText})\n")
+
+    @Results(id="WelcomePageResultMap",value={
+            @Result(property = "companyProfessionId", column = "company_profession_id"),
+            @Result(property = "studentId", column = "user_id"),
+            @Result(property = "realname", column = "realname"),
+            @Result(property = "employTitle", column = "title"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "status", column = "status"),
+            @Result(property = "companyName", column = "NAME"),
+    })
+    public List<HashMap<String,Object>> getWelcomePage(Pagination pagination,
+                                                      @Param("companyId") long companyId,
+                                                      @Param("searchText") String searchText);
+
+
+    @Select({"SELECT\n" +
+            "\tsys_learner_info.id,\n" +
+            "\tsys_learner_info.user_id,\n" +
+            "\tsys_learner_info.nickname,\n" +
+            "\tsys_learner_info.realname,\n" +
+            "\tsys_learner_info.sex,\n" +
+            "\tsys_learner_info.age,\n" +
+            "\tsys_learner_info.signature,\n" +
+            "\tsys_learner_info.vacation,\n" +
+            "\tsys_learner_info.github,\n" +
+            "\tsys_learner_info.email,\n" +
+            "\tsys_learner_info.phone,\n" +
+            "\tsys_learner_info.hobby,\n" +
+            "\tsys_learner_info.professional \n" +
+            "FROM\n" +
+            "\tsys_learner_info \n" +
+            "WHERE\n" +
+            "\tsys_learner_info.id REGEXP #{keyword}\n" +
+            "\tOR sys_learner_info.nickname REGEXP #{keyword}\n" +
+            "\tOR sys_learner_info.realname REGEXP #{keyword}\n" +
+            "\tOR sys_learner_info.phone REGEXP #{keyword}\n"})
+    @Results(id = "learnerInfoResultMap", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "studentId", column = "user_id"),
+            @Result(property = "nickname", column = "nickname"),
+            @Result(property = "realname", column = "realname"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "age", column = "age"),
+            @Result(property = "signature", column = "signature"),
+            @Result(property = "vacation", column = "vacation"),
+            @Result(property = "github", column = "github"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "phone", column = "phone"),
+            @Result(property = "hobby", column = "hobby"),
+            @Result(property = "professional", column = "professional"),
+    })
+    List<HashMap<String,Object>> getLearnerInfoPage(Pagination pagination, @Param("keyword") String keyword);
+
 }

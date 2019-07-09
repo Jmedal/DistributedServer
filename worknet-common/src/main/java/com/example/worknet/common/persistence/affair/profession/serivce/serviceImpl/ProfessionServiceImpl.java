@@ -6,6 +6,8 @@ import com.example.worknet.common.persistence.affair.profession.serivce.Professi
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * <p>
  * 职业表 服务实现类
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-05-25
  */
 @Service
+@Transactional
 public class ProfessionServiceImpl extends ServiceImpl<ProfessionMapper, Profession> implements ProfessionService {
 
 }

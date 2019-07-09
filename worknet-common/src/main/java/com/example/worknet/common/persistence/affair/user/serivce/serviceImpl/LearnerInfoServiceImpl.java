@@ -10,6 +10,7 @@ import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
  * @since 2019-04-27
  */
 @Service
+@Transactional
 public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, LearnerInfo> implements LearnerInfoService {
 
     /**

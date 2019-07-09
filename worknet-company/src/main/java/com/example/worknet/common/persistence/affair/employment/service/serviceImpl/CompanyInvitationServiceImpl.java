@@ -8,6 +8,7 @@ import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 
 /**
@@ -19,6 +20,7 @@ import java.util.HashMap;
  * @since 2019-07-02
  */
 @Service
+@Transactional
 public class CompanyInvitationServiceImpl extends ServiceImpl<CompanyInvitationMapper, CompanyInvitation> implements CompanyInvitationService {
 
     /**

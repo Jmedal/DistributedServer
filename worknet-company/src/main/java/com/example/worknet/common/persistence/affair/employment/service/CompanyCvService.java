@@ -40,6 +40,6 @@ public interface CompanyCvService extends IService<CompanyCv> {
     Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
                                                  String userId, String searchText);
 
-    boolean changeResumeStatus(Long resumeId, int status, Long userId);
+
 
 }

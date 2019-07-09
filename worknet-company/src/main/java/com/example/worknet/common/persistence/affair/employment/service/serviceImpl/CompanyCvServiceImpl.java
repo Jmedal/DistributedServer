@@ -9,6 +9,7 @@ import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.validation.OverridesAttribute;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.HashMap;
  * @since 2019-07-02
  */
 @Service
+@Transactional
 public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv> implements CompanyCvService {
 
 
@@ -97,16 +99,7 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
 
     }
 
-    @Override
-    public boolean changeResumeStatus(Long resumeId, int status,Long userId) {
-        CompanyCv companyCv=super.selectById(resumeId);
-        if(companyCv != null && companyCv.getUserId().equals(userId)
-                && companyCv.getStatus().equals(0)) {
-            companyCv.setStatus(status);
-            return super.updateAllColumnById(companyCv);
-        }
-        return false;
-    }
+
 
     @Autowired
     CompanyCvMapper companyCvMapper;
