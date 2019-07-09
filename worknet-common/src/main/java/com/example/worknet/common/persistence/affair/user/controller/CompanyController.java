@@ -2,30 +2,19 @@ package com.example.worknet.common.persistence.affair.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.CompanyProfession;
-import com.example.worknet.core.utils.file.HttpFileUnils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Calendar;
 import java.util.HashMap;
 
 

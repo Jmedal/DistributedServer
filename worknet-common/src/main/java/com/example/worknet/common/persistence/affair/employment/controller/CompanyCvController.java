@@ -1,6 +1,5 @@
 package com.example.worknet.common.persistence.affair.employment.controller;
 
-
 import com.alibaba.fastjson.JSON;
 import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
