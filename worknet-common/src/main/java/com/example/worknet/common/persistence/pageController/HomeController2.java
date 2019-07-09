@@ -28,7 +28,7 @@ public class HomeController2 {
     }
 
     //预览简历or简历模板
-    @RequestMapping(value = {"/resume/preview/{resumeId}","/resume/preview/employ/{resumeId}"})
+    @RequestMapping(value = {"/resume/preview/{resumeId}", "/resume/preview/employ/{resumeId}"})
     public String previewResumeMode(@PathVariable(value = "resumeId") int resumeId){
         //控制器不必管，会有前端负责鉴别两者
         return "preview.html";

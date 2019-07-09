@@ -264,7 +264,7 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/personal/change/myAvatar", method = RequestMethod.POST)
+    @RequestMapping(value = {"/personal/change/myAvatar", "/company/change/myAvatar"}, method = RequestMethod.POST)
     public String upLoadPicture(MultipartHttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null){

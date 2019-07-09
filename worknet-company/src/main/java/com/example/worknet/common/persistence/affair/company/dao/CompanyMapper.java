@@ -62,7 +62,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_company_cv ON sys_company_profession.id = sys_company_cv.company_profession_id \n" +
             "WHERE\n" +
             "\tsys_company.id = #{companyId}\n" +
-            "\tAND ( sys_company_cv.user_id  REGEXP #{keyword} OR sys_company_cv.NAME REGEXP #{keyword}")
+            "\tAND (sys_company_cv.user_id  REGEXP #{keyword}\n" +
+            "\tOR sys_company_cv.NAME REGEXP #{keyword}\n" +
+            "\tOR sys_company_profession.title REGEXP #{keyword})\n")
     @Results(id = "ResumeListResultMap",value = {
             @Result(property = "resumeId", column = "resumeId"),
             @Result(property = "companyId", column = "companyId"),
@@ -72,7 +74,7 @@ public interface CompanyMapper extends BaseMapper<Company> {
             @Result(property = "employTitle", column = "employTitle"),
             @Result(property = "status", column = "status"),
     })
-    List<HashMap<String,Object>> getResumePage(Pagination pagination, @Param("companyId") String companyId, @Param("keyword") String keyword);
+    List<HashMap<String,Object>> getResumePage(Pagination pagination, @Param("companyId") Long companyId, @Param("keyword") String keyword);
 
     @Select("SELECT\n" +
             "\tsys_company_profession.id AS companyProfessionId,\n" +

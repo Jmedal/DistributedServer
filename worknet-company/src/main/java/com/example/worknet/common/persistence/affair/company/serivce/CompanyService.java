@@ -24,7 +24,7 @@ public interface CompanyService extends IService<Company> {
 
     HashMap<String,Object> getCompanyInfoByUserId(Long userId);
 
-    Page<HashMap<String,Object>> getResumePage(Page<HashMap<String, Object>> pager, String companyId, String keyword);
+    Page<HashMap<String,Object>> getResumePage(Page<HashMap<String, Object>> pager, Long userId, String keyword);
 
     boolean updateCompanyInfo(Company company);
 

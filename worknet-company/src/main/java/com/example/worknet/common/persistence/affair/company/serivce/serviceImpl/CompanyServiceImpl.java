@@ -62,14 +62,13 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     /**
      * 获取公司简历信息列表
      * @param pager
-     * @param companyId
+     * @param userId
      * @param keyword
      * @return
      */
     @Override
-    public Page<HashMap<String,Object>> getResumePage(Page<HashMap<String, Object>> pager, String companyId, String keyword){
-        if(companyId == null || companyId.equals("null") || companyId.equals(""))
-            companyId = "[digit]*";
+    public Page<HashMap<String,Object>> getResumePage(Page<HashMap<String, Object>> pager, Long userId, String keyword){
+        Long companyId = super.selectOne(new EntityWrapper<Company>().eq("user_id",userId)).getId();
         if(keyword == null || keyword.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
         else
@@ -202,6 +201,8 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         Long companyId = super.selectOne(new EntityWrapper<Company>().eq("user_id",userId)).getId();
         if(keyword == null || keyword.equals("null") || keyword.equals(""))
             keyword = "[\\w]*";
+        else
+            keyword = keyword.trim().replaceAll("\\s+","|");
         Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
         return page.setRecords(companyMapper.getWelcomePage(page, companyId, keyword));
     }

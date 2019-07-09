@@ -2,6 +2,7 @@ package com.example.worknet.common.persistence.affair.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 
@@ -97,7 +100,7 @@ public class CompanyController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/company/get/myAvatar", method = RequestMethod.POST)
+    @RequestMapping(value = "/company/get/myAvatar", method = RequestMethod.GET)
     public ResponseEntity getCoursePic(HttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
@@ -113,27 +116,12 @@ public class CompanyController {
             return ResponseEntity.badRequest().build();
     }
 
-    //修改公司头像(这段代码的作用是接收文件并存储在指定的位置，fileName是文件名，可以用.截取后缀随机生成文件名)
-    @RequestMapping(value = "/company/change/myAvatar",method = RequestMethod.POST)
-    public String changeAvatar(@RequestParam MultipartFile avatar, HttpServletRequest request){
-//        String basePath  = "D:\\SoftwareXieTong\\src\\main\\resources\\";
-//        String fileName = request.getParameter("fileName");//avatar本身获取的name没有后缀，我又传了一次
-//        try {
-//            avatar.transferTo(new File(basePath + fileName));
-//        } catch (Exception e) {
-//            // TODO
-//        }
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
-
-    //获取companyId
     /**
      * 加载公司帐号信息
+     * @param request
      * @return
      */
-    @RequestMapping(value = "/company/get/info")
+    @RequestMapping(value = "/company/get/info", method = RequestMethod.GET)
     public String getCompanyId(HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
@@ -148,7 +136,6 @@ public class CompanyController {
         return JSON.toJSONString(map);
     }
 
-    //website communication address introduction name field
     /**
      * 修改公司帐号信息
      * @param request
@@ -169,11 +156,11 @@ public class CompanyController {
                 Company company=new Company();
                 company.setUserId(userId);
                 company.setWebsite(website);
-                company.setWebsite(communication);
-                company.setWebsite(address);
-                company.setWebsite(introduction);
-                company.setWebsite(name);
-                company.setWebsite(field);
+                company.setCommunication(communication);
+                company.setAddress(address);
+                company.setIntroduction(introduction);
+                company.setName(name);
+                company.setField(field);
                 if(companyService.updateCompanyInfo(company))
                     map.put("errorCode","00");
                 else
@@ -185,8 +172,6 @@ public class CompanyController {
         return JSON.toJSONString(map);
     }
 
-
-    //即简历的目标公司id为该登录公司
     /**
      * 获取登录公司接受的所有简历
      * @param page
@@ -204,7 +189,7 @@ public class CompanyController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             if(userService.selectById(userId).getRole().equals(UserConst.COMPANY.getState())) {
-                Page<HashMap<String, Object>> pager = companyService.getResumePage(new Page<>(page, pageSize), userId.toString(), keyword);
+                Page<HashMap<String, Object>> pager = companyService.getResumePage(new Page<>(page, pageSize), userId, keyword);
                 map.put("total", pager.getTotal());
                 map.put("rows", pager.getRecords());
                 map.put("errorCode", "00");
@@ -259,7 +244,6 @@ public class CompanyController {
         return JSON.toJSONString(map);
     }
 
-    //id userId nickname realname sex age signature vacation github email phone hobby professional
     /**
      * 公司管理加载学习者信息列表
      * @param page
@@ -333,7 +317,6 @@ public class CompanyController {
         return JSON.toJSONString(map);
     }
 
-    //类似管理员的功能，除了需要设定邀请公司为当前登录公司
     /**
      * 公司管理加载招聘邀请列表
      * @param page
@@ -363,9 +346,6 @@ public class CompanyController {
 
     }
 
-
-    //id companyId professionTypeId title introduction
-    //requirement salary state location isPractice duration chanceToFormal
     /**
      * 公司管理加载招聘信息列表
      * @param page

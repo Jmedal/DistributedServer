@@ -5,34 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f8ba5db-a34f-43b9-8db6-e46ba8a922c5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/file/HttpFileUnils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/worknet-common/src/main/resources/static/images/temp/avatar/2019/4df89cbf-f8d3-49b5-881f-549ef8a6d9d8.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/constant/Const.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/constant/Const.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew5.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/administrator/controller/AdministratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/administrator/controller/AdministratorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/controller/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyCvController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyCvController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyCvService.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyCvService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/CompanyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/CompanyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/LearnerCvController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/LearnerCvController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/dao/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/dao/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/LearnerCvServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/LearnerCvServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/video/controller/CourseVideoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/video/controller/CourseVideoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/Date/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/date/DateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company-employ.html" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company-employ.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/personal/myMsg_system.html" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/personal/myMsg_system.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/HomeController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/HomeController2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/resources/static/images/temp/avatar/2019/timg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-welcome.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/CompanyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyCvMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyCvMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyCvService.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyCvService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyCvServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyCvServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/core/utils/Date/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/core/utils/date/DateUtil.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -66,8 +50,8 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="49" />
-          <entry key="html" value="86" />
-          <entry key="java" value="783" />
+          <entry key="html" value="97" />
+          <entry key="java" value="804" />
           <entry key="png" value="4" />
           <entry key="sql" value="3" />
           <entry key="xml" value="32" />
@@ -76,9 +60,9 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="49" />
-          <entry key="HTML" value="86" />
+          <entry key="HTML" value="97" />
           <entry key="Image" value="4" />
-          <entry key="JAVA" value="783" />
+          <entry key="JAVA" value="804" />
           <entry key="SQL" value="3" />
           <entry key="XML" value="32" />
         </counts>
@@ -86,113 +70,63 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="25" />
-          <entry key="html" value="290" />
-          <entry key="java" value="12400" />
-          <entry key="txt" value="244" />
+          <entry key="html" value="301" />
+          <entry key="java" value="12468" />
+          <entry key="txt" value="263" />
           <entry key="xml" value="132" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="290" />
-          <entry key="JAVA" value="12400" />
-          <entry key="PLAIN_TEXT" value="269" />
+          <entry key="HTML" value="301" />
+          <entry key="JAVA" value="12468" />
+          <entry key="PLAIN_TEXT" value="288" />
           <entry key="XML" value="132" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="8" />
+          <entry key="project.closed" value="9" />
+          <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.23" value="1" />
           <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.25" value="5" />
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.27" value="1" />
-          <entry key="project.opened" value="9" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew5.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="33" column="48" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/CompanyController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="116" column="53" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="53" />
+            <state relative-caret-position="-3894">
+              <caret line="348" column="4" selection-start-line="348" selection-start-column="4" selection-end-line="348" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java">
+        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="62" column="57" selection-start-line="62" selection-start-column="49" selection-end-line="62" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="34" column="86" selection-start-line="34" selection-start-column="86" selection-end-line="34" selection-end-column="86" />
+            <state relative-caret-position="197">
+              <caret line="291" column="8" selection-start-line="291" selection-start-column="8" selection-end-line="297" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/home.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/index.html">
+        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyCvController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2543" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/resume.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5184" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="22" column="44" selection-start-line="22" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="45" column="57" lean-forward="true" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
+            <state relative-caret-position="251">
+              <caret line="150" column="32" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="67" />
+              <folding>
+                <element signature="method#deliverResume#0;class#CompanyCvController#0" />
+                <element signature="method#getMyResume#0;class#CompanyCvController#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -209,11 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>employ</find>
-      <find>employId</find>
-      <find>headPath</find>
-      <find>realHeadPath</find>
-      <find>formData</find>
       <find>index.html</find>
       <find>/company/get/myAvatar</find>
       <find>getCompanyEmployPage</find>
@@ -239,6 +168,11 @@
       <find>公司招聘信息</find>
       <find>company/change</find>
       <find>招聘信息</find>
+      <find>邀请职业</find>
+      <find>/resume/preview</find>
+      <find>/resume/get/</find>
+      <find>/resume</find>
+      <find>employInfo</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -257,9 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/admin/com-employ.html" />
-        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/resume.html" />
-        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/Date/DateUtil.java" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/date/DateUtil.java" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/LearnerInfoController.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/dao/CompanyInvitationMapper.java" />
@@ -299,15 +230,18 @@
         <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/employment.html" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/core/utils/file/HttpFileUnils.java" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew5.java" />
-        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java" />
-        <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/dao/UserMapper.java" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-welcome.html" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/CompanyService.java" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/HomeController2.java" />
+        <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java" />
         <option value="$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/resume.html" />
+        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java" />
         <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/CompanyController.java" />
-        <option value="$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java" />
-        <option value="$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html" />
       </list>
     </option>
   </component>
@@ -343,9 +277,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
+    <option name="x" value="1174" />
+    <option name="y" value="159" />
     <option name="width" value="1944" />
-    <option name="height" value="2082" />
+    <option name="height" value="2084" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -434,17 +369,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="worknet" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="constant" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
-              <item name="worknet-common" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="worknet" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -511,7 +435,7 @@
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
               <item name="affair" type="462c0819:PsiDirectoryNode" />
               <item name="employment" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
@@ -552,7 +476,7 @@
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
               <item name="affair" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="serivce" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
@@ -567,7 +491,6 @@
               <item name="affair" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
               <item name="serivce" type="462c0819:PsiDirectoryNode" />
-              <item name="serviceImpl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
@@ -618,6 +541,82 @@
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="company" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+              <item name="affair" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DistributedServer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DistributedServer" type="462c0819:PsiDirectoryNode" />
+              <item name="worknet-company" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -663,152 +662,6 @@
       <recent name="C:\Users\Medal姜总\Desktop\DistributedServer\sql" />
       <recent name="C:\Users\Medal姜总\Desktop\DistributedServer\worknet-company\src\main\java\com\example\worknet\common\persistence\template\mapping" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew5.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseClickServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestOptionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestQuestionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestResultServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestScoreServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseContestUserAnswerServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseIndexServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseRecommendServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/course/serivce/serviceImpl/CourseStudiedServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/curriculum/serivce/serviceImpl/CurriculumCourseServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/curriculum/serivce/serviceImpl/CurriculumServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/curriculum/serivce/serviceImpl/CurriculumTreeServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/profession/serivce/serviceImpl/ProfessionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/profession/serivce/serviceImpl/ProfessionTypeServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/profession/serivce/serviceImpl/UserProfessionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/LearnerInfoServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/serviceImpl/TeacherInfoServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/video/serivce/serviceImpl/CourseVideoServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/video/serivce/serviceImpl/VideoDiscussionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/video/serivce/serviceImpl/VideoWatchedServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/administrator/service/serviceImpl/AdminCheckCompanyServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/administrator/service/serviceImpl/AdministratorServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/CompanyService.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/companyContest/service/serviceImpl/CompanyContestApplyServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/companyContest/service/serviceImpl/CompanyContestChoiceOptionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/companyContest/service/serviceImpl/CompanyContestQuestionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/companyContest/service/serviceImpl/CompanyContestResultServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/companyContest/service/serviceImpl/CompanyContestServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/CompanyCvService.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyCvServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyInvitationServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/employment/service/serviceImpl/CompanyProfessionServiceImpl.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/message/service/serviceImpl/MessageServiceImpl.java</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -943,7 +796,8 @@
       <workItem from="1562465323004" duration="37517000" />
       <workItem from="1562546540454" duration="14456000" />
       <workItem from="1562565782944" duration="31654000" />
-      <workItem from="1562633560591" duration="45723000" />
+      <workItem from="1562633560591" duration="45847000" />
+      <workItem from="1562689565657" duration="7660000" />
     </task>
     <task id="LOCAL-00001" summary="提交 公司招聘查询api实现">
       <created>1562208742858</created>
@@ -1057,7 +911,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562659174845</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="公司管理模块构建结束，未测试">
+      <created>1562683403862</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1562683403862</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1093,7 +954,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203724000" />
+    <option name="totallyTimeSpent" value="211508000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1108,7 +969,7 @@
     <frame x="-6" y="-6" width="1719" height="932" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26638606" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25616357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1118,14 +979,14 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32833958" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33832708" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.499098" visible="true" weight="0.32084894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Spring" order="6" weight="0.32962137" />
+      <window_info anchor="bottom" id="Spring" order="6" weight="0.32958803" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32962137" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.500902" side_tool="true" weight="0.33832708" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.32962137" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.32958803" />
@@ -1144,7 +1005,7 @@
       <window_info anchor="right" id="Maven Projects" order="10" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26638606" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25616357" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -1154,14 +1015,14 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32833958" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.39325842" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.499098" weight="0.32084894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Spring" order="6" weight="0.32962137" />
+      <window_info anchor="bottom" id="Spring" order="6" weight="0.32958803" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32962137" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.500902" side_tool="true" weight="0.33832708" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.32962137" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.32958803" />
@@ -1237,44 +1098,10 @@
     <MESSAGE value="前端bug修复" />
     <MESSAGE value="开始收尾工作" />
     <MESSAGE value="简历模版测试完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="简历模版测试完成" />
+    <MESSAGE value="公司管理模块构建结束，未测试" />
+    <option name="LAST_COMMIT_MESSAGE" value="公司管理模块构建结束，未测试" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/LearnerInfoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="19" column="52" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyInvitationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1585">
-          <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="45" column="6" lean-forward="true" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/HomeControllerNew2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="227" column="20" selection-start-line="227" selection-start-column="20" selection-end-line="227" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/personal/myMsgInner.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-564" />
@@ -1298,18 +1125,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/personal/display_page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4860">
-          <folding>
-            <element signature="n#style#0;n#li#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/preview.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1291">
-          <caret line="183" column="46" lean-forward="true" selection-start-line="183" selection-start-column="46" selection-end-line="183" selection-end-column="46" />
-        </state>
+        <state relative-caret-position="-4860" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/personal/myMsg_system.html">
@@ -1337,9 +1153,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="721">
           <caret line="165" column="71" selection-start-line="165" selection-start-column="71" selection-end-line="165" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1389,12 +1202,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-employ.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-account.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
@@ -1402,21 +1209,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-welcome.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3564" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/welcome-info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2025" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/LearnerCvController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="214" column="91" lean-forward="true" selection-start-line="214" selection-start-column="63" selection-end-line="214" selection-end-column="91" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/config/hessian/HessianServiceConfig.java">
@@ -1451,18 +1246,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyCvController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1679">
-          <caret line="71" column="90" selection-start-line="71" selection-start-column="71" selection-end-line="71" selection-end-column="90" />
-          <folding>
-            <element signature="method#deliverResume#0;class#CompanyCvController#0" />
-            <element signature="method#getResume#0;class#CompanyCvController#0" />
-            <element signature="method#getMyResume#0;class#CompanyCvController#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1511,10 +1294,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java">
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/dao/UserMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="313" column="53" lean-forward="true" selection-start-line="313" selection-start-column="53" selection-end-line="313" selection-end-column="53" />
+        <state relative-caret-position="778">
+          <caret line="111" column="57" selection-start-line="111" selection-start-column="57" selection-end-line="111" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -1525,38 +1308,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/dao/UserMapper.java">
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/PersonalController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
-          <caret line="111" column="57" selection-start-line="111" selection-start-column="57" selection-end-line="111" selection-end-column="57" />
+        <state relative-caret-position="-248">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java">
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/VocationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="22" column="44" selection-start-line="22" selection-end-line="23" />
+        <state relative-caret-position="162">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/HomeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/CompanyService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="24" column="63" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
+        <state relative-caret-position="211">
+          <caret line="26" column="95" selection-start-line="26" selection-start-column="95" selection-end-line="26" selection-end-column="95" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/LearnerCvController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="357">
+          <caret line="214" column="91" lean-forward="true" selection-start-line="214" selection-start-column="63" selection-end-line="214" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/preview.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1977">
+          <caret line="135" column="26" selection-start-line="135" selection-start-column="19" selection-end-line="135" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/HomeController2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-welcome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="42" column="53" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/dao/CompanyMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="45" column="57" lean-forward="true" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
+        <state relative-caret-position="-1719">
+          <caret line="118" column="49" lean-forward="true" selection-start-line="118" selection-start-column="49" selection-end-line="118" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/serivce/CompanyService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-278">
+          <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-company/src/main/java/com/example/worknet/common/persistence/affair/company/serivce/serviceImpl/CompanyServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="113" column="43" selection-start-line="113" selection-start-column="36" selection-end-line="113" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1564,33 +1403,54 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2543" />
+        <state relative-caret-position="918">
+          <caret line="34" column="86" selection-start-line="34" selection-start-column="86" selection-end-line="34" selection-end-column="86" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/resume.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5184" />
+        <state relative-caret-position="27">
+          <caret line="159" column="37" lean-forward="true" selection-start-line="159" selection-start-column="37" selection-end-line="159" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-employ.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/stu-account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="122" column="31" selection-start-line="122" selection-start-column="25" selection-end-line="122" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/employment/controller/CompanyCvController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="150" column="32" selection-start-line="150" selection-start-column="32" selection-end-line="150" selection-end-column="67" />
+          <folding>
+            <element signature="method#deliverResume#0;class#CompanyCvController#0" />
+            <element signature="method#getMyResume#0;class#CompanyCvController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="291" column="8" selection-start-line="291" selection-start-column="8" selection-end-line="297" selection-end-column="9" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/affair/user/controller/CompanyController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="116" column="53" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/java/com/example/worknet/common/persistence/pageController/ComController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="62" column="57" selection-start-line="62" selection-start-column="49" selection-end-line="62" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/worknet-common/src/main/resources/templates/company/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="34" column="86" selection-start-line="34" selection-start-column="86" selection-end-line="34" selection-end-column="86" />
+        <state relative-caret-position="-3894">
+          <caret line="348" column="4" selection-start-line="348" selection-start-column="4" selection-end-line="348" selection-end-column="4" />
         </state>
       </provider>
     </entry>
