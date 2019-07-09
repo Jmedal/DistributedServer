@@ -95,6 +95,8 @@ public interface UserMapper extends BaseMapper<User> {
             "sys_company.name," +
             "sys_company.introduction," +
             "sys_company.address," +
+            "sys_company.website,\n" +
+            "sys_company.field\n" +
             "sys_company.register_time " +
             "from sys_user join sys_company where sys_user.id=#{id} and sys_company.user_id=#{id}")
     @Results(id = "companyInfoResultMap",value = {
@@ -106,6 +108,8 @@ public interface UserMapper extends BaseMapper<User> {
             @Result(property = "name",column = "name"),
             @Result(property = "introduction",column = "introduction"),
             @Result(property = "address",column = "address"),
+            @Result(property = "website",column = "website"),
+            @Result(property = "field",column = "field"),
             @Result(property = "registerTime",column = "register_time"),
     })
     HashMap<String,Object> getCompanyInfo(@Param("id") Long id);

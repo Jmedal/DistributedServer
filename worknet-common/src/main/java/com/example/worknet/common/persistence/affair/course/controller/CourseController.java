@@ -83,12 +83,6 @@ public class CourseController {
                                           HttpServletRequest request){
         String strDirPath = request.getSession().getServletContext().getRealPath("/");
         logger.info(strDirPath);
-        String pp = request.getRequestURI();
-        logger.info(pp);
-        String path=request.getServletContext().getContextPath();
-        logger.info(path);
-        String realPath=request.getServletContext().getRealPath("/static");
-        logger.info(realPath);
         try {
             return ResponseEntity.ok(courseService.getCoursePicture(cid,strDirPath));
         } catch (Exception e) {

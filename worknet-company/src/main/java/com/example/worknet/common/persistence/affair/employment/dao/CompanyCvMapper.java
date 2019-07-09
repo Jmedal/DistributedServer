@@ -38,28 +38,32 @@ public interface CompanyCvMapper extends BaseMapper<CompanyCv> {
             "mailbox,\n" +
             "introduction,\n" +
             "diploma,\n" +
+            "current_location,\n" +
+            "in_job_time,\n" +
             "head_path\n" +
             "FROM\n" +
             "sys_company_cv\n" +
             "WHERE\n" +
             "id = #{companyCvId} and user_id = #{userId}")
-    @Results(id = "companyCvInfoResultMap",value = {
-            @Result(property = "id",column = "id"),
-            @Result(property = "learnerId",column = "user_id"),
-            @Result(property = "name",column = "name"),
-            @Result(property = "sex",column = "sex"),
-            @Result(property = "birth",column = "birth"),
-            @Result(property = "nativePlace",column = "native_place"),
-            @Result(property = "identity",column = "identity"),
-            @Result(property = "qualification",column = "qualification"),
-            @Result(property = "speciality",column = "specialty"),
-            @Result(property = "university",column = "university"),
-            @Result(property = "tel",column = "tel"),
-            @Result(property = "experience",column = "experience"),
-            @Result(property = "mailbox",column = "mailbox"),
-            @Result(property = "introduction",column = "introduction"),
-            @Result(property = "diploma",column = "diploma"),
-            @Result(property = "headPath",column = "head_path"),
+    @Results(id = "companyCvInfoResultMap", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "learnerId", column = "user_id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "birth", column = "birth"),
+            @Result(property = "nativePlace", column = "native_place"),
+            @Result(property = "identity", column = "identity"),
+            @Result(property = "qualification", column = "qualification"),
+            @Result(property = "speciality", column = "specialty"),
+            @Result(property = "university", column = "university"),
+            @Result(property = "tel", column = "tel"),
+            @Result(property = "experience", column = "experience"),
+            @Result(property = "mailbox", column = "mailbox"),
+            @Result(property = "introduction", column = "introduction"),
+            @Result(property = "diploma", column = "diploma"),
+            @Result(property = "currentLocation", column = "current_location"),
+            @Result(property = "inJobTime", column = "in_job_time"),
+            @Result(property = "headPath", column = "head_path"),
     })
     HashMap<String,Object> getCompanyCvInfo(@Param("companyCvId") Long companyCvId, @Param("userId") Long userId);
 

@@ -20,33 +20,33 @@ import java.util.HashMap;
 
 @Controller
 public class HomeControllerNew5 {
-    //修改密码
-    @ResponseBody
-    @RequestMapping(value = "/company/change/password",method = RequestMethod.POST)
-    public String changePass(HttpServletRequest request){
-        //param:old_pass,new_pass,confirm_pass
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
-    //获取companyId
-    @ResponseBody
-    @RequestMapping(value = "/company/get/info")
-    public String getCompanyId(){
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        HashMap<String,Object> obj = new HashMap<>();
-        obj.put("name","百度");
-        obj.put("introduction","百度公司是一家恰烂钱的垃圾公司，广告专门推广莆田系，搜索还差的要死。");
-        obj.put("address","上海市xx区xx路xxx号");
-        obj.put("communication","021-55555555");
-        obj.put("website","http://www.baidu.com");
-        obj.put("field","互联网");
-        map.put("returnObject",obj);
-        return JSON.toJSONString(map);
-    }
-    //修改以下信息
-    // website communication address introduction name field
+//    //修改密码
+//    @ResponseBody
+//    @RequestMapping(value = "/company/change/password",method = RequestMethod.POST)
+//    public String changePass(HttpServletRequest request){
+//        //param:old_pass,new_pass,confirm_pass
+//        HashMap<String,Object> map = new HashMap<>();
+//        map.put("errorCode","00");
+//        return JSON.toJSONString(map);
+//    }
+//    //获取companyId
+//    @ResponseBody
+//    @RequestMapping(value = "/company/get/info")
+//    public String getCompanyId(){
+//        HashMap<String,Object> map = new HashMap<>();
+//        map.put("errorCode","00");
+//        HashMap<String,Object> obj = new HashMap<>();
+//        obj.put("name","百度");
+//        obj.put("introduction","百度公司是一家恰烂钱的垃圾公司，广告专门推广莆田系，搜索还差的要死。");
+//        obj.put("address","上海市xx区xx路xxx号");
+//        obj.put("communication","021-55555555");
+//        obj.put("website","http://www.baidu.com");
+//        obj.put("field","互联网");
+//        map.put("returnObject",obj);
+//        return JSON.toJSONString(map);
+//    }
+//    修改以下信息
+//     website communication address introduction name field
 //    @RequestMapping(value = "/company/change-info",method = RequestMethod.POST)
 //    @ResponseBody
 //    public String changeComInfo(HttpServletRequest request){
@@ -79,9 +79,9 @@ public class HomeControllerNew5 {
 //            map.put("errorCode", "error");
 //        return JSON.toJSONString(map);
 //    }
-    //获取登录公司接受的所有简历
-    //即简历的目标公司id为该登录公司
-    //关键字：学生id，学生真实姓名
+//    获取登录公司接受的所有简历
+//    即简历的目标公司id为该登录公司
+//    关键字：学生id，学生真实姓名
 //    @RequestMapping(value = "/company/get/resume")
 //    @ResponseBody
 //    public String getResume(HttpServletRequest request){
@@ -101,8 +101,8 @@ public class HomeControllerNew5 {
 //                map.put("errorCode", "error");
 //        return JSON.toJSONString(map);
 //    }
-    //同意某简历
-    //后端可以添加身份验证，也可以懒得做
+//    同意某简历
+//    后端可以添加身份验证，也可以懒得做
 //    @RequestMapping(value = "/company/agree/{resumeId}")
 //    @ResponseBody
 //    public String agreeResume(@PathVariable int resumeId){
@@ -118,7 +118,7 @@ public class HomeControllerNew5 {
 //            map.put("errorCode", "error");
 //        return JSON.toJSONString(map);
 //    }
-    //拒绝某简历
+//    拒绝某简历
 //    @RequestMapping(value = "/company/reject/{resumeId}")
 //    @ResponseBody
 //    public String rejectResume(@PathVariable int resumeId){
@@ -134,10 +134,10 @@ public class HomeControllerNew5 {
 //            map.put("errorCode", "error");
 //        return JSON.toJSONString(map);
 //    }
-    //作为公司获取学生信息
-    //和管理员应该有所区别，因为公司获取的信息可能需要通过学生的设置同意
-    //也可以一样，反正懒
-    //id userId nickname realname sex age signature vacation github email phone hobby professional
+//    作为公司获取学生信息
+//    和管理员应该有所区别，因为公司获取的信息可能需要通过学生的设置同意
+//    也可以一样，反正懒
+//    id userId nickname realname sex age signature vacation github email phone hobby professional
 //    @ResponseBody
 //    @RequestMapping(value = "/company/get/stu-info")
 //    public String getStuInfo(HttpServletRequest request){
@@ -160,7 +160,7 @@ public class HomeControllerNew5 {
 //
 //        return JSON.toJSONString(map);
 //    }
-
+//
 //    //获取该登录公司的招聘信息列表
 //    //不分页了，直接获取全部
 //    @ResponseBody
@@ -177,8 +177,8 @@ public class HomeControllerNew5 {
 //            map.put("errorCode", "error");
 //        return JSON.toJSONString(map);
 //    }
-
-    //公司邀请某个学生来某个招聘信息
+//
+//    公司邀请某个学生来某个招聘信息
 //    @RequestMapping(value = "/company/welcome",method = RequestMethod.POST)
 //    @ResponseBody
 //    public String welcomeStudent(HttpServletRequest request){
@@ -197,8 +197,8 @@ public class HomeControllerNew5 {
 //            map.put("errorCode","error");
 //        return JSON.toJSONString(map);
 //    }
-    //获取公司的所有邀请信息
-    //类似管理员的功能，除了需要设定邀请公司为当前登录公司
+//    获取公司的所有邀请信息
+//    类似管理员的功能，除了需要设定邀请公司为当前登录公司
 //    @ResponseBody
 //    @RequestMapping(value = "/company/get/welcome-info")
 //    public String getWelcomeInfo(HttpServletRequest request){
@@ -220,10 +220,10 @@ public class HomeControllerNew5 {
 //        return JSON.toJSONString(map);
 //
 //    }
-    //获取登录公司的招聘信息
-    //关键字：招聘标题，内容，要求
-    //id companyId professionTypeId title introduction
-    // requirement salary state location isPractice duration chanceToFormal
+//    获取登录公司的招聘信息
+//    关键字：招聘标题，内容，要求
+//    id companyId professionTypeId title introduction
+//     requirement salary state location isPractice duration chanceToFormal
 //    @RequestMapping(value = "/company/get/employ-info")
 //    @ResponseBody
 //    public String getEmployInfo(HttpServletRequest request){
@@ -244,7 +244,7 @@ public class HomeControllerNew5 {
 //            map.put("errorCode","error");
 //        return JSON.toJSONString(map);
 //    }
-    //id即招聘信息的id
+//    id即招聘信息的id
 //    @RequestMapping(value = "/company/end/employ/{id}")
 //    @ResponseBody
 //    public String endEmploy(@PathVariable int id){
@@ -257,9 +257,9 @@ public class HomeControllerNew5 {
 //                map.put("errorCode","error");
 //        return JSON.toJSONString(map);
 //    }
-    //修改公司招聘信息，包括下列参数：
-    //id companyId professionTypeId title introduction professionType(这个可以无视)
-    // requirement salary location isPractice duration chanceToFormal
+//    修改公司招聘信息，包括下列参数：
+//    id companyId professionTypeId title introduction professionType(这个可以无视)
+//     requirement salary location isPractice duration chanceToFormal
 //    @RequestMapping(value = "/company/employ/change-info",method = RequestMethod.POST)
 //    @ResponseBody
 //    public String changeEmployInfo(long id , long companyId , long professionTypeId ,String title,
@@ -288,10 +288,10 @@ public class HomeControllerNew5 {
 //            map.put("errorCode","error");
 //        return JSON.toJSONString(map);
 //    }
-    //创建公司招聘信息，包括下列参数：
-    //professionTypeId title introduction professionType(这个可以无视)
-    // requirement salary location isPractice duration chanceToFormal
-    //companyId即为登录公司的id
+//    创建公司招聘信息，包括下列参数：
+//    professionTypeId title introduction professionType(这个可以无视)
+//     requirement salary location isPractice duration chanceToFormal
+//    companyId即为登录公司的id
 //    @RequestMapping(value = "/company/employ/create-info",method = RequestMethod.POST)
 //    @ResponseBody
 //    public String createEmployInfo(  long professionTypeId ,String title,
@@ -318,28 +318,4 @@ public class HomeControllerNew5 {
 //            map.put("errorCode","error");
 //        return JSON.toJSONString(map);
 //    }
-    //修改公司头像(这段代码的作用是接收文件并存储在指定的位置，fileName是文件名，可以用.截取后缀随机生成文件名)
-    @RequestMapping(value = "/company/change/myAvatar",method = RequestMethod.POST)
-    public String changeAvatar(@RequestParam MultipartFile avatar, HttpServletRequest request){
-        String basePath  = "D:\\SoftwareXieTong\\src\\main\\resources\\";
-        String fileName = request.getParameter("fileName");//avatar本身获取的name没有后缀，我又传了一次
-        try {
-            avatar.transferTo(new File(basePath + fileName));
-        } catch (Exception e) {
-            // TODO
-        }
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
-        return JSON.toJSONString(map);
-    }
-    //获取登录公司自己的头像
-    @ResponseBody
-    @RequestMapping(value = "/company/get/myAvatar",produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getCoursePic(HttpServletResponse response) throws IOException {
-        File file = new File("D:\\SoftwareXieTong\\src\\main\\resources\\static\\images\\course2.jpg");
-        FileInputStream inputStream = new FileInputStream(file);
-        byte[] bytes = new byte[(int)file.length()];
-        inputStream.read(bytes, 0, inputStream.available());
-        return bytes;
-    }
 }

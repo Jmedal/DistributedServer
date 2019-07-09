@@ -52,6 +52,35 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
     }
 
     /**
+     * 获取简历头像相对路径
+     * @param companyCvId
+     * @return
+     */
+    @Override
+    public String getCompanyCvAvatarPath(Long companyCvId) {
+        CompanyCv companyCv = super.selectById(companyCvId);
+        if(companyCv != null)
+            return companyCv.getHeadPath();
+        return null;
+    }
+
+    /**
+     * 更新简历头像相对路径
+     * @param companyCvId
+     * @param headPath
+     * @return
+     */
+    @Override
+    public boolean setCompanyCvAvatarPath(Long companyCvId, String headPath) {
+        CompanyCv companyCv = super.selectById(companyCvId);
+        if(companyCv != null){
+            companyCv.setHeadPath(headPath);
+            return super.updateById(companyCv);
+        }
+        return false;
+    }
+
+    /**
      * 获取投递简历列表
      * @param pager
      * @param userId

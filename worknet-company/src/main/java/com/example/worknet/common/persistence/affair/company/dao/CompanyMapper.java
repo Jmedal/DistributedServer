@@ -23,7 +23,9 @@ import java.util.List;
  */
 @Component
 public interface CompanyMapper extends BaseMapper<Company> {
+
     @Select("select\n" +
+            "id,\n" +
             "name,\n" +
             "introduction,\n" +
             "address,\n" +
@@ -35,6 +37,7 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "WHERE \n" +
             "sys_company.id=#{companyId}")
     @Results(id = "companyInfoResultMap",value = {
+            @Result(property = "companyId",column = "id"),
             @Result(property = "name",column = "name"),
             @Result(property = "introduction",column = "introduction"),
             @Result(property = "address",column = "address"),
@@ -43,10 +46,6 @@ public interface CompanyMapper extends BaseMapper<Company> {
             @Result(property = "field",column = "field"),
     })
     HashMap<String,Object> getCompanyInfo( @Param("companyId") Long companyId);
-
-
-
-
 
     @Select("SELECT\n" +
             "\tsys_company_cv.id AS resumeId,\n" +
@@ -63,7 +62,7 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_company_cv ON sys_company_profession.id = sys_company_cv.company_profession_id \n" +
             "WHERE\n" +
             "\tsys_company.id = #{companyId}\n" +
-            "\tAND ( sys_company_cv.user_id  REGEXP #{searchText} OR sys_company_cv.NAME REGEXP #{searchText}")
+            "\tAND ( sys_company_cv.user_id  REGEXP #{keyword} OR sys_company_cv.NAME REGEXP #{keyword}")
     @Results(id = "ResumeListResultMap",value = {
             @Result(property = "resumeId", column = "resumeId"),
             @Result(property = "companyId", column = "companyId"),
@@ -72,12 +71,8 @@ public interface CompanyMapper extends BaseMapper<Company> {
             @Result(property = "realname", column = "realname"),
             @Result(property = "employTitle", column = "employTitle"),
             @Result(property = "status", column = "status"),
-    }
-    )
-
-    public List<HashMap<String,Object>> getResumeList(Pagination pagination,
-                                                    @Param("companyId") String companyId,
-                                                    @Param("searchText") String searchText);
+    })
+    List<HashMap<String,Object>> getResumePage(Pagination pagination, @Param("companyId") String companyId, @Param("keyword") String keyword);
 
     @Select("SELECT\n" +
             "\tsys_company_profession.id AS companyProfessionId,\n" +
@@ -91,10 +86,8 @@ public interface CompanyMapper extends BaseMapper<Company> {
     @Results(id = "ProfessionListResultMap",value = {
             @Result(property = "companyProfessionId", column = "companyProfessionId"),
             @Result(property = "title", column = "employTitle"),
-    }
-    )
-
-    public List<HashMap<String,Object>> getProfessionList(@Param("userId") Long userId);
+    })
+    List<HashMap<String,Object>> getProfessionList(@Param("userId") Long userId);
 
 
     @Select("SELECT\n" +
@@ -118,9 +111,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_profession_type ON sys_profession_type.id = sys_company_profession.profession_type_id " +
             "WHERE\n" +
             "\tsys_user.id = #{userId} \n" +
-            "\tAND ( sys_company_profession.title REGEXP #{searchText} \n" +
-            "\tOR sys_company_profession.introduction REGEXP #{searchText} \n" +
-            "\tOR sys_company_profession.requirement REGEXP #{searchText} )")
+            "\tAND ( sys_company_profession.title REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.introduction REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.requirement REGEXP #{keyword} )")
     @Results(id = "EmployListResultMap",value = {
             @Result(property = "id", column = "id"),
             @Result(property = "companyId", column = "company_id"),
@@ -135,12 +128,8 @@ public interface CompanyMapper extends BaseMapper<Company> {
             @Result(property = "isPractice", column = "is_practice"),
             @Result(property = "duration", column = "duration"),
             @Result(property = "chanceToFormal", column = "chance_to_formal"),
-    }
-    )
-
-    public List<HashMap<String,Object>> getEmployList(Pagination pagination,
-                                                      @Param("userId") String userId,
-                                                      @Param("searchText") String searchText);
+    })
+    List<HashMap<String,Object>> getEmployList(Pagination pagination, @Param("userId") String userId, @Param("keyword") String keyword);
 
 
     @Select("SELECT\n" +
@@ -158,8 +147,7 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_company ON sys_company.id = sys_company_invitation.company_id\n" +
             "\tJOIN sys_company_profession ON sys_company_profession.id = sys_company_invitation.company_profession_id \n" +
             "where sys_company_invitation.company_id = #{companyId}\n" +
-            "and (sys_learner_info.realname REGEXP #{searchText} or sys_company_profession.title REGEXP #{searchText} or company_profession_id REGEXP #{searchText})\n")
-
+            "and (sys_learner_info.realname REGEXP #{keyword} or sys_company_profession.title REGEXP #{keyword} or company_profession_id REGEXP #{keyword})\n")
     @Results(id="WelcomePageResultMap",value={
             @Result(property = "companyProfessionId", column = "company_profession_id"),
             @Result(property = "studentId", column = "user_id"),
@@ -169,10 +157,7 @@ public interface CompanyMapper extends BaseMapper<Company> {
             @Result(property = "status", column = "status"),
             @Result(property = "companyName", column = "NAME"),
     })
-    public List<HashMap<String,Object>> getWelcomePage(Pagination pagination,
-                                                      @Param("companyId") long companyId,
-                                                      @Param("searchText") String searchText);
-
+    List<HashMap<String,Object>> getWelcomePage(Pagination pagination, @Param("companyId") Long companyId, @Param("keyword") String keyword);
 
     @Select({"SELECT\n" +
             "\tsys_learner_info.id,\n" +

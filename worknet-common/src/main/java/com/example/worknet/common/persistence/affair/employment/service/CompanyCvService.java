@@ -23,7 +23,7 @@ public interface CompanyCvService extends IService<CompanyCv> {
 
     String getCompanyCvAvatarPath(Long companyCvId);
 
-    String setCompanyCvAvatarPath(Long companyCvId);
+    boolean setCompanyCvAvatarPath(Long companyCvId, String headPath);
 
     Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, Long userId, String keyword);
 }

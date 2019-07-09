@@ -81,8 +81,13 @@ public interface Const {
      */
     String COMPANY_CV_HEAD_PATH = "company_cv_avatar";
 
+    /**
+     * 自身服务器URL
+     */
     String SERVER_URL_MY = "http://localhost:8080";
 
+    /**
+     * 远端服务器URL
+     */
     String SERVER_URL_COMPANY = "http://localhost:8090";
-
 }

@@ -2,22 +2,23 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
 import com.example.worknet.common.persistence.template.modal.CompanyCv;
 import com.example.worknet.core.utils.date.DateUtil;
+import com.example.worknet.core.utils.file.HttpFileUnils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.plugins.Page;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -32,8 +33,18 @@ import java.util.HashMap;
 @ResponseBody
 public class CompanyCvController {
 
+    private final static Logger logger = LoggerFactory.getLogger(CompanyCvController.class);
+
     @Autowired
     private CompanyCvService companyCvService;
+
+    @Autowired
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public CompanyCvController(ResourceLoader resourceLoader){
+        this.resourceLoader = resourceLoader;
+    }
 
     /**
      * 用户投递简历
@@ -58,7 +69,7 @@ public class CompanyCvController {
      */
     @RequestMapping(value = "/resume/deliver", method = RequestMethod.POST)
     public String deliverResume(HttpServletRequest request,
-                                @RequestParam(value = "resumeId") Long companyProfessionId,
+                                @RequestParam(value = "employId") Long companyProfessionId,
                                 @RequestParam(value = "name", required = false) String name,
                                 @RequestParam(value = "sex", required = false) Integer sex,
                                 @RequestParam(value = "birth", required = false) String birth,
@@ -73,7 +84,8 @@ public class CompanyCvController {
                                 @RequestParam(value = "introduction", required = false) String introduction,
                                 @RequestParam(value = "diploma", required = false) String diploma,
                                 @RequestParam(value = "currentLocation", required = false) String currentLocation,
-                                @RequestParam(value = "inJobTime", required = false) String inJobTime){
+                                @RequestParam(value = "inJobTime", required = false) String inJobTime,
+                                @RequestParam(value = "headPath", required = false) String headPath){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long) request.getSession(true).getAttribute("userId");
@@ -95,6 +107,7 @@ public class CompanyCvController {
             companyCv.setDiploma(diploma);
             companyCv.setCurrentLocation(currentLocation);
             companyCv.setInJobTime(inJobTime);
+            companyCv.setHeadPath(headPath);
             companyCv.setStatus(0);
             Long companyCvId = companyCvService.deliverCompanyCv(companyCv);
             if(companyCvId != null){
@@ -107,22 +120,45 @@ public class CompanyCvController {
         return JSON.toJSONString(map);
     }
 
-    //根据简历的id获取学习者简历的头像（注意和上面的不同）
-    @RequestMapping(value = "/get/resume/avatar/{resumeId}",produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getAvatar(@PathVariable Integer resumeId,
-                            HttpServletResponse response) throws IOException {
-        File file = new File("D:\\SoftwareXieTong\\src\\main\\resources\\static\\images\\profile1.png");
-        FileInputStream inputStream = new FileInputStream(file);
-        byte[] bytes = new byte[(int)file.length()];
-        inputStream.read(bytes, 0, inputStream.available());
-        return bytes;
+    /**
+     * 加载学习者简历的头像
+     * @param companyCvId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/get/resume/avatar/{companyCvId}", method = RequestMethod.POST)
+    public ResponseEntity getAvatar(@PathVariable(value = "companyCvId") Long companyCvId,
+                                    HttpServletRequest request) {
+        try {
+            String headPath = companyCvService.getCompanyCvAvatarPath(companyCvId);
+            logger.info(headPath);
+            String strDirPath = request.getSession().getServletContext().getRealPath("/");
+            logger.info(strDirPath);
+            return ResponseEntity.ok(HttpFileUnils.responseFile(resourceLoader, headPath, strDirPath));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    //上传对应简历id的头像
-    @RequestMapping(value = "/resume/deliver/avatar/{resumeId}",method = RequestMethod.POST)
-    public String deliverAvatar(@PathVariable int resumeId){
+    /**
+     * 上传或者修改简历头像
+     * @param companyCvId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/resume/deliver/avatar/{companyCvId}", method = RequestMethod.POST)
+    public String deliverAvatar(@PathVariable(value = "companyCvId") Long companyCvId,
+                                MultipartHttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        map.put("errorCode","00");
+        if(request.getSession(true).getAttribute("userId") != null) {
+            String savePath = Const.FILE_SEPARATOR + Const.COMPANY_CV_HEAD_PATH + Const.FILE_SEPARATOR + Calendar.getInstance().get(Calendar.YEAR);
+            String headPath = HttpFileUnils.requestFile(request, savePath, companyCvService.selectById(companyCvId).getHeadPath(), null);
+            if(headPath != null && companyCvService.setCompanyCvAvatarPath(companyCvId, headPath)){
+                map.put("errorCode", "00");
+            }else
+                map.put("errorCode", "error");
+        }else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 
@@ -132,14 +168,14 @@ public class CompanyCvController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/resume/get/{resumeId}", method = RequestMethod.GET)
-    public String getResume(@PathVariable(value = "resumeId") Long companyCvId, HttpServletRequest request){
+    @RequestMapping(value = "/resume/get/{companyCvId}", method = RequestMethod.GET)
+    public String getResume(@PathVariable(value = "companyCvId") Long companyCvId, HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long) request.getSession(true).getAttribute("userId");
             HashMap<String,Object> companyCv = companyCvService.getCompanyCvInfo(companyCvId, userId);
             if(companyCv != null){
-                map.put("returnObject",companyCv);
+                map.put("returnObject", companyCv);
                 map.put("errorCode", "00");
             }else
                 map.put("errorCode", "error");

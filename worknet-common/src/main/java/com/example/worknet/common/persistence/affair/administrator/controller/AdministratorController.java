@@ -6,14 +6,12 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
-import com.example.worknet.common.persistence.template.modal.Profession;
 import com.example.worknet.common.persistence.template.modal.ProfessionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.example.worknet.common.constant.UserConst.COMPANY;

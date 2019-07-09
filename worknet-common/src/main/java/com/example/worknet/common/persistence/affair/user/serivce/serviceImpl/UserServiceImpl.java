@@ -278,8 +278,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String file_name = FileToolsUtil.fileUpload(request.getFile("avatar"),FileToolsUtil.createDiretory(file_full_path));
         //更新数据库路径信息
         user.setHeadPath(file_path + Const.FILE_SEPARATOR + file_name);
-        super.updateById(user);
-        return true;
+        return super.updateById(user);
     }
 
     /**

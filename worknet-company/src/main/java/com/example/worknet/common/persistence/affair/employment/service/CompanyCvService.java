@@ -21,5 +21,9 @@ public interface CompanyCvService extends IService<CompanyCv> {
 
     HashMap<String, Object> getCompanyCvInfo(Long companyCvId, Long userId);
 
+    String getCompanyCvAvatarPath(Long companyCvId);
+
+    boolean setCompanyCvAvatarPath(Long companyCvId, String headPath);
+
     Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, Long userId, String keyword);
 }

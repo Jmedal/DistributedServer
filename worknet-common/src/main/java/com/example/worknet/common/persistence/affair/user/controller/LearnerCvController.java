@@ -31,6 +31,8 @@ import java.util.HashMap;
 @ResponseBody
 public class LearnerCvController {
 
+    private final static Logger logger = LoggerFactory.getLogger(LearnerCvController.class);
+
     @Autowired
     private UserService userService;
 
@@ -72,6 +74,7 @@ public class LearnerCvController {
     public ResponseEntity getModeAvatar(@PathVariable(value = "resumeId") Long resumeId,
                                                 HttpServletRequest request){
         String strDirPath = request.getSession().getServletContext().getRealPath("/");
+        logger.info(strDirPath);
         try {
             return ResponseEntity.ok(learnerCvService.getLearnerCvAvatar(resumeId,strDirPath));
         } catch (Exception e) {

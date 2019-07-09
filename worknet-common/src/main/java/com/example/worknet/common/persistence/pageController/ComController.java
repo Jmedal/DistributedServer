@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ComController {
 
-    @RequestMapping(value = "/company/login")
+    @RequestMapping(value = {"/company/login", "/company"})
     public String login(){
         return "company/login.html";
     }

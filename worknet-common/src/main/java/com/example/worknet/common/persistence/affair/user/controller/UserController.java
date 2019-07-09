@@ -259,13 +259,13 @@ public class UserController {
     }
 
     /**
-     * 修改头像
+     * 上床或修改头像
      * @param request
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/personal/change/myAvatar",method = RequestMethod.POST)
-    public String upLoadPicture(MultipartHttpServletRequest request)throws Exception{
+    @RequestMapping(value = "/personal/change/myAvatar", method = RequestMethod.POST)
+    public String upLoadPicture(MultipartHttpServletRequest request) {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null){
             Long userId = (long)request.getSession(true).getAttribute("userId");
@@ -281,7 +281,7 @@ public class UserController {
     }
 
     /**
-     * 获取头像
+     * 加载用户头像
      * @param userId
      * @param request
      * @return
@@ -291,12 +291,6 @@ public class UserController {
                                           HttpServletRequest request){
         String strDirPath = request.getSession().getServletContext().getRealPath("/");
         logger.info(strDirPath);
-        String pp = request.getRequestURI();
-        logger.info(pp);
-        String path=request.getServletContext().getContextPath();
-        logger.info(path);
-        String realPath=request.getServletContext().getRealPath("/static");
-        logger.info(realPath);
         try {
             return ResponseEntity.ok(userService.getAvatar(userId,strDirPath));
         } catch (Exception e) {
@@ -312,7 +306,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/personal/change/password", method = RequestMethod.POST)
+    @RequestMapping(value ={"/personal/change/password", "/company/change/password"}, method = RequestMethod.POST)
     public String changePass(@RequestParam(value = "old_pass") String oldPassword,
                              @RequestParam(value = "new_pass") String newPassword,
                              @RequestParam(value = "confirm_pass") String confirmPassword,
