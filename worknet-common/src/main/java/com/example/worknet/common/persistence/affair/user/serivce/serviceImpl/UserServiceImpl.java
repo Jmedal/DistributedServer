@@ -193,9 +193,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean updateCompanyInfo(Company company) {
-        if(company.getUserId()==null)
-            return false;
-        return companyService.updateById(company);
+        if(company.getId() != null)
+            return companyService.updateById(company);
+        if(company.getUserId() != null)
+            return companyService.update(company, new EntityWrapper<Company>().eq("user_id",company.getUserId()));
+        return false;
     }
 
     /**
@@ -205,9 +207,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean updateTeacherInfo(TeacherInfo teacherInfo) {
-        if(teacherInfo.getUserId()==null)
-            return false;
-        return teacherInfoService.updateById(teacherInfo);
+        if(teacherInfo.getId() != null)
+            return teacherInfoService.updateById(teacherInfo);
+        if(teacherInfo.getUserId() != null)
+            return teacherInfoService.update(teacherInfo, new EntityWrapper<TeacherInfo>().eq("user_id",teacherInfo.getUserId()));
+        return false;
     }
 
     /**
@@ -217,10 +221,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public boolean updateLearnerInfo(LearnerInfo learnerInfo) {
-        if(learnerInfo.getUserId()==null)
-            return false;
-        learnerInfo.setId(learnerInfoService.selectOne(new EntityWrapper<LearnerInfo>().eq("user_id",learnerInfo.getUserId())).getId());
-        return learnerInfoService.updateById(learnerInfo);
+        if(learnerInfo.getId() != null)
+            return learnerInfoService.updateById(learnerInfo);
+        if(learnerInfo.getUserId() != null)
+            return learnerInfoService.update(learnerInfo, new EntityWrapper<LearnerInfo>().eq("user_id",learnerInfo.getUserId()));
+        return false;
     }
 
     /**

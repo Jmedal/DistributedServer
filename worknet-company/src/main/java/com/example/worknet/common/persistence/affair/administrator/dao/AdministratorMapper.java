@@ -32,9 +32,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tsys_user \n" +
             "WHERE\n" +
             "\tsys_user.role = #{role}\n" +
-            "\tAND ( sys_user.id REGEXP #{keyword} OR sys_user.account LIKE CONCAT( '%', #{keyword}, '%' ) ) \n" +
-            "ORDER BY\n" +
-            "\tsys_user.id DESC"})
+            "\tAND ( sys_user.id REGEXP #{keyword} OR sys_user.account LIKE CONCAT( '%', #{keyword}, '%' ) ) \n"})
     @Results(id = "defaultCoursesInfoResultMap",value = {
             @Result(property = "id", column = "id"),
             @Result(property = "account", column = "account"),
@@ -63,9 +61,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tsys_learner_info.id REGEXP #{keyword}\n" +
             "\tOR sys_learner_info.nickname REGEXP #{keyword}\n" +
             "\tOR sys_learner_info.realname REGEXP #{keyword}\n" +
-            "\tOR sys_learner_info.phone REGEXP #{keyword}\n" +
-            "ORDER BY\n" +
-            "\tsys_learner_info.id DESC"})
+            "\tOR sys_learner_info.phone REGEXP #{keyword}\n"})
     @Results(id = "learnerInfoResultMap", value = {
             @Result(property = "id", column = "id"),
             @Result(property = "userId", column = "user_id"),
@@ -100,9 +96,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             "\tsys_company \n" +
             "WHERE\n" +
             "\tsys_company.id REGEXP #{keyword}\n" +
-            "\tOR sys_company.`name` REGEXP #{keyword}\n" +
-            "ORDER BY\n" +
-            "\tsys_company.id DESC"})
+            "\tOR sys_company.`name` REGEXP #{keyword}\n"})
     @Results(id = "companyInfoResultMap", value = {
             @Result(property = "id", column = "id"),
             @Result(property = "userId", column = "user_id"),
@@ -182,4 +176,68 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
             @Result(property = "status", column = "status"),
     })
     List<HashMap<String,Object>> getCompanyInvitationPage(Pagination pagination, @Param("keyword") String keyword);
+
+    @Select({"SELECT\n" +
+            "\tsys_company_profession.id,\n" +
+            "\tsys_company_profession.company_id,\n" +
+            "\tsys_company.`name`,\n" +
+            "\tsys_company_profession.profession_type_id,\n" +
+            "\tsys_company_profession.state,\n" +
+            "\tsys_profession_type.type_name,\n" +
+            "\tsys_company_profession.location,\n" +
+            "\tsys_company_profession.title,\n" +
+            "\tsys_company_profession.salary,\n" +
+            "\tsys_company_profession.introduction,\n" +
+            "\tsys_company_profession.requirement,\n" +
+            "\tsys_company_profession.is_practice,\n" +
+            "\tsys_company_profession.duration,\n" +
+            "\tsys_company_profession.chance_to_formal\n" +
+            "FROM\n" +
+            "\tsys_company_profession\n" +
+            "\tJOIN sys_company ON sys_company_profession.company_id = sys_company.id\n" +
+            "\tJOIN sys_profession_type ON sys_company_profession.profession_type_id = sys_profession_type.id\n" +
+            "WHERE\n" +
+            "\tsys_company_profession.id REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.company_id REGEXP #{keyword}\n" +
+            "\tOR sys_company_profession.profession_type_id REGEXP #{keyword} \t\n" +
+            "\tOR sys_company.`name` REGEXP #{keyword}\n" +
+            "\tOR sys_company_profession.location REGEXP #{keyword}\n" +
+            "\tOR sys_profession_type.type_name REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.title REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.introduction REGEXP #{keyword} \n" +
+            "\tOR sys_company_profession.requirement REGEXP #{keyword} \n" +
+            "ORDER BY\n" +
+            "\tsys_company_profession.id DESC"})
+    @Results(id = "companyProfessionResultMap", value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "companyName", column = "name"),
+            @Result(property = "professionTypeId", column = "profession_type_id"),
+            @Result(property = "state", column = "state"),
+            @Result(property = "professionType", column = "type_name"),
+            @Result(property = "location", column = "location"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "salary", column = "salary"),
+            @Result(property = "introduction", column = "introduction"),
+            @Result(property = "requirement", column = "requirement"),
+            @Result(property = "isPractice", column = "is_practice"),
+            @Result(property = "duration", column = "duration"),
+            @Result(property = "chanceToFormal", column = "chance_to_formal"),
+    })
+    List<HashMap<String,Object>> getCompanyProfessionPage(Pagination pagination, @Param("keyword") String keyword);
+
+    @Select({"SELECT\n" +
+            "\tsys_profession_type.id,\n" +
+            "\tsys_profession_type.type_name\n" +
+            "FROM\n" +
+            "\tsys_profession_type\n" +
+            "WHERE\n" +
+            "\tsys_profession_type.id REGEXP #{keyword} \n" +
+            "\tOR sys_profession_type.type_name REGEXP #{keyword}"})
+    @Results(id = "professionTypeResultMap", value = {
+            @Result(property = "professionTypeId", column = "id"),
+            @Result(property = "professionType", column = "type_name"),
+    })
+    List<HashMap<String,Object>> getProfessionTypePage(Pagination pagination, @Param("keyword") String keyword);
+
 }

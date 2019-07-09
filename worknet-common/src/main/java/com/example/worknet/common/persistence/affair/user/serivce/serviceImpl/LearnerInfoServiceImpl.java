@@ -49,7 +49,7 @@ public class LearnerInfoServiceImpl extends ServiceImpl<LearnerInfoMapper, Learn
         if(learnerCv != null && learnerCv.getLearnerId().equals(userId)){
             LearnerInfo learnerInfo = getLearnerInfoByUserId(userId);
             learnerInfo.setLearnerCvId(cvId);
-            return super.updateAllColumnById(learnerInfo);
+            return super.updateById(learnerInfo);
         }
         return false;
     }

@@ -49,6 +49,8 @@
         onLoadSuccess:function(data){
             $('span.edit-info').on('click',function (object) {
                 stuInfo = JSON.parse($(this).attr('data-json'));
+                $('input').val('');
+                $('textarea').val('');
                 $('#myModal').modal('show');
             });
             $('.search-input').attr('placeholder',"搜索岗位/姓名/id");

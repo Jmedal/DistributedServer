@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
+import com.example.worknet.common.persistence.template.modal.Profession;
+import com.example.worknet.common.persistence.template.modal.ProfessionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.example.worknet.common.constant.UserConst.COMPANY;
@@ -32,7 +35,7 @@ public class AdministratorController {
     private AdministratorService administratorService;
 
     /**
-     * 加载学生帐号列表
+     * 管理员加载学生帐号列表
      * @param page
      * @param pageSize
      * @param keyword   关键字用于搜索 用户名|学生id
@@ -57,7 +60,7 @@ public class AdministratorController {
     }
 
     /**
-     * 加载公司帐号列表
+     * 管理员加载公司帐号列表
      * @param page
      * @param pageSize
      * @param keyword 关键字用于搜索 用户名|公司id
@@ -82,7 +85,7 @@ public class AdministratorController {
     }
 
     /**
-     * 创建公司帐号
+     * 管理员创建公司帐号
      * @param username
      * @param password
      * @param request
@@ -108,7 +111,7 @@ public class AdministratorController {
     }
 
     /**
-     * 解封用户帐号
+     * 管理员解封用户帐号
      * @param userId
      * @param request
      * @return
@@ -129,7 +132,7 @@ public class AdministratorController {
     }
 
     /**
-     * 封帐号
+     * 管理员封用户帐号
      * @param userId
      * @param request
      * @return
@@ -150,7 +153,7 @@ public class AdministratorController {
     }
 
     /**
-     * 修改帐号密码
+     * 管理员修改帐号密码
      * @param request
      * @return
      */
@@ -171,7 +174,7 @@ public class AdministratorController {
     }
 
     /**
-     * 加载学习者账户信息列表
+     * 管理员加载学习者账户信息列表
      * @param page
      * @param pageSize
      * @param keyword   关键字用于搜索 姓名|id|昵称|手机号
@@ -195,11 +198,8 @@ public class AdministratorController {
         return JSON.toJSONString(map);
     }
 
-
-    //registerTime website communication address introduction name field id userId
-    //其中id是信息的id,userId是公司账号的id
     /**
-     * 加载公司账户信息列表
+     * 管理员加载公司账户信息列表
      * @param page
      * @param pageSize
      * @param keyword   关键字用于搜索 公司名称|公司id
@@ -223,10 +223,18 @@ public class AdministratorController {
         return JSON.toJSONString(map);
     }
 
-
-    //修改以下信息
-    // website communication address introduction name field
-    //其中id是信息的id,userId是公司账号的id
+    /**
+     * 管理员修改公司信息
+     * @param id
+     * @param field
+     * @param name
+     * @param introduction
+     * @param address
+     * @param communication
+     * @param website
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/com/change-info",method = RequestMethod.POST)
     public String changeComInfo(@RequestParam(value = "id") Long id,
                                 @RequestParam(value = "field", required = false) String field,
@@ -256,9 +264,23 @@ public class AdministratorController {
         return JSON.toJSONString(map);
     }
 
-    //修改学生信息
-    // nickname realname sex age signature vacation github email phone hobby professional
-    //参数和数据库中一一对应
+    /**
+     * 管理员修改学生信息
+     * @param id
+     * @param nickname
+     * @param realname
+     * @param sex
+     * @param age
+     * @param signature
+     * @param vacation
+     * @param github
+     * @param email
+     * @param phone
+     * @param hobby
+     * @param professional
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/admin/change-info", method = RequestMethod.POST)
     public String changeStuInfo(@RequestParam(value = "id") Long id,
                                 @RequestParam(value = "nickname", required = false) String nickname,
@@ -298,23 +320,24 @@ public class AdministratorController {
         return JSON.toJSONString(map);
     }
 
-
-    //resumeId companyProfessionId realname userId companyId companyName status
     /**
-     * 加载学生投递简历信息
+     * 管理员加载学生投递简历信息
+     * @param page
+     * @param pageSize
+     * @param keyword   关键字用于搜索 学生id|学生真实姓名|公司id|公司名称|招聘信息title
      * @param request
      * @return
      */
     @RequestMapping(value = "/admin/get/stu-employ", method = RequestMethod.GET)
     public String getStuEmploy(@RequestParam(value = "pageNumber") Integer page,
                                @RequestParam(value = "pageSize") Integer pageSize,
-                               @RequestParam(value = "searchText", required = false) String keyword, //关键字：学生id，学生真实姓名，公司id，公司名称，招聘信息title
+                               @RequestParam(value = "searchText", required = false) String keyword,
                                HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("user") != null
                 && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getCompanyCvPage(new Page<>(page, pageSize), keyword);
-            map.put("total",pager.getTotal());//数据总条数
+            map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
             map.put("errorCode", "00");
         } else
@@ -324,10 +347,10 @@ public class AdministratorController {
 
     //resumeId companyProfessionId realname userId companyId companyName status
     /**
-     * 加载公司招聘邀请列表
+     * 管理员加载公司招聘邀请列表
      * @param page
      * @param pageSize
-     * @param keyword
+     * @param keyword    关键字用于搜索 学生id|学生真实姓名|公司id|公司名称|招聘信息title
      * @param request
      * @return
      */
@@ -340,9 +363,133 @@ public class AdministratorController {
         if(request.getSession(true).getAttribute("user") != null
                 && (request.getSession(true).getAttribute("user")).equals("administrator")) {
             Page<HashMap<String, Object>> pager = administratorService.getCompanyInvitationPage(new Page<>(page, pageSize), keyword);
-            map.put("total",pager.getTotal());//数据总条数
+            map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
             map.put("errorCode", "00");
+        } else
+            map.put("errorCode", "error");
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 管理员加载公司招聘信息列表
+     * @param page
+     * @param pageSize
+     * @param keyword   关键字用于搜索 招聘id|招聘标题|公司id|公司名称|职业类型id|职业类型名称|公司所在地|内容|要求
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/get/com-employ", method = RequestMethod.GET)
+    public String adminGetEmployInfo(@RequestParam(value = "pageNumber") Integer page,
+                                     @RequestParam(value = "pageSize") Integer pageSize,
+                                     @RequestParam(value = "searchText", required = false) String keyword,
+                                     HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
+            Page<HashMap<String, Object>> pager = administratorService.getCompanyProfessionPage(new Page<>(page, pageSize), keyword);
+            map.put("total",pager.getTotal());
+            map.put("rows",pager.getRecords());
+            map.put("errorCode", "00");
+        } else
+            map.put("errorCode", "error");
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 管理员获取职业列表
+     * @param page
+     * @param pageSize
+     * @param keyword   关键字用于搜索 职业类型id|职业类型名称
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/get/profession", method = RequestMethod.GET)
+    public String adminGetProfession(@RequestParam(value = "pageNumber") Integer page,
+                                     @RequestParam(value = "pageSize") Integer pageSize,
+                                     @RequestParam(value = "searchText", required = false) String keyword,
+                                     HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
+            Page<HashMap<String, Object>> pager = administratorService.getProfessionTypePage(new Page<>(page, pageSize), keyword);
+            map.put("total",pager.getTotal());
+            map.put("rows",pager.getRecords());
+            map.put("errorCode", "00");
+        } else
+            map.put("errorCode", "error");
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 管理员修改职业
+     * @param professionTypeId
+     * @param professionTypeName
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/change-profession",method = RequestMethod.POST)
+    public String adminChangeProfession(@RequestParam(value = "professionTypeId") Long professionTypeId,
+                                        @RequestParam(value = "professionType") String professionTypeName,
+                                        HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
+            ProfessionType professionType = new ProfessionType();
+            professionType.setId(professionTypeId);
+            professionType.setTypeName(professionTypeName);
+            if(administratorService.changeProfessionType(professionType))
+                map.put("errorCode", "00");
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 管理员创建职业
+     * @param professionTypeName
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/create-profession",method = RequestMethod.POST)
+    public String adminCreateProfession(@RequestParam(value = "professionType") String professionTypeName,
+                                        HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
+            ProfessionType professionType = new ProfessionType();
+            professionType.setTypeName(professionTypeName);
+            if(administratorService.changeProfessionType(professionType))
+                map.put("errorCode", "00");
+            else
+                map.put("errorCode", "error");
+        } else
+            map.put("errorCode", "error");
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 管理员删除职业
+     * @param professionTypeId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/admin/delete-profession",method = RequestMethod.POST)
+    public String adminDeleteProfession(@RequestParam(value = "professionTypeId") Long professionTypeId,
+                                        HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("user") != null
+                && (request.getSession(true).getAttribute("user")).equals("administrator")) {
+            try {
+                if(administratorService.deleteProfessionType(professionTypeId))
+                    map.put("errorCode", "00");
+                else
+                    map.put("errorCode", "error");
+            }catch (Exception e){
+                map.put("errorCode", "error");
+            }
         } else
             map.put("errorCode", "error");
         return JSON.toJSONString(map);

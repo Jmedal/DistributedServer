@@ -6,6 +6,7 @@ import com.example.worknet.common.constant.UserConst;
 import com.example.worknet.common.persistence.template.modal.LearnerInfo;
 import com.example.worknet.common.persistence.template.modal.Administrator;
 import com.example.worknet.common.persistence.template.modal.Company;
+import com.example.worknet.common.persistence.template.modal.ProfessionType;
 
 import java.util.HashMap;
 
@@ -27,15 +28,23 @@ public interface AdministratorService extends IService<Administrator> {
 
     boolean changeUserActivity(Long userId, Integer activity);
 
-    Page<HashMap<String,Object>> getUserPage(Page<HashMap<String, Object>> page, UserConst role, String keyword);
+    Page<HashMap<String,Object>> getUserPage(Page<HashMap<String, Object>> pager, UserConst role, String keyword);
 
-    Page<HashMap<String,Object>> getUserInfoPage(Page<HashMap<String, Object>> page, UserConst role,String keyword);
+    Page<HashMap<String,Object>> getUserInfoPage(Page<HashMap<String, Object>> pager, UserConst role,String keyword);
 
     boolean changeLearnerInfo(LearnerInfo learnerInfo);
 
     boolean changeCompanyInfo(Company company);
 
-    Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> page, String keyword);
+    Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, String keyword);
 
-    Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> page, String keyword);
+    Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> pager, String keyword);
+
+    Page<HashMap<String,Object>> getCompanyProfessionPage(Page<HashMap<String, Object>> pager, String keyword);
+
+    Page<HashMap<String,Object>> getProfessionTypePage(Page<HashMap<String, Object>> pager, String keyword);
+
+    boolean changeProfessionType(ProfessionType professionType);
+
+    boolean deleteProfessionType(Long professionTypeId);
 }

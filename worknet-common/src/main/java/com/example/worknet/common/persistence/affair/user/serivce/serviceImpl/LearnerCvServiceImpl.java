@@ -155,7 +155,7 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
         LearnerInfo learnerInfo = learnerInfoService.getLearnerInfoByUserId(userId);
         if(learnerInfo.getLearnerCvId().equals(cvId)){
             learnerInfo.setLearnerCvId(null);
-            learnerInfoService.updateAllColumnById(learnerInfo);
+            learnerInfoService.updateById(learnerInfo);
         }
         LearnerCv learnerCv = super.selectById(cvId);
         if (learnerCv.getLearnerId().equals(userId)){
@@ -163,7 +163,7 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
             List<HashMap<String, Object>> list = getLearnerCvList(userId);
             if(list.size() > 0){
                 learnerInfo.setLearnerCvId(Long.valueOf(list.get(0).get("resumeId").toString()));
-                return learnerInfoService.updateAllColumnById(learnerInfo);
+                return learnerInfoService.updateById(learnerInfo);
             }
             return true;
         }
@@ -191,7 +191,7 @@ public class LearnerCvServiceImpl extends ServiceImpl<LearnerCvMapper, LearnerCv
         String file_name = FileToolsUtil.fileUpload(request.getFile("avatar"),FileToolsUtil.createDiretory(file_full_path));
         //更新数据库路径信息
         learnerCv.setHeadPath(file_path + Const.FILE_SEPARATOR + file_name);
-        super.updateAllColumnById(learnerCv);
+        super.updateById(learnerCv);
         return true;
     }
 

@@ -52,7 +52,7 @@ public class HessianClientBeanConfig {
     @Bean
     public CompanyProfessionService companyProfessionService() {
         try {
-            return HessianProxyFactoryUtil.getHessianClientBean(CompanyProfessionService.class, ServiceURL.companyProfessionService);
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyProfessionService.class, ServiceURL.CompanyProfessionService);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class HessianClientBeanConfig {
     @Bean
     public CompanyInvitationService companyInvitationService() {
         try {
-            return HessianProxyFactoryUtil.getHessianClientBean(CompanyInvitationService.class, ServiceURL.companyInvitationService);
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyInvitationService.class, ServiceURL.CompanyInvitationService);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class HessianClientBeanConfig {
     @Bean
     public CompanyCvService companyCompanyCvService() {
         try {
-            return HessianProxyFactoryUtil.getHessianClientBean(CompanyCvService.class, ServiceURL.companyCvService);
+            return HessianProxyFactoryUtil.getHessianClientBean(CompanyCvService.class, ServiceURL.CompanyCvService);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class HessianClientBeanConfig {
     @Bean
     public AdministratorService AdministratorService() {
         try {
-            return HessianProxyFactoryUtil.getHessianClientBean(AdministratorService.class, ServiceURL.administratorService);
+            return HessianProxyFactoryUtil.getHessianClientBean(AdministratorService.class, ServiceURL.AdministratorService);
         }catch (Exception e) {
             e.printStackTrace();
         }

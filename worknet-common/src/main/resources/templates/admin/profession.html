@@ -101,6 +101,8 @@
 <script>
     var userId;
     $('#register-company').on('click',function (object) {
+        $('input').val('');
+        $('textarea').val('');
         $('#register').modal('show');
     });
     $('#create-com').on('click',function (object) {
@@ -158,6 +160,8 @@
         height:$(window).height()*0.85,
         onLoadSuccess:function(data){
             $('span.password').on('click',function (object) {
+                $('input').val('');
+                $('textarea').val('');
                 userId = parseInt($(this).attr('data-id'));
                 $('#password').val($(this).html());
                 $('#myModal').modal('show');

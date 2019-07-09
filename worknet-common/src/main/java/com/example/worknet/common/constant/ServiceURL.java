@@ -12,11 +12,11 @@ public interface ServiceURL {
 
     String CompanyService = Const.SERVER_URL_COMPANY + "/companyService";
 
-    String companyProfessionService = Const.SERVER_URL_COMPANY + "/companyProfessionService";
+    String CompanyProfessionService = Const.SERVER_URL_COMPANY + "/companyProfessionService";
 
-    String companyInvitationService = Const.SERVER_URL_COMPANY + "/companyInvitationService";
+    String CompanyInvitationService = Const.SERVER_URL_COMPANY + "/companyInvitationService";
 
-    String companyCvService = Const.SERVER_URL_COMPANY + "/companyCvService";
+    String CompanyCvService = Const.SERVER_URL_COMPANY + "/companyCvService";
 
-    String administratorService = Const.SERVER_URL_COMPANY + "/administratorService";
+    String AdministratorService = Const.SERVER_URL_COMPANY + "/administratorService";
 }

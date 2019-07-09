@@ -27,7 +27,7 @@ public class CompanyContestServiceImpl extends ServiceImpl<CompanyContestMapper,
 
 
     /**
-     * 获取筛选的课程列表信息
+     * 获取筛选的笔试列表信息
      * @param pager
      * @param type
      * @return

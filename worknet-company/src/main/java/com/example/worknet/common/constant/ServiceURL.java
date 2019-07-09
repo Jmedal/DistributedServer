@@ -8,4 +8,5 @@ public interface ServiceURL {
 
     String UserService = Const.SERVER_URL_COMMON + "/userService";
 
+    String ProfessionTypeService = Const.SERVER_URL_COMMON + "/professionTypeService";
 }
