@@ -42,13 +42,13 @@ public interface CompanyInvitationMapper extends BaseMapper<CompanyInvitation> {
             "ORDER BY\n" +
             "\tsys_company_invitation.invite_time DESC"})
     @Results(id = "defaultCoursesInfoResultMap",value = {
-            @Result(property = "id",column = "id"),
-            @Result(property = "companyId",column = "company_id"),
-            @Result(property = "companyName",column = "name"),
-            @Result(property = "employId",column = "company_profession_id"),
-            @Result(property = "title",column = "title"),
-            @Result(property = "status",column = "status"),
-            @Result(property = "inviteTime",column = "invite_time"),
+            @Result(property = "id", column = "id"),
+            @Result(property = "companyId", column = "company_id"),
+            @Result(property = "companyName", column = "name"),
+            @Result(property = "employId", column = "company_profession_id"),
+            @Result(property = "title", column = "title"),
+            @Result(property = "status", column = "status"),
+            @Result(property = "inviteTime", column = "invite_time", javaType = String.class),
     })
     List<HashMap<String,Object>> getCompanyInvitationPage(Pagination pagination, @Param("id") Long id, @Param("keyword") String keyword);
 

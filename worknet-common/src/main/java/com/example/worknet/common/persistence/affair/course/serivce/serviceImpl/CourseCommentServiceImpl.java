@@ -7,7 +7,7 @@ import com.example.worknet.common.persistence.template.modal.CourseComment;
 import com.example.worknet.common.persistence.affair.course.dao.CourseCommentMapper;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseCommentService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

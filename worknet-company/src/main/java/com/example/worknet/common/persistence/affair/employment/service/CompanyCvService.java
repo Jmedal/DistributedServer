@@ -17,29 +17,9 @@ import java.util.HashMap;
  */
 public interface CompanyCvService extends IService<CompanyCv> {
 
-    long deliverResume(Long companyProfessionId,
-                       Long userId,
-                       String name,
-                       Integer sex,
-                       Date birth,
-                       String nativePlace,
-                       String identity,
-                       String qualification,
-                       String specialty,
-                       String university,
-                       String tel,
-                       String experience,
-                       String mailbox,
-                       String introduction,
-                       String diploma,
-                       String currentLocation,
-                       String inJobTime);
+    Long deliverCompanyCv(CompanyCv companyCv);
 
-    HashMap<String, Object> getCvInfo(Long resumeId);
+    HashMap<String, Object> getCompanyCvInfo(Long companyCvId, Long userId);
 
-    Page<HashMap<String,Object>> getMyResumePage(Page<HashMap<String, Object>> page,
-                                                 String userId, String searchText);
-
-
-
+    Page<HashMap<String,Object>> getCompanyCvPage(Page<HashMap<String, Object>> pager, String userId, String searchText);
 }

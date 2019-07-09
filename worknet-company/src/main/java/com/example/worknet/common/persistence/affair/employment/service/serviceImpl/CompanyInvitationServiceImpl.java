@@ -7,6 +7,7 @@ import com.example.worknet.common.persistence.affair.employment.service.CompanyI
 import com.example.worknet.common.persistence.template.modal.CompanyInvitation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class CompanyInvitationServiceImpl extends ServiceImpl<CompanyInvitationM
      */
     @Override
     public Page<HashMap<String,Object>> getCompanyInvitationPage(Page<HashMap<String, Object>> pager, Long userId, String keyword){
-        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(),pager.getSize());
+        Page<HashMap<String, Object>> page = new Page<>(pager.getCurrent(), pager.getSize());
         return page.setRecords(companyInvitationMapper.getCompanyInvitationPage(page,userId,keyword));
     }
 

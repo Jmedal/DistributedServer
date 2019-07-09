@@ -3,6 +3,8 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
+import com.example.worknet.common.persistence.template.modal.CompanyCv;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.http.MediaType;
@@ -16,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -33,40 +33,77 @@ import java.util.HashMap;
 public class CompanyCvController {
 
     @Autowired
-    CompanyCvService companyCvService;
-    //限定为post方法，保证resumeId隐秘
-    @RequestMapping(value = "/resume/deliver",method = RequestMethod.POST)
-    //后端创建完简历之后需要返回给前端简历id,用于发送图片给后端
+    private CompanyCvService companyCvService;
+
+    /**
+     * 用户投递简历
+     * @param request
+     * @param name
+     * @param name
+     * @param sex
+     * @param birth
+     * @param nativePlace
+     * @param identity
+     * @param qualification
+     * @param specialty
+     * @param university
+     * @param tel
+     * @param experience
+     * @param mailbox
+     * @param introduction
+     * @param diploma
+     * @param currentLocation
+     * @param inJobTime
+     * @return
+     */
+    @RequestMapping(value = "/resume/deliver", method = RequestMethod.POST)
     public String deliverResume(HttpServletRequest request,
-                                @RequestParam("searchText") Long employId,
-                                @RequestParam("searchText") String name,
-                                @RequestParam("searchText") Integer sex,
-                                @RequestParam("searchText") Date birth,
-                                @RequestParam("searchText") String nativePlace,
-                                @RequestParam("searchText") String identity,
-                                @RequestParam("searchText") String qualification,
-                                @RequestParam("searchText") String specialty,
-                                @RequestParam("searchText") String university,
-                                @RequestParam("searchText") String tel,
-                                @RequestParam("searchText") String experience,
-                                @RequestParam("searchText") String mailbox,
-                                @RequestParam("searchText") String introduction,
-                                @RequestParam("searchText") String diploma,
-                                @RequestParam("searchText") String currentLocation,
-                                @RequestParam("searchText") String inJobTime
-                                ){
+                                @RequestParam(value = "resumeId") Long companyProfessionId,
+                                @RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "sex", required = false) Integer sex,
+                                @RequestParam(value = "birth", required = false) String birth,
+                                @RequestParam(value = "nativePlace", required = false) String nativePlace,
+                                @RequestParam(value = "identity", required = false) String identity,
+                                @RequestParam(value = "qualification", required = false) String qualification,
+                                @RequestParam(value = "speciality", required = false) String specialty,
+                                @RequestParam(value = "university", required = false) String university,
+                                @RequestParam(value = "tel", required = false) String tel,
+                                @RequestParam(value = "experience", required = false) String experience,
+                                @RequestParam(value = "mailbox", required = false) String mailbox,
+                                @RequestParam(value = "introduction", required = false) String introduction,
+                                @RequestParam(value = "diploma", required = false) String diploma,
+                                @RequestParam(value = "currentLocation", required = false) String currentLocation,
+                                @RequestParam(value = "inJobTime", required = false) String inJobTime){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long) request.getSession(true).getAttribute("userId");
-            Long id = companyCvService.deliverResume(employId, userId, name, sex, birth, nativePlace, identity, qualification, specialty,
-                    university, tel, experience, mailbox, introduction, diploma, currentLocation, inJobTime);
-            map.put("errorCode", "00");
-            map.put("returnObject", id);//需要返回创建的简历的id
-//        System.out.println(request.getParameter("introduction"));//测试下是否会分行
-        }else{
+            CompanyCv companyCv=new CompanyCv();
+            companyCv.setCompanyProfessionId(companyProfessionId);
+            companyCv.setUserId(userId);
+            companyCv.setName(name);
+            companyCv.setSex(sex);
+            companyCv.setBirth(DateUtil.getSqlDateTime(birth,DateUtil.YMD_TIME));
+            companyCv.setNativePlace(nativePlace);
+            companyCv.setIdentity(identity);
+            companyCv.setQualification(qualification);
+            companyCv.setSpeciality(specialty);
+            companyCv.setUniversity(university);
+            companyCv.setTel(tel);
+            companyCv.setExperience(experience);
+            companyCv.setMailbox(mailbox);
+            companyCv.setIntroduction(introduction);
+            companyCv.setDiploma(diploma);
+            companyCv.setCurrentLocation(currentLocation);
+            companyCv.setInJobTime(inJobTime);
+            companyCv.setStatus(0);
+            Long companyCvId = companyCvService.deliverCompanyCv(companyCv);
+            if(companyCvId != null){
+                map.put("returnObject", companyCvId);
+                map.put("errorCode", "00");
+            }else
+                map.put("errorCode", "error");
+        }else
             map.put("errorCode", "error");
-        }
-        //修改对应简历的状态，投递简历。
         return JSON.toJSONString(map);
     }
 
@@ -89,33 +126,45 @@ public class CompanyCvController {
         return JSON.toJSONString(map);
     }
 
-
-    //根据简历id获取具体的简历（不是模板！！）
-    @RequestMapping(value = "/resume/get/{resumeId}")
-    public String getResume(@PathVariable int resumeId){
-        HashMap<String, Object> map = new HashMap<>();
-        HashMap<String,Object> obj = companyCvService.getCvInfo((long)resumeId);
-        map.put("returnObject",obj);
-        map.put("errorCode","00");
+    /**
+     * 加载用户简历
+     * @param companyCvId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/resume/get/{resumeId}", method = RequestMethod.GET)
+    public String getResume(@PathVariable(value = "resumeId") Long companyCvId, HttpServletRequest request){
+        HashMap<String,Object> map = new HashMap<>();
+        if(request.getSession(true).getAttribute("userId") != null) {
+            Long userId = (long) request.getSession(true).getAttribute("userId");
+            HashMap<String,Object> learnerCv = companyCvService.getCompanyCvInfo(companyCvId, userId);
+            if(learnerCv != null){
+                map.put("returnObject",learnerCv);
+                map.put("errorCode", "00");
+            }else
+                map.put("errorCode", "error");
+        }else
+            map.put("errorCode", "error");
         return JSON.toJSONString(map);
     }
 
     /**
-     * 获取用户投递过的简历
+     * 加载用户投递的简历
+     * @param page
+     * @param pageSize
+     * @param searchText
      * @param request
-     * @param response
      * @return
      */
-    @RequestMapping(value = "/get/my-resume")
-    public String getMyResume(@RequestParam("pageSize") Integer pageSize,
-                              @RequestParam("pageNumber") Integer page,
-                              @RequestParam("searchText") String searchText,
-                              HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/get/my-resume", method = RequestMethod.GET)
+    public String getMyResume(@RequestParam(value = "pageNumber") Integer page,
+                              @RequestParam(value = "pageSize") Integer pageSize,
+                              @RequestParam(value = "searchText", required = false) String searchText,
+                              HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        System.out.println("关键字："+searchText);
         if(request.getSession(true).getAttribute("userId") != null){
             Long userId = (long) request.getSession(true).getAttribute("userId");
-            Page<HashMap<String,Object>> pager = companyCvService.getMyResumePage(new Page<>(page,pageSize),userId.toString(),searchText);
+            Page<HashMap<String,Object>> pager = companyCvService.getCompanyCvPage(new Page<>(page,pageSize), userId.toString(), searchText);
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());
             map.put("errorCode", "00");
@@ -124,6 +173,5 @@ public class CompanyCvController {
         }
         return JSON.toJSONString(map);
     }
-
 }
 

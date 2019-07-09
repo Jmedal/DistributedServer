@@ -6,7 +6,7 @@ import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvServi
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.LearnerCv;
 import com.example.worknet.common.persistence.template.modal.User;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -211,7 +209,7 @@ public class LearnerCvController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
-                if(learnerCvService.deleteLearnerCv(resumeId,userId))
+                if(learnerCvService.deleteLearnerCv(resumeId, userId))
                     map.put("errorCode", "00");
                 else
                     map.put("errorCode", "error");
@@ -235,7 +233,7 @@ public class LearnerCvController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
-                LearnerCv learnerCv = learnerCvService.getLearnerCvInfo(resumeId,userId);
+                LearnerCv learnerCv = learnerCvService.getLearnerCvInfo(resumeId, userId);
                 if(learnerCv !=null){
                     map.put("returnObject",learnerCv);
                     map.put("errorCode", "00");
@@ -337,7 +335,7 @@ public class LearnerCvController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             if(userService.selectById(userId).getRole().equals(UserConst.STUDENT.getState())) {
-                if(learnerCvService.insertOrUpdateCvAvatar(resumeId,request))
+                if(learnerCvService.insertOrUpdateCvAvatar(resumeId, request))
                     map.put("errorCode", "00");
                 else
                     map.put("errorCode", "error");

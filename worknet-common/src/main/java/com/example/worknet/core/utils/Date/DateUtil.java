@@ -1,4 +1,4 @@
-package com.example.worknet.core.utils.Date;
+package com.example.worknet.core.utils.date;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -42,6 +42,12 @@ public class DateUtil {
         return myDate;
     }
 
+    /**
+     * 将时间字符串 转换为 时间戳
+     * @param date
+     * @param type
+     * @return
+     */
     public static Timestamp getSqlDateTime(String date, String type) {
         if(date == null) return null;
         DateFormat dateFormat = new SimpleDateFormat(type);
@@ -57,7 +63,7 @@ public class DateUtil {
 
 
     /**
-     * 将时间转换为时间戳
+     * 将时间字符串 转换为 时间戳字符串
      * @param s
      * @param type
      * @return
@@ -76,7 +82,7 @@ public class DateUtil {
     }
 
     /**
-     * 将时间戳转换为时间
+     * 将时间戳 转换为 时间字符串
      * @param date
      * @param type
      * @return

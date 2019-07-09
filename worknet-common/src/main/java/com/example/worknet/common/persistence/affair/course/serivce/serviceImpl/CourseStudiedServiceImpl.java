@@ -6,7 +6,7 @@ import com.example.worknet.common.persistence.template.modal.CourseStudied;
 import com.example.worknet.common.persistence.affair.course.dao.CourseStudiedMapper;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseStudiedService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -45,7 +45,7 @@ public class LearnerInfoController {
         if(request.getSession(true).getAttribute("userId") != null) {
             Long userId = (long)request.getSession(true).getAttribute("userId");
             if(userService.selectById(userId).getRole().equals(3)) {
-                if(learnerInfoService.updateDefaultCvId(userId,resumeId))
+                if(learnerInfoService.updateDefaultCvId(userId, resumeId))
                     map.put("errorCode", "00");
                 else
                     map.put("errorCode", "error");

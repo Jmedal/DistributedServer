@@ -100,7 +100,7 @@ public class AdministratorController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("user") != null
                 && (request.getSession(true).getAttribute("user")).equals("administrator")) {
-            if(administratorService.userRegister(username,password,COMPANY))
+            if(administratorService.userRegister(username, password, COMPANY))
                 map.put("errorCode", "00");
             else
                 map.put("errorCode", "error");

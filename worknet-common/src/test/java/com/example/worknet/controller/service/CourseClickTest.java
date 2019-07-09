@@ -1,27 +1,16 @@
 package com.example.worknet.controller.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.example.worknet.common.constant.ServiceURL;
-import com.example.worknet.common.persistence.affair.companyContest.service.CompanyContestApplyService;
-import com.example.worknet.common.persistence.affair.course.controller.CourseStudiedController;
-import com.example.worknet.common.persistence.affair.course.serivce.CourseService;
 import com.example.worknet.common.persistence.affair.user.serivce.CompanyService;
-import com.example.worknet.common.persistence.affair.user.serivce.LearnerCvService;
 import com.example.worknet.common.persistence.affair.user.serivce.UserService;
-import com.example.worknet.common.persistence.affair.administrator.service.AdministratorService;
-import com.example.worknet.common.persistence.affair.course.serivce.CourseClickService;
-import com.example.worknet.common.persistence.affair.user.serivce.TeacherInfoService;
 import com.example.worknet.common.persistence.template.modal.Company;
 import com.example.worknet.common.persistence.template.modal.User;
-import com.example.worknet.config.hessian.utils.HessianProxyFactoryUtil;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 测试API

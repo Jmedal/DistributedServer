@@ -25,12 +25,12 @@ public class worknetTests {
     private CompanyCvService companyCvService;
 	@Test
 	public void contextLoads() {
-        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
-        Date date =new Date();
-        String time=formatter.format(date);
-        ParsePosition pos=new ParsePosition(0);
-        Date d=formatter.parse(time,pos);
-        System.out.println(companyCvService.deliverResume((long)1,(long)1,"张萨姆",1,d,"上海","111","本科","计算机"	,"海大学","1111111111","1111-1111 哈哈哈哈","8888@qq.com",	"我是XXXXX	","2222年 XXX奖",	"上海",	"三周内"));
+//        SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
+//        Date date =new Date();
+//        String time=formatter.format(date);
+//        ParsePosition pos=new ParsePosition(0);
+//        Date d=formatter.parse(time,pos);
+//        System.out.println(companyCvService.deliverResume((long)1,(long)1,"张萨姆",1,d,"上海","111","本科","计算机"	,"海大学","1111111111","1111-1111 哈哈哈哈","8888@qq.com",	"我是XXXXX	","2222年 XXX奖",	"上海",	"三周内"));
 //        System.out.println(companyCvService.getMyResumePage(new Page<>(),"1","腾讯").getRecords());
 
 	}

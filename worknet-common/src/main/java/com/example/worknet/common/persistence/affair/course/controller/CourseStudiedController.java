@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.example.worknet.common.persistence.affair.course.serivce.CourseStudiedService;
 import com.example.worknet.common.persistence.template.modal.CourseStudied;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

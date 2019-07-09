@@ -5,7 +5,7 @@ import com.example.worknet.common.persistence.template.modal.VideoDiscussion;
 import com.example.worknet.common.persistence.affair.video.dao.VideoDiscussionMapper;
 import com.example.worknet.common.persistence.affair.video.serivce.VideoDiscussionService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.example.worknet.core.utils.Date.DateUtil;
+import com.example.worknet.core.utils.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
