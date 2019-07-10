@@ -192,11 +192,12 @@
             });
         }
     });
+
     $('#create-employ').on('click',function (object) {
         employInfo = {};
         $('input').val('');
         $('textarea').val('');
-        $('#isPractice').attr('checked',false);
+        $('#isPractice').prop('checked',false);
         employInfo.professionTypeId = 1;
         employInfo.location = '北京';
         $.each($('input'),function (k) {
@@ -235,6 +236,11 @@
 
     $('#change-info').on('click',function (object) {
         console.log(employInfo);
+        if($('#isPractice').is(':checked')){
+            employInfo.isPractice = 1;
+        } else {
+            employInfo.isPractice = 0;
+        }
         if($(this).html()=='确认修改'){
             $.post('/company/employ/change-info',
                 employInfo,function (data) {
@@ -308,13 +314,14 @@
                 $('textarea').val('');
                 employInfo = JSON.parse($(this).attr('data-json'));
                 if(employInfo.isPractice){
-                    employInfo.isPractice = 1;
-                    $('#isPractice').attr('checked','true');
+                    $('#isPractice').prop('checked',true);
+                    $('#practice-group').slideDown();
                 }
                 else{
+                    $('#isPractice').prop('checked',false);
                     $('#practice-group').slideUp();
-                    employInfo.isPractice = 0;
                 }
+                $('#professionTypeId').selectpicker('refresh');
                 //出现一个modal
                 $('#change-info').html('确认修改');
                 $('#myModal').modal('show');
