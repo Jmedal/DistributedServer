@@ -3,7 +3,9 @@ package com.example.worknet.common.persistence.affair.employment.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.worknet.common.constant.Const;
 import com.example.worknet.common.persistence.affair.employment.service.CompanyCvService;
+import com.example.worknet.common.persistence.affair.user.serivce.UserService;
 import com.example.worknet.common.persistence.template.modal.CompanyCv;
+import com.example.worknet.common.persistence.template.modal.User;
 import com.example.worknet.core.utils.date.DateUtil;
 import com.example.worknet.core.utils.file.HttpFileUnils;
 import org.slf4j.Logger;
@@ -107,6 +109,7 @@ public class CompanyCvController {
             companyCv.setCurrentLocation(currentLocation);
             companyCv.setInJobTime(inJobTime);
             companyCv.setHeadPath(headPath);
+            companyCv.setLastEditTime(DateUtil.getSqlNowDateTime());
             companyCv.setStatus(0);
             Long companyCvId = companyCvService.deliverCompanyCv(companyCv);
             if(companyCvId != null){
@@ -125,7 +128,7 @@ public class CompanyCvController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/get/resume/avatar/{companyCvId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/resume/avatar/{companyCvId}", method = RequestMethod.GET)
     public ResponseEntity getAvatar(@PathVariable(value = "companyCvId") Long companyCvId,
                                     HttpServletRequest request) {
         try {
@@ -147,15 +150,32 @@ public class CompanyCvController {
      */
     @RequestMapping(value = "/resume/deliver/avatar/{companyCvId}", method = RequestMethod.POST)
     public String deliverAvatar(@PathVariable(value = "companyCvId") Long companyCvId,
+                                @RequestParam(value = "update") Integer update,
                                 MultipartHttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null) {
             String savePath = Const.FILE_SEPARATOR + Const.COMPANY_CV_HEAD_PATH + Const.FILE_SEPARATOR + Calendar.getInstance().get(Calendar.YEAR);
-            String headPath = HttpFileUnils.requestFile(request, savePath, companyCvService.selectById(companyCvId).getHeadPath(), null);
-            if(headPath != null && companyCvService.setCompanyCvAvatarPath(companyCvId, headPath)){
-                map.put("errorCode", "00");
-            }else
-                map.put("errorCode", "error");
+            if (update.equals(1)){
+                String headPath = HttpFileUnils.requestFile(request, savePath, companyCvService.selectById(companyCvId).getHeadPath(), null);
+                System.out.println("headPath:"+headPath);
+                if(headPath != null && companyCvService.setCompanyCvAvatarPath(companyCvId, headPath)){
+                    map.put("errorCode", "00");
+                }else
+                    map.put("errorCode", "error");
+            }else {
+                CompanyCv companyCv = companyCvService.selectById(companyCvId);
+                if(companyCv != null && companyCv.getHeadPath() != null && !companyCv.getHeadPath().equals("")){
+                    String headPath =  companyCv.getHeadPath();
+                    HttpFileUnils.copyFile(savePath, headPath);
+                    String fileName = headPath.substring(headPath.lastIndexOf(Const.FILE_SEPARATOR) + 1);
+                    if(companyCvService.setCompanyCvAvatarPath(companyCvId, savePath + Const.FILE_SEPARATOR + fileName)){
+                        map.put("errorCode", "00");
+                    }else
+                        map.put("errorCode", "error");
+                }else
+                    map.put("errorCode", "error");
+            }
+
         }else
             map.put("errorCode", "error");
         return JSON.toJSONString(map);
@@ -170,9 +190,9 @@ public class CompanyCvController {
     @RequestMapping(value = "/resume/get/{companyCvId}", method = RequestMethod.GET)
     public String getResume(@PathVariable(value = "companyCvId") Long companyCvId, HttpServletRequest request){
         HashMap<String,Object> map = new HashMap<>();
-        if(request.getSession(true).getAttribute("userId") != null) {
-            Long userId = (long) request.getSession(true).getAttribute("userId");
-            HashMap<String,Object> companyCv = companyCvService.getCompanyCvInfo(companyCvId, userId);
+        if(request.getSession(true).getAttribute("userId") != null
+                || request.getSession(true).getAttribute("user").equals("administrator")) {
+            HashMap<String,Object> companyCv = companyCvService.getCompanyCvInfo(companyCvId);
             if(companyCv != null){
                 map.put("returnObject", companyCv);
                 map.put("errorCode", "00");
@@ -199,7 +219,6 @@ public class CompanyCvController {
         HashMap<String,Object> map = new HashMap<>();
         if(request.getSession(true).getAttribute("userId") != null){
             Long userId = (long) request.getSession(true).getAttribute("userId");
-            System.out.println(keyword);
             Page<HashMap<String,Object>> pager = companyCvService.getCompanyCvPage(new Page<>(page,pageSize), userId, keyword);
             map.put("total",pager.getTotal());
             map.put("rows",pager.getRecords());

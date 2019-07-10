@@ -43,12 +43,11 @@ public class CompanyCvServiceImpl extends ServiceImpl<CompanyCvMapper, CompanyCv
     /**
      * 获取投递简历信息
      * @param companyCvId
-     * @param userId
      * @return
      */
     @Override
-    public HashMap<String, Object> getCompanyCvInfo(Long companyCvId, Long userId) {
-        return companyCvMapper.getCompanyCvInfo(companyCvId, userId);
+    public HashMap<String, Object> getCompanyCvInfo(Long companyCvId) {
+        return companyCvMapper.getCompanyCvInfo(companyCvId);
     }
 
     /**

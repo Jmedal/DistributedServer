@@ -19,7 +19,7 @@ public interface CompanyCvService extends IService<CompanyCv> {
 
     Long deliverCompanyCv(CompanyCv companyCv);
 
-    HashMap<String, Object> getCompanyCvInfo(Long companyCvId, Long userId);
+    HashMap<String, Object> getCompanyCvInfo(Long companyCvId);
 
     String getCompanyCvAvatarPath(Long companyCvId);
 

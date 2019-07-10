@@ -153,7 +153,7 @@
 <script src="/js/bootstrap-select.js"></script>
 <script>
     $('.main').height($(window).height());
-    var employInfo;
+    var employInfo={};
     $('#isPractice').on('change',function (object) {
         if($(this).is(':checked')){
             $('#practice-group').slideDown();
@@ -193,8 +193,12 @@
         }
     });
     $('#create-employ').on('click',function (object) {
+        employInfo = {};
         $('input').val('');
         $('textarea').val('');
+        $('#isPractice').attr('checked',false);
+        employInfo.professionTypeId = 1;
+        employInfo.location = '北京';
         $.each($('input'),function (k) {
             let key = $(this).attr('id');
             let val = employInfo[key];
@@ -237,7 +241,7 @@
                     data = JSON.parse(data);
                     if(data.errorCode=='00'){
                         window.top.showToastr(0,"修改信息成功");
-                        $('#stu-info').bootstrapTable('refresh');
+                        $('#stu-account').bootstrapTable('refresh');
                         $('#myModal').modal('hide');
                     }else{
                         window.top.showToastr(2,"未知错误");
@@ -251,7 +255,7 @@
                     data = JSON.parse(data);
                     if(data.errorCode=='00'){
                         window.top.showToastr(0,"创建招聘成功");
-                        $('#stu-info').bootstrapTable('refresh');
+                        $('#stu-account').bootstrapTable('refresh');
                         $('#myModal').modal('hide');
                     }else{
                         window.top.showToastr(2,"未知错误");
@@ -303,10 +307,14 @@
                 $('input').val('');
                 $('textarea').val('');
                 employInfo = JSON.parse($(this).attr('data-json'));
-                if(employInfo.isPractice)
+                if(employInfo.isPractice){
+                    employInfo.isPractice = 1;
                     $('#isPractice').attr('checked','true');
-                else
+                }
+                else{
                     $('#practice-group').slideUp();
+                    employInfo.isPractice = 0;
+                }
                 //出现一个modal
                 $('#change-info').html('确认修改');
                 $('#myModal').modal('show');

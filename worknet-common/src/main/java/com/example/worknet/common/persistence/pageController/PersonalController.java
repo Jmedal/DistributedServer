@@ -57,6 +57,6 @@ public class PersonalController {
 
     @RequestMapping(value = "/info/{uid}")//获取用户个人页面
     public String info(@PathVariable(value = "uid") Long uid){
-        return "personal/display_page.html";
+        return "/personal/display_page.html";
     }
 }

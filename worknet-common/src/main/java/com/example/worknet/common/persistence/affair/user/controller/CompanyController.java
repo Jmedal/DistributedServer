@@ -310,7 +310,7 @@ public class CompanyController {
      * 公司管理加载招聘邀请列表
      * @param page
      * @param pageSize
-     * @param keyword   关键字用于搜索
+     * @param keyword
      * @param request
      * @return
      */
@@ -480,6 +480,7 @@ public class CompanyController {
                 companyProfession.setIsPractice(isPractice);
                 companyProfession.setDuration(duration);
                 companyProfession.setChanceToFormal(chanceToFormal);
+                companyProfession.setState(1);
                 if(companyService.createEmployInfo(companyProfession, userId))
                     map.put("errorCode", "00");
                 else

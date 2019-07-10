@@ -159,7 +159,7 @@
 							<div class="control-group">
 								<label class="control-label" for="birth">出生年月</label>
 								<div class="controls">
-									<input id="birth" name="birth" type="text" placeholder="请输入出生年月，如1997.04" class="input-xlarge form-control">
+									<input id="birth" name="birth" type="text" placeholder="请输入出生年月，如1997-04-08" class="input-xlarge form-control">
 								</div>
 							</div>
 
@@ -436,7 +436,7 @@
             reader.onload = function () {
                 let res = this.result;
                 $("#avatar_img2").attr("src", res);
-                resumeMap.headPath = res;
+                resumeMap.headPath = 1;
             };
         });
         $('#resume-detail input').on('blur',function (object) {
@@ -516,6 +516,7 @@
                 resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
                 resumeMap.resumeName = $('#myModalLabel2').val();
                 if(createOrChange==0){//create创建新的模板
+                    console.log(resumeMap);
                     $.post('/create-resume-mode',resumeMap,function (data) {
                         data = JSON.parse(data);
                         if(data.errorCode=='00'){

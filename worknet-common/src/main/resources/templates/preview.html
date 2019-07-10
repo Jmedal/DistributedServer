@@ -81,6 +81,9 @@
                 data = JSON.parse(data);
                 if(data.errorCode=='00'){
                     let obj = data.returnObject;
+                    let bit = obj.birth;
+                    bit = bit.split(' ');
+                    bit = bit[0];
                     $('#user-info').html('<div id="avatar" class="right">\n' +
                         '            <img src="/get/resume-mode/avatar/'+obj.id+'" width="100">\n' +
                         '        </div>\n' +
@@ -88,7 +91,7 @@
                         '            <p id="name">'+obj.name+'</p>\n' +
                         '            <p class="resume-info">\n' +
                         '                <span>'+(obj.sex==1?"女":"男")+'</span>\n' +
-                        '                <span>'+obj.birth+'</span>\n' +
+                        '                <span>'+bit+'</span>\n' +
                         '                <span>'+obj.nativePlace+'</span>\n' +
                         '                <span>'+qu[obj.qualification]+'</span>\n' +
                         '            </p>\n' +
@@ -137,14 +140,16 @@
                 data = JSON.parse(data);
                 if(data.errorCode=='00'){
                     let obj = data.returnObject;
+                    let bit = obj.birth;
+                    bit = bit.split(' ')[0];
                     $('#user-info').html('<div id="avatar" class="right">\n' +
-                        '            <img src="/get/resume-mode/avatar/'+obj.id+'" width="100">\n' +
+                        '            <img src="/get/resume/avatar/'+obj.id+'" width="100">\n' +
                         '        </div>\n' +
                         '        <div id="info">\n' +
                         '            <p id="name">'+obj.name+'</p>\n' +
                         '            <p class="resume-info">\n' +
                         '                <span>'+(obj.sex==1?"女":"男")+'</span>\n' +
-                        '                <span>'+obj.birth+'</span>\n' +
+                        '                <span>'+bit+'</span>\n' +
                         '                <span>'+obj.nativePlace+'</span>\n' +
                         '                <span>'+qu[obj.qualification]+'</span>\n' +
                         '            </p>\n' +

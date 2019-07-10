@@ -44,13 +44,13 @@ public interface CompanyCvMapper extends BaseMapper<CompanyCv> {
             "FROM\n" +
             "sys_company_cv\n" +
             "WHERE\n" +
-            "id = #{companyCvId} and user_id = #{userId}")
+            "id = #{companyCvId}")
     @Results(id = "companyCvInfoResultMap", value = {
             @Result(property = "id", column = "id"),
             @Result(property = "learnerId", column = "user_id"),
             @Result(property = "name", column = "name"),
             @Result(property = "sex", column = "sex"),
-            @Result(property = "birth", column = "birth"),
+            @Result(property = "birth", column = "birth",javaType = String.class),
             @Result(property = "nativePlace", column = "native_place"),
             @Result(property = "identity", column = "identity"),
             @Result(property = "qualification", column = "qualification"),
@@ -65,7 +65,7 @@ public interface CompanyCvMapper extends BaseMapper<CompanyCv> {
             @Result(property = "inJobTime", column = "in_job_time"),
             @Result(property = "headPath", column = "head_path"),
     })
-    HashMap<String,Object> getCompanyCvInfo(@Param("companyCvId") Long companyCvId, @Param("userId") Long userId);
+    HashMap<String,Object> getCompanyCvInfo(@Param("companyCvId") Long companyCvId);
 
 
     @Select("SELECT\n" +

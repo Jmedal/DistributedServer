@@ -54,4 +54,19 @@ public class HttpFileUnils {
         return resourceLoader.getResource("file:" + strDirPath + Const.FILE_SEPARATOR + file_name);
     }
 
+    /**
+     * 复制文件
+     * @param savePath
+     * @param oldPath
+     * @return
+     */
+    public static boolean copyFile(String savePath, String oldPath) {
+        if(savePath == null || oldPath == null)
+            return false;
+        String save_full_path = Const.FILE_PATH + savePath;
+        String old_full_path = Const.FILE_PATH + oldPath;
+        FileToolsUtil.fileToUpload(save_full_path, old_full_path);
+        return true;
+    }
+
 }

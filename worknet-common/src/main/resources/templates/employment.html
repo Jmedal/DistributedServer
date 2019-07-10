@@ -580,6 +580,7 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
+    var HP;
     $(document).ready(function () {
         var href = window.location.href;
         let tmp = href.split('\/');
@@ -588,6 +589,7 @@
         var available = true;
         var resumeMap = {};
         var formData = new FormData();
+        formData.append("update","0");
         $.get('/get/companyInfo/'+companyId,function (data) {
             data = JSON.parse(data);
             if(data.errorCode=='00'){
@@ -650,6 +652,7 @@
                 return null;
             }
         }
+        var update = 0;
         $("#avatar_file").change(function () {
 
             var file = $(this)[0].files[0];
@@ -664,6 +667,7 @@
             // console.log(file.name);
             formData.append("avatar",file);
             formData.append("fileName",file.name);
+            formData.append("update","1");
             // 阅读文件完成后触发的事件
             reader.onload = function () {
                 let res = this.result;
@@ -814,6 +818,7 @@
                     let tstr = '<a id="preview-online-resume"><i class="icon icon-eye"></i>预览</a>\n';
                     if(obj.headPath!=null){
                         //如果头像存在
+                        HP = obj.headPath;
                         obj.headPath='/get/resume-mode/avatar/'+obj.id;
                     }
                     fillResume(obj);//填写mapper
@@ -855,6 +860,9 @@
                 let currentTime = new Date();
                 resumeMap.lastEditTime = currentTime.Format("yyyy-MM-dd HH:mm:ss");
                 resumeMap.employId = employId;
+                resumeMap.update = update;
+                if(resumeMap.update=="0")
+                    resumeMap.headPath = HP;
                 console.log(resumeMap);
                 $.post('/resume/deliver/',resumeMap,function (data) {
                     data = JSON.parse(data);

@@ -259,7 +259,7 @@ public class UserController {
     }
 
     /**
-     * 上床或修改头像
+     * 上传或修改头像
      * @param request
      * @return
      * @throws Exception

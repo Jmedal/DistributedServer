@@ -64,7 +64,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tsys_company.id = #{companyId}\n" +
             "\tAND (sys_company_cv.user_id  REGEXP #{keyword}\n" +
             "\tOR sys_company_cv.NAME REGEXP #{keyword}\n" +
-            "\tOR sys_company_profession.title REGEXP #{keyword})\n")
+            "\tOR sys_company_profession.title REGEXP #{keyword})\n" +
+            "ORDER BY\n" +
+            "\tsys_company_cv.id DESC")
     @Results(id = "ResumeListResultMap",value = {
             @Result(property = "resumeId", column = "resumeId"),
             @Result(property = "companyId", column = "companyId"),
@@ -84,7 +86,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_company_profession ON sys_company.id = sys_company_profession.company_id\n" +
             "\tJOIN sys_user ON sys_company.user_id = sys_user.id\n" +
             "WHERE\n" +
-            "\tsys_user.id= #{userId}\n")
+            "\tsys_user.id= #{userId}\n" +
+            "ORDER BY\n" +
+            "\tsys_company_profession.id DESC")
     @Results(id = "ProfessionListResultMap",value = {
             @Result(property = "companyProfessionId", column = "companyProfessionId"),
             @Result(property = "title", column = "employTitle"),
@@ -115,7 +119,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tsys_user.id = #{userId} \n" +
             "\tAND ( sys_company_profession.title REGEXP #{keyword} \n" +
             "\tOR sys_company_profession.introduction REGEXP #{keyword} \n" +
-            "\tOR sys_company_profession.requirement REGEXP #{keyword} )")
+            "\tOR sys_company_profession.requirement REGEXP #{keyword} )\n" +
+            "ORDER BY\n" +
+            "\tsys_company_profession.id DESC")
     @Results(id = "EmployListResultMap",value = {
             @Result(property = "id", column = "id"),
             @Result(property = "companyId", column = "company_id"),
@@ -149,7 +155,9 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tJOIN sys_company ON sys_company.id = sys_company_invitation.company_id\n" +
             "\tJOIN sys_company_profession ON sys_company_profession.id = sys_company_invitation.company_profession_id \n" +
             "where sys_company_invitation.company_id = #{companyId}\n" +
-            "and (sys_learner_info.realname REGEXP #{keyword} or sys_company_profession.title REGEXP #{keyword} or company_profession_id REGEXP #{keyword})\n")
+            "and (sys_learner_info.realname REGEXP #{keyword} or sys_company_profession.title REGEXP #{keyword} or company_profession_id REGEXP #{keyword})\n" +
+            "ORDER BY\n" +
+            "\tsys_company_invitation.id DESC")
     @Results(id="WelcomePageResultMap",value={
             @Result(property = "companyProfessionId", column = "company_profession_id"),
             @Result(property = "studentId", column = "user_id"),
@@ -177,11 +185,14 @@ public interface CompanyMapper extends BaseMapper<Company> {
             "\tsys_learner_info.professional \n" +
             "FROM\n" +
             "\tsys_learner_info \n" +
+            "\tJOIN sys_user ON sys_learner_info.user_id = sys_user.id\n" +
             "WHERE\n" +
-            "\tsys_learner_info.id REGEXP #{keyword}\n" +
+            "\tsys_user.activity = 1\n" +
+            "\tAND (sys_learner_info.id REGEXP #{keyword}\n" +
             "\tOR sys_learner_info.nickname REGEXP #{keyword}\n" +
             "\tOR sys_learner_info.realname REGEXP #{keyword}\n" +
-            "\tOR sys_learner_info.phone REGEXP #{keyword}\n"})
+            "\tOR sys_learner_info.phone REGEXP #{keyword})\n"
+    })
     @Results(id = "learnerInfoResultMap", value = {
             @Result(property = "id", column = "id"),
             @Result(property = "studentId", column = "user_id"),
